@@ -126,6 +126,8 @@ namespace JsonData
         public string responseId;
         public QueryResult queryResult;
         public Status webhookStatus;
+        //Added line below for output audio
+        public string outputAudio;
     }
 
     //https://dialogflow.com/docs/reference/api-v2/rest/Shared.Types/QueryResult
@@ -288,8 +290,4 @@ namespace JsonData
     {
         public Text text;
     }
-
-
-
-
 }

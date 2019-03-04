@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{E169AC5C-5DCA-5A0B-19A6-C83AC321B08D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -52,6 +53,9 @@
     <UnityVersion>2018.3.0f2</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -278,6 +282,9 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis.Dialogflow.v2beta1">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Google.Apis.Dialogflow.v2beta1.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
@@ -292,6 +299,15 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Google.Apis.Core.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -644,6 +660,10 @@
       <Project>{58891E55-1AD0-1C5D-C6E8-0CA079E35C61}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

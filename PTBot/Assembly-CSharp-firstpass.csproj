@@ -277,6 +277,9 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis.Dialogflow.v2beta1">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Google.Apis.Dialogflow.v2beta1.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
@@ -291,6 +294,18 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR 4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
