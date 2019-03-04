@@ -9,3 +9,10 @@
 - When the video stops playing, the character model will return to the default idle animation.
 - I've started writing the scripts to connect to the DialogFlow chatbot, I need to make some more modifications before I can start testing the connection.
 - I've tested connecting to the DialogFlow API using Postman and have successfully sent POST requests and received responses.
+
+04-03-2019
+- I found a way to connect to the chatbot from Unity using the Google API NUGET package.
+- I updated the script to connect to the chatbot with the Google API Plugins for Authorisation which generates the OAuth 2 Access Token.
+- I quickly ran some data through the application and was successful.
+- The chatbot API call returns text and audio output, which is currently displayed in Unity.
+- However the audio is currently distorted, so need to fix that in next update.
