@@ -1,45 +1,48 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using CrazyMinnow.SALSA.Fuse;
+using CrazyMinnow.SALSA;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Dialogflow.v2beta1;
+using JsonData;
+using System.Collections;
+using System.IO;
 using System;
 using UnityEngine.Networking;
-using JsonData;
 using UnityEngine.UI;
-using System.IO;
-using Google.Apis.Dialogflow.v2beta1;
-using Google.Apis.Auth.OAuth2;
-
-//https://stackoverflow.com/questions/51272889/unable-to-send-post-request-to-dialogflow-404
+using UnityEngine;
 
 public class DialogflowAPIScript : MonoBehaviour
 {
-    public InputField inputField;
-    private string url = "https://dialogflow.googleapis.com/v2beta1/projects/pt-bot-d56dd/agent/sessions/34563:detectIntent";
-    private string accessToken { get; set; }//= "ya29.c.El_CBitJqntwQ34NmI1sfOS8uYIVqxRsf51AZYKRUHRXZY9wq32YpvJOYTorrZU7_vc7ibFUe-V-jUz72G2XdvQ-U6sUpdzmFBnnOjpVyPTwSU6GTTlJTawJB0GH5NmOOQ";
-    // ^ NEED TO FIGURE OUT HOW TO GET ACCESS TOKEN EVERY TIME AS IT EXPIRES EVERY HOUR!
+    private AudioClip audioClip;
+    private AudioSource audioSource;
+    private readonly string url = "https://dialogflow.googleapis.com/v2beta1/projects/pt-bot-d56dd/agent/sessions/34563:detectIntent";
+    private Salsa3D salsa3D;
+    private string AccessToken { get; set; }
     private UnityEngine.UI.Text chatbotResponse;
+    public InputField inputField;
+    private GameObject pt;
 
-    public void Test()
+    public void SendToChatbot()
     {
-        accessToken = GetAccessToken();
+        pt = GameObject.Find("PT");
+        AccessToken = GetAccessToken();
+        Debug.Log("Got Access Token");
         chatbotResponse = GameObject.Find("TextChatbotResponse").GetComponent<UnityEngine.UI.Text>();
-        Debug.Log(inputField.text.ToString());
-        StartCoroutine(PostRequest(inputField.text.ToString()));
+        RequestBody requestBody = CreateRequestBody();
+        Debug.Log("Got Request Body");
+        StartCoroutine(PostRequest(requestBody));
     }
 
     private string GetAccessToken()
     {
-        var credentials = GoogleCredential.FromFile(@"C:\Users\lbk95\Documents\_ASTON\GoogleServiceAccount\pt-bot-d56dd-be933ba53ff9.json");
+        //https://stackoverflow.com/questions/52607901/authenticating-request-with-google-apis-dialogflow-v2
+        var credentials = GoogleCredential.FromJson("{  'type': 'service_account',  'project_id': 'pt-bot-d56dd',  'private_key_id': 'be933ba53ff9d381ad3afc49ce7501ac6e7b026e',  'private_key': '-----BEGIN PRIVATE KEY-----MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDSPZ/YWS94JMbGqLXvG7VgfQ//NWG7gzUpo2lRUwiDQ07XPXTszog4zyTDY72x6la9mlaBaK/fC/Yv5C/8tqIOJ+SO1nYpxEGnR1YXEhk5y7+K97V+FHxJmQuYWSrIpU9pV0w2GJz8h5uuMsAnwDMMmCboGSS1ncz2xgZcr4GPXG9z4TWZZTq51PemQNSYv6L5D1dPPG6kr4tV8ZWvd8Ko7UbJkqc000vi3pWlghjDNnxKp6u+5kCFteHcs/uu/ElJTHsMkWinF3CarR5hkeirWddVJMRJFgQAE6ujV4loqXupIPGb2D9og5kBOJb7Rk+YIU6RSFYn7p3S5+7V1WdZAgMBAAECggEADNioHjug22n/3V6ssz4RsKIjqpfz71W+l1s9UbNNp1ujAyLltJyQFUyO9gNvsWHcx/wYwhKIAIyGD/oU9o+gSlYksJepI7cyvcptl75K3U22WAL3y4rr50FbRIVaSGVVe13SsdGCMioFGLlQJX2ogOIBKphytkg8oG2MMPimZYCHee3d7AvtfI133rsS3wMeNKkvxgJI7FVraWqTnlZwvzxj5YGEUzHgBGUU7aDrUBcYj+7jCzO/9vMS4zXitARgNGTn8l9/FONhw8viqw1GCLNEsUGSZBN/Y8sdqvghu7HygMVULWIhrQsRTVJ9OjDHeq0q38qLejfd5F3sWbDtgQKBgQD8C9GEeXDvFMnc/9Xnceb918UEV8Q0LtiKCW64a6UI5pfOCgBWeVvLtwZ9kaKC9otLi/Plo3X/KgicYBg4aDJjr/NIsHGXg2z1pmru/5BH7gexaUNkWRMXGQMIsnCveyPPGS5pq7m+nV8FouoqwEsZuRpFngdwdM4wmC04W+nRuQKBgQDVievWdt/Fv6Pt2xDovDcFWx7C5GpUDlGB7sLrA9POlqFYiQOz3wetSYhKiRA0ybvdqyS8evXShqqAQB1ySS5QT0fZtKsWUR8C6vKIcExKV6fqHXi/Pq6bP3H4LwVM0VF+/+Vt13yyhLXk4jw7aOnHeGGuhs4AV0WgMnZkShWSoQKBgB/nvxXt6YXaM9Nt7z3lBUCM17u9AHE6nN6cYw+lULbXuc+zJGfN5Pjcqk2q6c96NhfSF4WyM3WhdIWXBHnfdsF3vGwvKbHsSRavgknOwAza7M5gbM9/FxONbvzi2bDc/aNxpJZrzo96jFTCUrImtVsEO3ckkfyCTLeKC+9eczLBAoGBAKLKdHqZQVsWEDkCqs9ivWdd4gOd8tmF2Ol/RiW4Uz7JYtOGEMaNnuKijj6UY0B7EreZA3aVHtaSR2Vie5Bm7eHXruTvcQagbU3iI2eUhPSgAqjeMvFJLf+4zH/yCM5ZPRHer9+fSbcmqSyGtHhuMNsakQ1mQ6HK5o+MKOmn+O5BAoGBANEGT/5lPsJtpqkf6pCihSyTlRcLIv4/Pe6KI3FMW8mPkBHtQ84RaBfw7CwtS/pnNfgKkq6BImvcrXwAUXJ+1YK1PFlQlWc70cFZiE+Kj1EFhXC//yeC2yuXTSx79hXeHmU8Ch7VrYX7JtGAKRnBrZtbQp4JPBzgWlrYE+PAqLcy-----END PRIVATE KEY-----',  'client_email': 'dialogflow-ejoxan@pt-bot-d56dd.iam.gserviceaccount.com',  'client_id': '106195813506666296547',  'auth_uri': 'https://accounts.google.com/o/oauth2/auth',  'token_uri': 'https://oauth2.googleapis.com/token',  'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',  'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-ejoxan%40pt-bot-d56dd.iam.gserviceaccount.com'}");
         var scopedCredentials = credentials.CreateScoped(DialogflowService.Scope.CloudPlatform);
-        var _oAuthToken = scopedCredentials.UnderlyingCredential.GetAccessTokenForRequestAsync().Result;
-        Debug.Log(_oAuthToken);
-        return _oAuthToken;
+        var oAuth2Token = scopedCredentials.UnderlyingCredential.GetAccessTokenForRequestAsync().Result;
+        return oAuth2Token;
     }
 
-
-    IEnumerator PostRequest(String inputMessage)
+    private RequestBody CreateRequestBody()
     {
-        UnityWebRequest postRequest = new UnityWebRequest(url, "POST");
         RequestBody requestBody = new RequestBody
         {
             queryInput = new QueryInput
@@ -47,20 +50,23 @@ public class DialogflowAPIScript : MonoBehaviour
                 text = new TextInput()
             }
         };
-        requestBody.queryInput.text.text = inputMessage;
+        requestBody.queryInput.text.text = inputField.text.ToString();
         requestBody.queryInput.text.languageCode = "en";
+        return requestBody;
+    }
 
+    IEnumerator PostRequest(RequestBody requestBody)
+    {
+        UnityWebRequest postRequest = new UnityWebRequest(url, "POST");
         string jsonRequestBody = JsonUtility.ToJson(requestBody, true);
-        Debug.Log(jsonRequestBody);
-
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
-        //Debug.Log(bodyRaw);
-        postRequest.SetRequestHeader("Authorization", "Bearer " + accessToken);
+
+        postRequest.SetRequestHeader("Authorization", $"Bearer {AccessToken}");
         postRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         postRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         postRequest.SetRequestHeader("Content-Type", "application/json");
-
         yield return postRequest.SendWebRequest();
+        Debug.Log("Got Post Request Response");
 
         if (postRequest.isNetworkError || postRequest.isHttpError)
         {
@@ -69,57 +75,35 @@ public class DialogflowAPIScript : MonoBehaviour
         }
         else
         {
-            // Show results as text
-            Debug.Log("Response: " + postRequest.downloadHandler.text);
-
             // Or retrieve results as binary data
             byte[] resultbyte = postRequest.downloadHandler.data;
             string result = System.Text.Encoding.UTF8.GetString(resultbyte);
             ResponseBody content = (ResponseBody)JsonUtility.FromJson<ResponseBody>(result);
             Debug.Log(content.queryResult.fulfillmentText);
-            Debug.Log(content.outputAudio);
             chatbotResponse.text = content.queryResult.fulfillmentText;
-            File.WriteAllBytes(@"C:\test\test.wav", Convert.FromBase64String(content.outputAudio));
-            PlayAudio(content.outputAudio);
+            GetAndPlayAudio(content.outputAudio);
         }
     }
 
-    //https://stackoverflow.com/questions/35228767/noisy-audio-clip-after-decoding-from-base64
-
-    private void PlayAudio(string base64)
+    private void GetAndPlayAudio(string outputAudio)
     {
-        byte[] bytes = Convert.FromBase64String(base64);
-        float[] f = ConvertByteToFloat(bytes);
-
-        //Normalize(f);
-        /*
-        foreach (float floaty in f)
-        {
-            if (floaty > 1.0f || floaty < 0.0f)
-                Debug.Log(floaty);
-        }*/
-
-        AudioClip audioClip = AudioClip.Create("testSound", f.Length, 2, 44100, false);
-        audioClip.SetData(f, 0);
-
-        AudioSource audioSource = GameObject.FindObjectOfType<AudioSource>();
-        audioSource.spatialBlend = 0.0f;
-        audioSource.PlayOneShot(audioClip);
+        //File.WriteAllBytes($"{Application.dataPath}/chatbotResponse.wav", Convert.FromBase64String(outputAudio));
+        //audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/chatbotResponse.wav");
+        File.WriteAllBytes(string.Format("{0}/{1}", Application.dataPath, "chatbotResponse.wav"), Convert.FromBase64String(outputAudio));
+        audioClip = WavUtility.ToAudioClip(string.Format("{0}/{1}", Application.dataPath, "chatbotResponse.wav"));
+        salsa3D = pt.GetComponent<Salsa3D>();
+        salsa3D.SetAudioClip(audioClip);
+        salsa3D.Play();
+        //audioSource = GameObject.FindObjectOfType<AudioSource>();
+        //audioSource.spatialBlend = 0.0f;
+        //audioSource.PlayOneShot(audioClip);
+        Debug.Log("Played Audio");
         return;
     }
-
-    private float[] ConvertByteToFloat(byte[] array)
-    {
-        float[] floatArr = new float[array.Length / 4];
-
-        for (int i = 0; i < floatArr.Length; i++)
-        {
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(array, i * 4, 4);
-
-            floatArr[i] = BitConverter.ToSingle(array, i * 4) / 0x80000000;
-        }
-
-        return floatArr;
-    }
 }
+
+/*
+ salsa = character.GetComponent<Salsa3D>();
+				salsa.SetAudioClip(audioClip);
+				salsa.Play();
+ */

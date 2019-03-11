@@ -281,3 +281,10 @@ C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp-firstpass.csproj.CopyComplete
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp-firstpass.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp-firstpass.pdb
+C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Auth.dll
+C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Core.dll
+C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Dialogflow.v2beta1.dll
+C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.dll
+C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\SALSA.dll
+C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp-firstpass.csprojAssemblyReference.cache

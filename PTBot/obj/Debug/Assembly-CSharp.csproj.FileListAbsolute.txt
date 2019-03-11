@@ -195,11 +195,9 @@ C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\UnityEngine.WindModule.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\UnityEngine.XRModule.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Auth.dll
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Auth.PlatformServices.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Core.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Dialogflow.v2beta1.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.dll
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.PlatformServices.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Unity.Cecil.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Unity.SerializationLogic.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Unity.DataContract.dll
@@ -210,14 +208,6 @@ C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Unity.CecilTools.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Unity.Cecil.Pdb.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Unity.Cecil.Mdb.dll
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.pdb
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.xml
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Auth.pdb
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Auth.xml
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Core.pdb
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Core.xml
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Dialogflow.v2beta1.pdb
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Google.Apis.Dialogflow.v2beta1.xml
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\UnityEngine.xml
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\UnityEditor.xml
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Unity.TextMeshPro.Editor.pdb
@@ -296,5 +286,6 @@ C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp.pdb
-C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Assembly-CSharp.dll.config
 C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
+C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\lbk95\Documents\_ASTON\YEAR 4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\SALSA.dll
