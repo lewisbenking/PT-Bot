@@ -16,3 +16,10 @@
 - I quickly ran some data through the application and was successful.
 - The chatbot API call returns text and audio output, which is currently displayed in Unity.
 - However the audio is currently distorted, so need to fix that in next update.
+
+11-03-2019
+- I found a WavUtility script plugin online to fix the issue from last week with the distorted audio.
+- It now loads the saved wav file into Unity to play the audio.
+- I noticed a slight lag with the DialogFlow API call since last week, however this may depend on internet connection.
+- Used the imported SALSA tools to set up lip syncing with the PT character model, and intial set up was successful.
+- Started report layout.
