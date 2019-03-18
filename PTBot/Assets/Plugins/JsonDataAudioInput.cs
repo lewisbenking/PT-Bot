@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace JsonData
+namespace JsonDataAudioInput
 {
     /*
      "queryParams": {
@@ -17,7 +17,7 @@ namespace JsonData
     public class RequestBody
     {
         public QueryInput queryInput;
-        //public string inputAudio;
+        public string inputAudio;
     }
 
     /*
@@ -44,10 +44,8 @@ namespace JsonData
     [Serializable]
     public class QueryInput
     {
-        public TextInput text;
-        //public InputAudioConfig audioConfig;
+        public InputAudioConfig audioConfig;
     }
-
     /*
      * InputAudioConfig
      * Instructs the speech recognizer how to process the audio content.
@@ -236,18 +234,16 @@ namespace JsonData
         public Struct struct_value;
         public ListValue list_value;
 
-        public void ForBool(bool value)
-        {
+        public void ForBool(bool value){
             this.bool_value = value;
         }
-
+        
         public void ForString(string value)
         {
             this.string_value = value;
         }
 
-        public void ForNumber(double number)
-        {
+        public void ForNumber(double number){
             this.number_value = number;
         }
 
@@ -256,13 +252,11 @@ namespace JsonData
             this.null_value = NullValue.null_vaule;
         }
 
-        public void ForStruct(Struct value)
-        {
+        public void ForStruct(Struct value){
             this.struct_value = value;
         }
 
-        public void ForList(ListValue value)
-        {
+        public void ForList(ListValue value){
             this.list_value = value;
         }
     }
@@ -274,21 +268,22 @@ namespace JsonData
     }
 
     [Serializable]
-    public class ListValue
-    {
+    public class ListValue{
         public Value values;
 
     }
 
     [Serializable]
-    public class Text
-    {
+    public class Text{
         public string[] text;
     }
 
     [Serializable]
-    public class Message
-    {
+    public class Message{
         public Text text;
     }
+
+
+
+
 }

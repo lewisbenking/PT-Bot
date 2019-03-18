@@ -3,6 +3,7 @@ using CrazyMinnow.SALSA;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Dialogflow.v2beta1;
 using JsonData;
+using JsonDataAudioInput;
 using System.Collections;
 using System.IO;
 using System;
@@ -14,22 +15,45 @@ public class DialogflowAPIScript : MonoBehaviour
 {
     private AudioClip audioClip;
     private AudioSource audioSource;
-    private readonly string url = "https://dialogflow.googleapis.com/v2beta1/projects/pt-bot-d56dd/agent/sessions/34563:detectIntent";
+    private string url;
     private Salsa3D salsa3D;
     private string AccessToken { get; set; }
     private UnityEngine.UI.Text chatbotResponse;
     public InputField inputField;
     private GameObject pt;
+    private Animator animator;
 
-    public void SendToChatbot()
+    public void SendSpeechToChatbot(string inputAudio)
     {
         pt = GameObject.Find("PT");
+        animator = pt.GetComponent<Animator>();
+        animator.SetBool("waitingForChatbotResponse", true);
+        url = "https://dialogflow.googleapis.com/v2beta1/projects/pt-bot-d56dd/agent/sessions/34563:detectIntent";
+        Debug.Log(JsonUtility.ToJson(CreateRequestBodyInputAudio(inputAudio), true));
+        AccessToken = GetAccessToken();
+        Debug.Log("Got Access Token");
+        Debug.Log(AccessToken);
+        chatbotResponse = GameObject.Find("TextChatbotResponse").GetComponent<UnityEngine.UI.Text>();
+        chatbotResponse.text = "I'm thinking of a response";
+        JsonDataAudioInput.RequestBody requestBody = CreateRequestBodyInputAudio(inputAudio);
+        Debug.Log("Got Request Body");
+        StartCoroutine(PostRequestAudio(requestBody));
+    }
+
+    public void SendTextToChatbot()
+    {
+        pt = GameObject.Find("PT");
+        animator = pt.GetComponent<Animator>();
+        animator.SetBool("waitingForChatbotResponse", true);
+        url = "https://dialogflow.googleapis.com/v2beta1/projects/pt-bot-d56dd/agent/sessions/34563:detectIntent";
         AccessToken = GetAccessToken();
         Debug.Log("Got Access Token");
         chatbotResponse = GameObject.Find("TextChatbotResponse").GetComponent<UnityEngine.UI.Text>();
-        RequestBody requestBody = CreateRequestBody();
+        chatbotResponse.text = "I'm thinking of a response";
+        JsonData.RequestBody requestBody = CreateRequestBodyInputText();
         Debug.Log("Got Request Body");
-        StartCoroutine(PostRequest(requestBody));
+        Debug.Log(requestBody.ToString());
+        StartCoroutine(PostRequestText(requestBody));
     }
 
     private string GetAccessToken()
@@ -41,13 +65,13 @@ public class DialogflowAPIScript : MonoBehaviour
         return oAuth2Token;
     }
 
-    private RequestBody CreateRequestBody()
+    private JsonData.RequestBody CreateRequestBodyInputText()
     {
-        RequestBody requestBody = new RequestBody
+        JsonData.RequestBody requestBody = new JsonData.RequestBody
         {
-            queryInput = new QueryInput
+            queryInput = new JsonData.QueryInput
             {
-                text = new TextInput()
+                text = new JsonData.TextInput()
             }
         };
         requestBody.queryInput.text.text = inputField.text.ToString();
@@ -55,12 +79,58 @@ public class DialogflowAPIScript : MonoBehaviour
         return requestBody;
     }
 
-    IEnumerator PostRequest(RequestBody requestBody)
+    IEnumerator PostRequestText(JsonData.RequestBody requestBody)
     {
         UnityWebRequest postRequest = new UnityWebRequest(url, "POST");
         string jsonRequestBody = JsonUtility.ToJson(requestBody, true);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
+        postRequest.SetRequestHeader("Authorization", $"Bearer {AccessToken}");
+        postRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        postRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        postRequest.SetRequestHeader("Content-Type", "application/json");
+        yield return postRequest.SendWebRequest();
+        Debug.Log("Got Post Request Response");
 
+        if (postRequest.isNetworkError || postRequest.isHttpError)
+        {
+            Debug.Log(postRequest.responseCode);
+            Debug.Log(postRequest.error);
+        }
+        else
+        {
+            animator.SetBool("waitingForChatbotResponse", false);
+            // Or retrieve results as binary data
+            byte[] resultbyte = postRequest.downloadHandler.data;
+            string result = System.Text.Encoding.UTF8.GetString(resultbyte);
+            JsonData.ResponseBody content = (JsonData.ResponseBody)JsonUtility.FromJson<JsonData.ResponseBody>(result);
+            Debug.Log(content.queryResult.fulfillmentText);
+            chatbotResponse.text = content.queryResult.fulfillmentText;
+            chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
+            GetAndPlayAudio(content.outputAudio);
+        }
+    }
+   
+    private JsonDataAudioInput.RequestBody CreateRequestBodyInputAudio(string inputAudio)
+    {
+        JsonDataAudioInput.RequestBody requestBody = new JsonDataAudioInput.RequestBody
+        {
+            queryInput = new JsonDataAudioInput.QueryInput
+            {
+                audioConfig = new JsonDataAudioInput.InputAudioConfig()
+            },
+            inputAudio = inputAudio
+        };
+        requestBody.queryInput.audioConfig.audioEncoding = JsonDataAudioInput.AudioEncoding.AUDIO_ENCODING_LINEAR_16;
+        requestBody.queryInput.audioConfig.sampleRateHertz = 48000;
+        requestBody.queryInput.audioConfig.languageCode = "en-US";
+        return requestBody;
+    }
+    
+    IEnumerator PostRequestAudio(JsonDataAudioInput.RequestBody requestBody)
+    {
+        UnityWebRequest postRequest = new UnityWebRequest(url, "POST");
+        string jsonRequestBody = JsonUtility.ToJson(requestBody, true);
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
         postRequest.SetRequestHeader("Authorization", $"Bearer {AccessToken}");
         postRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         postRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -78,32 +148,39 @@ public class DialogflowAPIScript : MonoBehaviour
             // Or retrieve results as binary data
             byte[] resultbyte = postRequest.downloadHandler.data;
             string result = System.Text.Encoding.UTF8.GetString(resultbyte);
-            ResponseBody content = (ResponseBody)JsonUtility.FromJson<ResponseBody>(result);
+            Debug.Log(result);
+            JsonDataAudioInput.ResponseBody content = (JsonDataAudioInput.ResponseBody)JsonUtility.FromJson<JsonDataAudioInput.ResponseBody>(result);
+            animator.SetBool("waitingForChatbotResponse", false);
             Debug.Log(content.queryResult.fulfillmentText);
             chatbotResponse.text = content.queryResult.fulfillmentText;
+            chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
             GetAndPlayAudio(content.outputAudio);
         }
     }
 
     private void GetAndPlayAudio(string outputAudio)
     {
-        //File.WriteAllBytes($"{Application.dataPath}/chatbotResponse.wav", Convert.FromBase64String(outputAudio));
-        //audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/chatbotResponse.wav");
-        File.WriteAllBytes(string.Format("{0}/{1}", Application.dataPath, "chatbotResponse.wav"), Convert.FromBase64String(outputAudio));
-        audioClip = WavUtility.ToAudioClip(string.Format("{0}/{1}", Application.dataPath, "chatbotResponse.wav"));
-        salsa3D = pt.GetComponent<Salsa3D>();
-        salsa3D.SetAudioClip(audioClip);
-        salsa3D.Play();
-        //audioSource = GameObject.FindObjectOfType<AudioSource>();
-        //audioSource.spatialBlend = 0.0f;
-        //audioSource.PlayOneShot(audioClip);
+        File.WriteAllBytes($"{Application.dataPath}/chatbotResponse.wav", Convert.FromBase64String(outputAudio));
+        audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/chatbotResponse.wav");
+        //File.WriteAllBytes(string.Format("{0}/{1}", Application.dataPath, "chatbotResponse.wav"), Convert.FromBase64String(outputAudio));
+        //audioClip = WavUtility.ToAudioClip(string.Format("{0}/{1}", Application.dataPath, "chatbotResponse.wav"));
+        audioSource = GameObject.Find("PT").GetComponentInChildren<AudioSource>();
+        audioSource.spatialBlend = 0.0f;
+        audioSource.PlayOneShot(audioClip);
         Debug.Log("Played Audio");
         return;
     }
 }
 
 /*
- salsa = character.GetComponent<Salsa3D>();
-				salsa.SetAudioClip(audioClip);
-				salsa.Play();
+  "fulfillmentText": "Sorry, what was that?",
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            "One more time?"
+          ]
+        }
+      }
+    ],
  */

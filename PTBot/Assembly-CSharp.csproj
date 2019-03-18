@@ -77,6 +77,7 @@
     <Compile Include="Assets\Crazy Minnow Studio\SALSA with RandomEyes\Third Party Support\Fuse Character Creator\CM_FuseSetup.cs" />
     <Compile Include="Assets\Crazy Minnow Studio\SALSA with RandomEyes\Third Party Support\Fuse Character Creator\CM_FuseSync.cs" />
     <Compile Include="Assets\DialogflowAPIScript.cs" />
+    <Compile Include="Assets\MicInput.cs" />
     <Compile Include="Assets\PlayVideoScript.cs" />
     <None Include="Assets\Crazy Minnow Studio\SALSA with RandomEyes\Third Party Support\Fuse Character Creator\ReadMe.txt" />
     <None Include="Assets\Crazy Minnow Studio\SALSA with RandomEyes\ReadMe.txt" />
