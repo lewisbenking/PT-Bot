@@ -12,13 +12,17 @@ public class PlayVideoScript : MonoBehaviour
     private string url;
     private static Animator animator;
     private GameObject pt;
+    private Text chatbotResponse;
 
-    public void Test(string url)
+    public void PlayVideo(string url)
     {
         Application.runInBackground = true;
         this.url = url;
+        chatbotResponse = GameObject.Find("TextChatbotResponse").GetComponent<Text>();
+        chatbotResponse.text = "";
         pt = GameObject.Find("PT");
         animator = pt.GetComponent<Animator>();
+        animator.SetBool("IsVideoPreparing", false);
         StartCoroutine(PlayTheVideo(url));
     }
 
@@ -70,5 +74,6 @@ public class PlayVideoScript : MonoBehaviour
         }
         Debug.Log("Done Playing Video");
         animator.SetBool("IsVideoPreparing", false);
+        image.texture = null;
     }
 }

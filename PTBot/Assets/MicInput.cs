@@ -20,6 +20,7 @@ public class MicInput : MonoBehaviour
     private float[] samples;
     private DialogflowAPIScript dialogFlowAPIScript;
     private Button buttonTalkToBot;
+
     //Use this for initialization  
     void Start()
     {
@@ -45,7 +46,16 @@ public class MicInput : MonoBehaviour
         }
     }
 
-    public void Yeet()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("T key pressed");
+            RecordAudio();
+        }
+    }
+
+    public void RecordAudio()
     {
         buttonTalkToBot = GameObject.Find("ButtonSendVoiceToChatbot").GetComponent<Button>();
 
@@ -62,13 +72,12 @@ public class MicInput : MonoBehaviour
             {
                 buttonTalkToBot.GetComponentInChildren<Text>().text = "Talk to PT-Bot";
                 Microphone.End(null); //Stop the audio recording  
-                //goAudioSource.Play(); //Playback the recorded audio
                 Convert.ToByte(goAudioSource.clip);
-                byte[] boi = WavUtility.FromAudioClip(goAudioSource.clip);
-                string ree = Convert.ToBase64String(boi);
-                Debug.Log(ree);
+                byte[] byteArray = WavUtility.FromAudioClip(goAudioSource.clip);
+                string base64string = Convert.ToBase64String(byteArray);
+                Debug.Log(base64string);
                 dialogFlowAPIScript = GameObject.Find("GameObject2").GetComponentInChildren<DialogflowAPIScript>();
-                dialogFlowAPIScript.SendSpeechToChatbot(ree);
+                dialogFlowAPIScript.SendSpeechToChatbot(base64string);
                 Debug.Log(recordedClip.length);
             }
         }

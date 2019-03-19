@@ -22,12 +22,14 @@ public class DialogflowAPIScript : MonoBehaviour
     public InputField inputField;
     private GameObject pt;
     private Animator animator;
+    private SpriteRenderer musclesAffectedDiagram;
 
     public void SendSpeechToChatbot(string inputAudio)
     {
         pt = GameObject.Find("PT");
         animator = pt.GetComponent<Animator>();
         animator.SetBool("waitingForChatbotResponse", true);
+        musclesAffectedDiagram = GameObject.Find("MusclesAffected").GetComponentInChildren<SpriteRenderer>();
         url = "https://dialogflow.googleapis.com/v2beta1/projects/pt-bot-d56dd/agent/sessions/34563:detectIntent";
         Debug.Log(JsonUtility.ToJson(CreateRequestBodyInputAudio(inputAudio), true));
         AccessToken = GetAccessToken();
@@ -106,10 +108,12 @@ public class DialogflowAPIScript : MonoBehaviour
             Debug.Log(content.queryResult.fulfillmentText);
             chatbotResponse.text = content.queryResult.fulfillmentText;
             chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
+            string filename = content.queryResult.intent.displayName;
+            SetMusclesAffectedDiagram(filename);
             GetAndPlayAudio(content.outputAudio);
         }
     }
-   
+
     private JsonDataAudioInput.RequestBody CreateRequestBodyInputAudio(string inputAudio)
     {
         JsonDataAudioInput.RequestBody requestBody = new JsonDataAudioInput.RequestBody
@@ -125,7 +129,7 @@ public class DialogflowAPIScript : MonoBehaviour
         requestBody.queryInput.audioConfig.languageCode = "en-US";
         return requestBody;
     }
-    
+
     IEnumerator PostRequestAudio(JsonDataAudioInput.RequestBody requestBody)
     {
         UnityWebRequest postRequest = new UnityWebRequest(url, "POST");
@@ -162,25 +166,23 @@ public class DialogflowAPIScript : MonoBehaviour
     {
         File.WriteAllBytes($"{Application.dataPath}/chatbotResponse.wav", Convert.FromBase64String(outputAudio));
         audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/chatbotResponse.wav");
-        //File.WriteAllBytes(string.Format("{0}/{1}", Application.dataPath, "chatbotResponse.wav"), Convert.FromBase64String(outputAudio));
-        //audioClip = WavUtility.ToAudioClip(string.Format("{0}/{1}", Application.dataPath, "chatbotResponse.wav"));
         audioSource = GameObject.Find("PT").GetComponentInChildren<AudioSource>();
         audioSource.spatialBlend = 0.0f;
         audioSource.PlayOneShot(audioClip);
         Debug.Log("Played Audio");
         return;
     }
-}
 
-/*
-  "fulfillmentText": "Sorry, what was that?",
-    "fulfillmentMessages": [
-      {
-        "text": {
-          "text": [
-            "One more time?"
-          ]
+    private void SetMusclesAffectedDiagram(string filename)
+    {
+        if (filename.Contains("WorkoutRequest"))
+        {
+            Debug.Log($"{Application.dataPath}/Sprites/{filename}.jpg");
+            //musclesAffectedDiagram.sprite = Resources.Load<Sprite>($"{Application.dataPath}/Sprites/{filename}.jpg");
         }
-      }
-    ],
- */
+        else
+        {
+            Debug.Log("No need to set muscles affected diagram");
+        }
+    }
+}
