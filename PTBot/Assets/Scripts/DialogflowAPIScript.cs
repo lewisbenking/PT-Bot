@@ -128,11 +128,11 @@ public class DialogflowAPIScript : MonoBehaviour
     {
         if ((chatbotResponse.Contains("Bye")) || (chatbotResponse.Contains("Thanks for your time")) || (chatbotResponse.Contains("No worries, take care")) || (chatbotResponse.Contains("Thanks for using JimBot"))) { GoHome(); }
         PanelSetActive(areasToTrainPanel, (chatbotResponse.ToLower().Contains("which area would you like to train today")));
-        if (chatbotResponse.Contains("Arms")) { diagramToShow = "ArmDiagram"; }
+        if (chatbotResponse.Contains("Arms")) { diagramToShow = "ArmsDiagram"; }
         else if (chatbotResponse.Contains("Back")) { diagramToShow = "BackDiagram"; }
         else if (chatbotResponse.Contains("Chest")) { diagramToShow = "ChestDiagram"; }
         else if (chatbotResponse.Contains("Core")) { diagramToShow = "CoreDiagram"; }
-        else if (chatbotResponse.Contains("Legs")) { diagramToShow = "Legs"; }
+        else if (chatbotResponse.Contains("Legs")) { diagramToShow = "LegsDiagram"; }
 
         // Get the exercise details
         if (chatbotResponse.ToLower().Contains("- ")) { GetExerciseDetails(chatbotResponse); }
