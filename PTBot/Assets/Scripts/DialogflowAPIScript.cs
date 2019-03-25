@@ -1,12 +1,12 @@
 ﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Dialogflow.v2beta1; //For chatbot connectivity
+using Google.Apis.Dialogflow.v2beta1;
 using System.Collections;
 using System.IO;
 using System;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine;
-using TMPro; //For textmesh
+using TMPro;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
@@ -19,7 +19,7 @@ public class DialogflowAPIScript : MonoBehaviour
     private AudioClip audioClip;
     private AudioSource audioSource;
     private ExerciseDetails exerciseDetails;
-    private GameObject pt, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, exercise1, exercise2, exercise3, exercise4;
+    private GameObject jimBot, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, exercise1, exercise2, exercise3, exercise4;
     private Image muscleDiagram;
     private PlayVideoScript playVideoScript;
     private readonly VideoSource videoSource;
@@ -40,9 +40,9 @@ public class DialogflowAPIScript : MonoBehaviour
         workoutEquipmentPanel = GameObject.Find("WorkoutEquipmentPanel");
         muscleDiagramPanel = GameObject.Find("MuscleDiagramPanel");
         PanelSetActive(muscleDiagramPanel, false);
-        pt = GameObject.Find("PT");
         areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
         PanelSetActive(areasToTrainPanel, false);
+        jimBot = GameObject.Find("PT");
         audioSource = GameObject.Find("PT").GetComponentInChildren<AudioSource>();
     }
 
@@ -50,7 +50,7 @@ public class DialogflowAPIScript : MonoBehaviour
     {
         playVideoScript = new PlayVideoScript();
         exerciseDetails = new ExerciseDetails();
-        animator = pt.GetComponent<Animator>();
+        animator = jimBot.GetComponent<Animator>();
         url = "https://dialogflow.googleapis.com/v2beta1/projects/pt-bot-d56dd/agent/sessions/34563:detectIntent";
         AccessToken = GetAccessToken();
         chatbotResponse = GameObject.Find("TextChatbotResponse").GetComponent<TextMeshProUGUI>();
@@ -69,10 +69,7 @@ public class DialogflowAPIScript : MonoBehaviour
 
     public void PanelSetActive(GameObject panel, bool isActive)
     {
-        if (panel != null)
-        {
-            panel.SetActive(isActive);
-        }
+        if (panel != null) { panel.SetActive(isActive); }
     }
 
     private void GetExerciseDetails(string chatbotResponse)
@@ -83,7 +80,6 @@ public class DialogflowAPIScript : MonoBehaviour
         int index; string word;
         foreach (string iteration in chatbotResponseSplit)
         {
-            // See if it matches an exercise
             word = iteration;
             word = word.Replace("workout for you!\n\n", ""); word = word.Replace("- ", ""); word = word.Replace(".\n", ""); word = word.Replace("\nYou can see more about each exercise by clicking the buttons.", "");
             index = exerciseDetails.GetArrayIndex(word);
@@ -151,46 +147,29 @@ public class DialogflowAPIScript : MonoBehaviour
         barbellToggle = GameObject.Find("ToggleBarbell").GetComponent<Toggle>();
         cableMachineToggle = GameObject.Find("ToggleCableMachine").GetComponent<Toggle>();
         dumbbellToggle = GameObject.Find("ToggleDumbbells").GetComponent<Toggle>();
-        string response = "";
         if (barbellToggle.isOn)
         {
-            if (cableMachineToggle.isOn && dumbbellToggle.isOn)
-            {
-                response = "All 3";
-            }
-            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn)
-            {
-                response = "Barbell and Cable Machine";
-            }
-            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn)
-            {
-                response = "Barbell and Dumbbells";
-            }
-            else
-            {
-                response = "Barbell Only";
-            }
+            if (cableMachineToggle.isOn && dumbbellToggle.isOn) { return "All 3"; }
+            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn) { return "Barbell and Cable Machine"; }
+            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn) { return "Barbell and Dumbbells"; }
+            else { return "Barbell Only"; }
         }
         else
         {
-            if (cableMachineToggle.isOn && dumbbellToggle.isOn)
-            {
-                response = "Cable Machine and Dumbbells";
-            }
-            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn)
-            {
-                response = "Cable Machine Only";
-            }
-            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn)
-            {
-                response = "Dumbbells Only";
-            }
-            else
-            {
-                response = "None selected";
-            }
+            if (cableMachineToggle.isOn && dumbbellToggle.isOn) { return "Cable Machine and Dumbbells"; }
+            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn) { return "Cable Machine Only"; }
+            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn) { return "Dumbbells Only"; }
+            else { return "None selected"; }
         }
-        return response;
+    }
+
+    private string GetAccessToken()
+    {
+        //https://stackoverflow.com/questions/52607901/authenticating-request-with-google-apis-dialogflow-v2
+        var credentials = GoogleCredential.FromJson("{  'type': 'service_account',  'project_id': 'pt-bot-d56dd',  'private_key_id': 'be933ba53ff9d381ad3afc49ce7501ac6e7b026e',  'private_key': '-----BEGIN PRIVATE KEY-----MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDSPZ/YWS94JMbGqLXvG7VgfQ//NWG7gzUpo2lRUwiDQ07XPXTszog4zyTDY72x6la9mlaBaK/fC/Yv5C/8tqIOJ+SO1nYpxEGnR1YXEhk5y7+K97V+FHxJmQuYWSrIpU9pV0w2GJz8h5uuMsAnwDMMmCboGSS1ncz2xgZcr4GPXG9z4TWZZTq51PemQNSYv6L5D1dPPG6kr4tV8ZWvd8Ko7UbJkqc000vi3pWlghjDNnxKp6u+5kCFteHcs/uu/ElJTHsMkWinF3CarR5hkeirWddVJMRJFgQAE6ujV4loqXupIPGb2D9og5kBOJb7Rk+YIU6RSFYn7p3S5+7V1WdZAgMBAAECggEADNioHjug22n/3V6ssz4RsKIjqpfz71W+l1s9UbNNp1ujAyLltJyQFUyO9gNvsWHcx/wYwhKIAIyGD/oU9o+gSlYksJepI7cyvcptl75K3U22WAL3y4rr50FbRIVaSGVVe13SsdGCMioFGLlQJX2ogOIBKphytkg8oG2MMPimZYCHee3d7AvtfI133rsS3wMeNKkvxgJI7FVraWqTnlZwvzxj5YGEUzHgBGUU7aDrUBcYj+7jCzO/9vMS4zXitARgNGTn8l9/FONhw8viqw1GCLNEsUGSZBN/Y8sdqvghu7HygMVULWIhrQsRTVJ9OjDHeq0q38qLejfd5F3sWbDtgQKBgQD8C9GEeXDvFMnc/9Xnceb918UEV8Q0LtiKCW64a6UI5pfOCgBWeVvLtwZ9kaKC9otLi/Plo3X/KgicYBg4aDJjr/NIsHGXg2z1pmru/5BH7gexaUNkWRMXGQMIsnCveyPPGS5pq7m+nV8FouoqwEsZuRpFngdwdM4wmC04W+nRuQKBgQDVievWdt/Fv6Pt2xDovDcFWx7C5GpUDlGB7sLrA9POlqFYiQOz3wetSYhKiRA0ybvdqyS8evXShqqAQB1ySS5QT0fZtKsWUR8C6vKIcExKV6fqHXi/Pq6bP3H4LwVM0VF+/+Vt13yyhLXk4jw7aOnHeGGuhs4AV0WgMnZkShWSoQKBgB/nvxXt6YXaM9Nt7z3lBUCM17u9AHE6nN6cYw+lULbXuc+zJGfN5Pjcqk2q6c96NhfSF4WyM3WhdIWXBHnfdsF3vGwvKbHsSRavgknOwAza7M5gbM9/FxONbvzi2bDc/aNxpJZrzo96jFTCUrImtVsEO3ckkfyCTLeKC+9eczLBAoGBAKLKdHqZQVsWEDkCqs9ivWdd4gOd8tmF2Ol/RiW4Uz7JYtOGEMaNnuKijj6UY0B7EreZA3aVHtaSR2Vie5Bm7eHXruTvcQagbU3iI2eUhPSgAqjeMvFJLf+4zH/yCM5ZPRHer9+fSbcmqSyGtHhuMNsakQ1mQ6HK5o+MKOmn+O5BAoGBANEGT/5lPsJtpqkf6pCihSyTlRcLIv4/Pe6KI3FMW8mPkBHtQ84RaBfw7CwtS/pnNfgKkq6BImvcrXwAUXJ+1YK1PFlQlWc70cFZiE+Kj1EFhXC//yeC2yuXTSx79hXeHmU8Ch7VrYX7JtGAKRnBrZtbQp4JPBzgWlrYE+PAqLcy-----END PRIVATE KEY-----',  'client_email': 'dialogflow-ejoxan@pt-bot-d56dd.iam.gserviceaccount.com',  'client_id': '106195813506666296547',  'auth_uri': 'https://accounts.google.com/o/oauth2/auth',  'token_uri': 'https://oauth2.googleapis.com/token',  'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',  'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-ejoxan%40pt-bot-d56dd.iam.gserviceaccount.com'}");
+        var scopedCredentials = credentials.CreateScoped(DialogflowService.Scope.CloudPlatform);
+        var oAuth2Token = scopedCredentials.UnderlyingCredential.GetAccessTokenForRequestAsync().Result;
+        return oAuth2Token;
     }
 
     public void SendSpeechToChatbot(string inputAudio)
@@ -232,15 +211,6 @@ public class DialogflowAPIScript : MonoBehaviour
             Debug.Log(requestBody.ToString());
             StartCoroutine(PostRequestText(requestBody));
         }
-    }
-
-    private string GetAccessToken()
-    {
-        //https://stackoverflow.com/questions/52607901/authenticating-request-with-google-apis-dialogflow-v2
-        var credentials = GoogleCredential.FromJson("{  'type': 'service_account',  'project_id': 'pt-bot-d56dd',  'private_key_id': 'be933ba53ff9d381ad3afc49ce7501ac6e7b026e',  'private_key': '-----BEGIN PRIVATE KEY-----MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDSPZ/YWS94JMbGqLXvG7VgfQ//NWG7gzUpo2lRUwiDQ07XPXTszog4zyTDY72x6la9mlaBaK/fC/Yv5C/8tqIOJ+SO1nYpxEGnR1YXEhk5y7+K97V+FHxJmQuYWSrIpU9pV0w2GJz8h5uuMsAnwDMMmCboGSS1ncz2xgZcr4GPXG9z4TWZZTq51PemQNSYv6L5D1dPPG6kr4tV8ZWvd8Ko7UbJkqc000vi3pWlghjDNnxKp6u+5kCFteHcs/uu/ElJTHsMkWinF3CarR5hkeirWddVJMRJFgQAE6ujV4loqXupIPGb2D9og5kBOJb7Rk+YIU6RSFYn7p3S5+7V1WdZAgMBAAECggEADNioHjug22n/3V6ssz4RsKIjqpfz71W+l1s9UbNNp1ujAyLltJyQFUyO9gNvsWHcx/wYwhKIAIyGD/oU9o+gSlYksJepI7cyvcptl75K3U22WAL3y4rr50FbRIVaSGVVe13SsdGCMioFGLlQJX2ogOIBKphytkg8oG2MMPimZYCHee3d7AvtfI133rsS3wMeNKkvxgJI7FVraWqTnlZwvzxj5YGEUzHgBGUU7aDrUBcYj+7jCzO/9vMS4zXitARgNGTn8l9/FONhw8viqw1GCLNEsUGSZBN/Y8sdqvghu7HygMVULWIhrQsRTVJ9OjDHeq0q38qLejfd5F3sWbDtgQKBgQD8C9GEeXDvFMnc/9Xnceb918UEV8Q0LtiKCW64a6UI5pfOCgBWeVvLtwZ9kaKC9otLi/Plo3X/KgicYBg4aDJjr/NIsHGXg2z1pmru/5BH7gexaUNkWRMXGQMIsnCveyPPGS5pq7m+nV8FouoqwEsZuRpFngdwdM4wmC04W+nRuQKBgQDVievWdt/Fv6Pt2xDovDcFWx7C5GpUDlGB7sLrA9POlqFYiQOz3wetSYhKiRA0ybvdqyS8evXShqqAQB1ySS5QT0fZtKsWUR8C6vKIcExKV6fqHXi/Pq6bP3H4LwVM0VF+/+Vt13yyhLXk4jw7aOnHeGGuhs4AV0WgMnZkShWSoQKBgB/nvxXt6YXaM9Nt7z3lBUCM17u9AHE6nN6cYw+lULbXuc+zJGfN5Pjcqk2q6c96NhfSF4WyM3WhdIWXBHnfdsF3vGwvKbHsSRavgknOwAza7M5gbM9/FxONbvzi2bDc/aNxpJZrzo96jFTCUrImtVsEO3ckkfyCTLeKC+9eczLBAoGBAKLKdHqZQVsWEDkCqs9ivWdd4gOd8tmF2Ol/RiW4Uz7JYtOGEMaNnuKijj6UY0B7EreZA3aVHtaSR2Vie5Bm7eHXruTvcQagbU3iI2eUhPSgAqjeMvFJLf+4zH/yCM5ZPRHer9+fSbcmqSyGtHhuMNsakQ1mQ6HK5o+MKOmn+O5BAoGBANEGT/5lPsJtpqkf6pCihSyTlRcLIv4/Pe6KI3FMW8mPkBHtQ84RaBfw7CwtS/pnNfgKkq6BImvcrXwAUXJ+1YK1PFlQlWc70cFZiE+Kj1EFhXC//yeC2yuXTSx79hXeHmU8Ch7VrYX7JtGAKRnBrZtbQp4JPBzgWlrYE+PAqLcy-----END PRIVATE KEY-----',  'client_email': 'dialogflow-ejoxan@pt-bot-d56dd.iam.gserviceaccount.com',  'client_id': '106195813506666296547',  'auth_uri': 'https://accounts.google.com/o/oauth2/auth',  'token_uri': 'https://oauth2.googleapis.com/token',  'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',  'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-ejoxan%40pt-bot-d56dd.iam.gserviceaccount.com'}");
-        var scopedCredentials = credentials.CreateScoped(DialogflowService.Scope.CloudPlatform);
-        var oAuth2Token = scopedCredentials.UnderlyingCredential.GetAccessTokenForRequestAsync().Result;
-        return oAuth2Token;
     }
 
     private JsonData.RequestBody CreateRequestBodyInputText(string inputText)
@@ -347,69 +317,6 @@ public class DialogflowAPIScript : MonoBehaviour
         }
     }
 
-    public void PlayVideo(string url)
-    {
-        areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
-        if (areasToTrainPanel != null) { areasToTrainPanel.SetActive(false); }
-        scrollArea = GameObject.Find("ScrollArea");
-        if (scrollArea != null) { scrollArea.SetActive(false); }
-        muscleDiagramPanel.SetActive(false);
-        Application.runInBackground = true;
-        this.url = url;
-        pt = GameObject.Find("PT");
-        animator = pt.GetComponent<Animator>();
-        StartCoroutine(PlayTheVideo(url));
-    }
-
-    IEnumerator PlayTheVideo(string url)
-    {
-        //Add VideoPlayer/AudioSource to the GameObject
-        videoPlayer = gameObject.AddComponent<VideoPlayer>();
-        audioSource = gameObject.AddComponent<AudioSource>();
-
-        //Disable Play on Awake for both Video and Audio
-        videoPlayer.playOnAwake = false;
-        audioSource.playOnAwake = false;
-
-        //Pass URL to the source
-        videoPlayer.source = VideoSource.Url;
-        videoPlayer.url = url;
-
-        //Set Audio Output to AudioSource
-        videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
-
-        //Assign the Audio from Video to AudioSource to be played
-        videoPlayer.EnableAudioTrack(0, true);
-        videoPlayer.SetTargetAudioSource(0, audioSource);
-
-        //Set video To Play then prepare Audio to prevent Buffering
-        videoPlayer.Prepare();
-
-        //Wait until video is prepared
-        while (!videoPlayer.isPrepared)
-        {
-            yield return null;
-        }
-
-        Debug.Log("Done Preparing Video");
-        animator.SetTrigger("TurnToTV");
-        //Assign the Texture from Video to RawImage to be displayed
-        image.texture = videoPlayer.texture;
-
-        //Play Video & Audio
-        videoPlayer.Play();
-        audioSource.Play();
-        Debug.Log("Playing Video");
-
-        while (videoPlayer.isPlaying)
-        {
-            yield return null;
-        }
-        Debug.Log("Done Playing Video");
-        animator.SetTrigger("TurnToUser");
-        image.texture = null;
-    }
-
     public void ShowIndividualExercise(GameObject buttonChosen)
     {
         PanelSetActive(individualExercisePanel, true);
@@ -446,46 +353,26 @@ public class DialogflowAPIScript : MonoBehaviour
         //Add VideoPlayer/AudioSource to the GameObject
         videoPlayer = gameObject.AddComponent<VideoPlayer>();
         audioSource = gameObject.AddComponent<AudioSource>();
-
-        //Disable Play on Awake for both Video and Audio
         videoPlayer.playOnAwake = false;
         audioSource.playOnAwake = false;
-
         //Pass URL to the source
         videoPlayer.source = VideoSource.Url;
         videoPlayer.url = url;
-
-        //Set Audio Output to AudioSource
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
-
         //Assign the Audio from Video to AudioSource to be played
         videoPlayer.EnableAudioTrack(0, true);
         videoPlayer.SetTargetAudioSource(0, audioSource);
-
-        //Set video To Play then prepare Audio to prevent Buffering
         videoPlayer.Prepare();
-
         //Wait until video is prepared
-        while (!videoPlayer.isPrepared)
-        {
-            yield return null;
-        }
-
-        Debug.Log("Done Preparing Video");
+        while (!videoPlayer.isPrepared) { yield return null; }
         animator.SetTrigger("TurnToTV");
         //Assign the Texture from Video to RawImage to be displayed
         image.texture = videoPlayer.texture;
-
         //Play Video & Audio
         videoPlayer.Play();
         audioSource.Play();
-        Debug.Log("Playing Video");
 
-        while (videoPlayer.isPlaying)
-        {
-            yield return null;
-        }
-        Debug.Log("Done Playing Video");
+        while (videoPlayer.isPlaying) { yield return null; }
         animator.SetTrigger("TurnToUser");
         image.texture = null;
         PanelSetActive(individualExercisePanel, true);
