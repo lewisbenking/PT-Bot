@@ -77,11 +77,11 @@
     <Compile Include="Assets\Crazy Minnow Studio\SALSA with RandomEyes\Third Party Support\Fuse Character Creator\CM_FuseSetup.cs" />
     <Compile Include="Assets\Crazy Minnow Studio\SALSA with RandomEyes\Third Party Support\Fuse Character Creator\CM_FuseSync.cs" />
     <Compile Include="Assets\Scripts\DialogflowAPIScript.cs" />
-    <Compile Include="Assets\Scripts\ExerciseDescriptions.cs" />
+    <Compile Include="Assets\Scripts\ExerciseDetails.cs" />
+    <Compile Include="Assets\Scripts\JimBot.cs" />
     <Compile Include="Assets\Scripts\MicInput.cs" />
     <Compile Include="Assets\Scripts\PlayVideoScript.cs" />
     <Compile Include="Assets\Scripts\StartingScreen.cs" />
-    <Compile Include="Assets\Scripts\VideoURLs.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

@@ -78,7 +78,7 @@ public class MicInput : MonoBehaviour
                 byte[] byteArray = WavUtility.FromAudioClip(goAudioSource.clip);
                 string base64string = Convert.ToBase64String(byteArray);
                 Debug.Log(base64string);
-                dialogFlowAPIScript = GameObject.Find("GameObject2").GetComponentInChildren<DialogflowAPIScript>();
+                dialogFlowAPIScript = GameObject.Find("DialogFlowAPIObject").GetComponentInChildren<DialogflowAPIScript>();
                 dialogFlowAPIScript.SendSpeechToChatbot(base64string);
                 Debug.Log(recordedClip.length);
             }

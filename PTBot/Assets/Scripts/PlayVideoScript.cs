@@ -16,13 +16,14 @@ public class PlayVideoScript : MonoBehaviour
     public void PlayVideo(string url)
     {
         areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
-        areasToTrainPanel.SetActive(false);
+        if (areasToTrainPanel != null)
+        {
+            areasToTrainPanel.SetActive(false);
+        }
         scrollArea = GameObject.Find("ScrollArea");
         scrollArea.SetActive(false);
         Application.runInBackground = true;
         this.url = url;
-        //chatbotResponse = GameObject.Find("TextChatbotResponse");
-        //chatbotResponse.SetActive(false);
         pt = GameObject.Find("PT");
         animator = pt.GetComponent<Animator>();
         StartCoroutine(PlayTheVideo(url));
@@ -77,7 +78,6 @@ public class PlayVideoScript : MonoBehaviour
         animator.SetTrigger("TurnToUser");
         image.texture = null;
         areasToTrainPanel.SetActive(true);
-        //chatbotResponse.SetActive(true);
         scrollArea.SetActive(true);
     }
 }

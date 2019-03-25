@@ -7,42 +7,53 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro; //For textmesh
+using UnityEngine.Video;
 using UnityEngine.SceneManagement;
-using Newtonsoft.Json;
 
 public class DialogflowAPIScript : MonoBehaviour
 {
+    public InputField inputField;
+    public RawImage image;
+    private Animator animator;
+    private ArrayList exerciseNames;
     private AudioClip audioClip;
     private AudioSource audioSource;
-    private string url;
-    private string AccessToken { get; set; }
-    private TextMeshProUGUI chatbotResponse;
-    public InputField inputField;
-    private GameObject pt, areasToTrainPanel, yesNoPanel, muscleDiagramPanel;
+    private ExerciseDetails exerciseDetails;
+    private GameObject pt, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, exercise1, exercise2, exercise3, exercise4;
     private Image muscleDiagram;
-    private Animator animator;
-    private string[] workouts;
-    private string[] workoutVideoURLs;
-    private string[] exerciseDescriptions;
+    private PlayVideoScript playVideoScript;
+    private readonly VideoSource videoSource;
+    private string url, diagramToShow, individualExerciseURL;
+    private string AccessToken { get; set; }
+    private string[] chatbotResponseSplit;
+    private TextMeshProUGUI chatbotResponse, individualExerciseName, individualExerciseDescription;
+    private Toggle barbellToggle, cableMachineToggle, dumbbellToggle;
+    private VideoPlayer videoPlayer;
 
     private void Awake()
     {
-        yesNoPanel = GameObject.Find("YesNoPanel");
-        PanelSetActive(yesNoPanel, false);
+        scrollArea = GameObject.Find("ScrollArea");
+        exercisesPanel = GameObject.Find("ExercisesPanel");
+        PanelSetActive(exercisesPanel, false);
+        individualExercisePanel = GameObject.Find("IndividualExercisePanel");
+        PanelSetActive(individualExercisePanel, false);
+        workoutEquipmentPanel = GameObject.Find("WorkoutEquipmentPanel");
         muscleDiagramPanel = GameObject.Find("MuscleDiagramPanel");
-        muscleDiagram = GameObject.Find("MuscleDiagram").GetComponent<Image>();
         PanelSetActive(muscleDiagramPanel, false);
+        pt = GameObject.Find("PT");
+        areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
+        PanelSetActive(areasToTrainPanel, false);
+        audioSource = GameObject.Find("PT").GetComponentInChildren<AudioSource>();
     }
 
     private void Start()
     {
-        pt = GameObject.Find("PT");
-        areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
+        playVideoScript = new PlayVideoScript();
+        exerciseDetails = new ExerciseDetails();
         animator = pt.GetComponent<Animator>();
         url = "https://dialogflow.googleapis.com/v2beta1/projects/pt-bot-d56dd/agent/sessions/34563:detectIntent";
         AccessToken = GetAccessToken();
         chatbotResponse = GameObject.Find("TextChatbotResponse").GetComponent<TextMeshProUGUI>();
-        audioSource = GameObject.Find("PT").GetComponentInChildren<AudioSource>();
         PlayAudio("IntroClip");
     }
 
@@ -56,49 +67,75 @@ public class DialogflowAPIScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
-    private void PanelSetActive(GameObject panel, bool isActive)
+    public void PanelSetActive(GameObject panel, bool isActive)
     {
-        panel.SetActive(isActive);
+        if (panel != null)
+        {
+            panel.SetActive(isActive);
+        }
     }
 
-    private void ResponseHandler(string chatbotResponse, string intent)
+    private void GetExerciseDetails(string chatbotResponse)
     {
-        PanelSetActive(yesNoPanel, (chatbotResponse.ToLower().Contains("do you have access to") || (chatbotResponse.ToLower().Contains("would you like"))));
-        if (chatbotResponse.Contains("muscles affected"))
+        exerciseNames = new ArrayList();
+        PanelSetActive(scrollArea, false);
+        chatbotResponseSplit = chatbotResponse.Split('-');
+        int index; string word;
+        foreach (string iteration in chatbotResponseSplit)
         {
-            PanelSetActive(muscleDiagramPanel, true);
-            Debug.Log("Set muscle diagram panel to active");
-            if (intent.Contains("ArmWorkout"))
+            // See if it matches an exercise
+            word = iteration;
+            word = word.Replace("workout for you!\n\n", ""); word = word.Replace("- ", ""); word = word.Replace(".\n", ""); word = word.Replace("\nYou can see more about each exercise by clicking the buttons.", "");
+            index = exerciseDetails.GetArrayIndex(word);
+            Debug.Log(word);
+            if (index != -1)
             {
-                muscleDiagram.GetComponent<Image>().sprite = Resources.Load<Sprite>("ArmDiagram");
-            }
-            else if (intent.Contains("BackWorkout"))
-            {
-                muscleDiagram.GetComponent<Image>().sprite = Resources.Load<Sprite>("BackDiagram");
-            }
-            else if (intent.Contains("ChestWorkout"))
-            {
-                muscleDiagram.GetComponent<Image>().sprite = Resources.Load<Sprite>("ChestDiagram");
-            }
-            else if (intent.Contains("CoreWorkout"))
-            {
-                muscleDiagram.GetComponent<Image>().sprite = Resources.Load<Sprite>("CoreDiagram");
-            }
-            else if (intent.Contains("LegWorkout"))
-            {
-                muscleDiagram.GetComponent<Image>().sprite = Resources.Load<Sprite>("LegsDiagram");
+                exerciseNames.Add(word);
             }
         }
+        // Set individual exercise panel to active
+        PanelSetActive(exercisesPanel, true);
+        exercise1 = GameObject.Find("ButtonExercise1");
+        exercise2 = GameObject.Find("ButtonExercise2");
+        exercise3 = GameObject.Find("ButtonExercise3");
+        exercise4 = GameObject.Find("ButtonExercise4");
+        exercise1.SetActive(false); exercise2.SetActive(false); exercise3.SetActive(false); exercise4.SetActive(false);
 
-        if (chatbotResponse.ToLower().Contains("-"))
+        // Assign the exercise names to buttons
+        if (exerciseNames.Count > 1)
         {
-            workouts = chatbotResponse.Split('-');
-            foreach (string exercise in workouts)
+            exercise1.SetActive(true);
+            exercise1.GetComponentInChildren<TextMeshProUGUI>().text = exerciseNames[0].ToString();
+            if (exerciseNames.Count >= 2)
             {
-                string boi = exercise.Replace(" ", "");
-                Debug.Log(boi);
+                exercise2.SetActive(true);
+                exercise2.GetComponentInChildren<TextMeshProUGUI>().text = exerciseNames[1].ToString();
+                if (exerciseNames.Count >= 3)
+                {
+                    exercise3.SetActive(true);
+                    exercise3.GetComponentInChildren<TextMeshProUGUI>().text = exerciseNames[2].ToString();
+                    if (exerciseNames.Count == 4)
+                    {
+                        exercise4.SetActive(true);
+                        exercise4.GetComponentInChildren<TextMeshProUGUI>().text = exerciseNames[3].ToString();
+                    }
+                }
             }
         }
+    }
+
+    private void ResponseHandler(string chatbotResponse)
+    {
+        if ((chatbotResponse.Contains("Bye")) || (chatbotResponse.Contains("Thanks for your time")) || (chatbotResponse.Contains("No worries, take care")) || (chatbotResponse.Contains("Thanks for using JimBot"))) { GoHome(); }
+        PanelSetActive(areasToTrainPanel, (chatbotResponse.ToLower().Contains("which area would you like to train today")));
+        if (chatbotResponse.Contains("Arms")) { diagramToShow = "ArmDiagram"; }
+        else if (chatbotResponse.Contains("Back")) { diagramToShow = "BackDiagram"; }
+        else if (chatbotResponse.Contains("Chest")) { diagramToShow = "ChestDiagram"; }
+        else if (chatbotResponse.Contains("Core")) { diagramToShow = "CoreDiagram"; }
+        else if (chatbotResponse.Contains("Legs")) { diagramToShow = "Legs"; }
+
+        // Get the exercise details
+        if (chatbotResponse.ToLower().Contains("- ")) { GetExerciseDetails(chatbotResponse); }
     }
 
     private void PlayAudio(string fileName)
@@ -109,9 +146,57 @@ public class DialogflowAPIScript : MonoBehaviour
         Debug.Log("Played Audio");
     }
 
+    private string GetEquipmentText()
+    {
+        barbellToggle = GameObject.Find("ToggleBarbell").GetComponent<Toggle>();
+        cableMachineToggle = GameObject.Find("ToggleCableMachine").GetComponent<Toggle>();
+        dumbbellToggle = GameObject.Find("ToggleDumbbells").GetComponent<Toggle>();
+        string response = "";
+        if (barbellToggle.isOn)
+        {
+            if (cableMachineToggle.isOn && dumbbellToggle.isOn)
+            {
+                response = "All 3";
+            }
+            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn)
+            {
+                response = "Barbell and Cable Machine";
+            }
+            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn)
+            {
+                response = "Barbell and Dumbbells";
+            }
+            else
+            {
+                response = "Barbell Only";
+            }
+        }
+        else
+        {
+            if (cableMachineToggle.isOn && dumbbellToggle.isOn)
+            {
+                response = "Cable Machine and Dumbbells";
+            }
+            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn)
+            {
+                response = "Cable Machine Only";
+            }
+            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn)
+            {
+                response = "Dumbbells Only";
+            }
+            else
+            {
+                response = "None selected";
+            }
+        }
+        return response;
+    }
+
     public void SendSpeechToChatbot(string inputAudio)
     {
         PanelSetActive(areasToTrainPanel, false);
+        PanelSetActive(exercisesPanel, false);
         animator.SetTrigger("Thinking");
         chatbotResponse.text = "I'm thinking of a response, please wait...";
         JsonDataAudioInput.RequestBody requestBody = CreateRequestBodyInputAudio(inputAudio);
@@ -121,8 +206,10 @@ public class DialogflowAPIScript : MonoBehaviour
 
     public void SendTextToChatbot(string inputText)
     {
-        PanelSetActive(areasToTrainPanel, false);
-        chatbotResponse.text = "I'm thinking of a response";
+        if (inputText == "Continue") { inputText = GetEquipmentText(); }
+        PanelSetActive(workoutEquipmentPanel, false);
+        PanelSetActive(exercisesPanel, false);
+        chatbotResponse.text = "I'm thinking of a response, please wait...";
         animator.SetTrigger("Thinking");
         JsonData.RequestBody requestBody = CreateRequestBodyInputText(inputText);
         Debug.Log(requestBody.ToString());
@@ -132,13 +219,14 @@ public class DialogflowAPIScript : MonoBehaviour
     public void SendTextToChatbot()
     {
         PanelSetActive(areasToTrainPanel, false);
+        PanelSetActive(exercisesPanel, false);
         if (String.IsNullOrWhiteSpace(inputField.text))
         {
             PlayAudio("DefaultErrorResponse");
         }
         else
         {
-            chatbotResponse.text = "I'm thinking of a response";
+            chatbotResponse.text = "I'm thinking of a response, please wait...";
             animator.SetTrigger("Thinking");
             JsonData.RequestBody requestBody = CreateRequestBodyInputText(inputField.text.ToString());
             Debug.Log(requestBody.ToString());
@@ -198,7 +286,7 @@ public class DialogflowAPIScript : MonoBehaviour
             chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
             File.WriteAllBytes($"{Application.dataPath}/Audio/chatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
             PlayAudio("chatbotResponse");
-            ResponseHandler(chatbotResponse.text, content.queryResult.intent.displayName);
+            ResponseHandler(chatbotResponse.text);
         }
     }
 
@@ -254,21 +342,152 @@ public class DialogflowAPIScript : MonoBehaviour
                 chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
                 File.WriteAllBytes($"{Application.dataPath}/Audio/chatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
                 PlayAudio("chatbotResponse");
-                ResponseHandler(chatbotResponse.text, content.queryResult.intent.displayName);
+                ResponseHandler(chatbotResponse.text);
             }
         }
     }
 
-    private void SetMusclesAffectedDiagram(string filename)
+    public void PlayVideo(string url)
     {
-        if (filename.Contains("WorkoutRequest"))
+        areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
+        if (areasToTrainPanel != null) { areasToTrainPanel.SetActive(false); }
+        scrollArea = GameObject.Find("ScrollArea");
+        if (scrollArea != null) { scrollArea.SetActive(false); }
+        muscleDiagramPanel.SetActive(false);
+        Application.runInBackground = true;
+        this.url = url;
+        pt = GameObject.Find("PT");
+        animator = pt.GetComponent<Animator>();
+        StartCoroutine(PlayTheVideo(url));
+    }
+
+    IEnumerator PlayTheVideo(string url)
+    {
+        //Add VideoPlayer/AudioSource to the GameObject
+        videoPlayer = gameObject.AddComponent<VideoPlayer>();
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+        //Disable Play on Awake for both Video and Audio
+        videoPlayer.playOnAwake = false;
+        audioSource.playOnAwake = false;
+
+        //Pass URL to the source
+        videoPlayer.source = VideoSource.Url;
+        videoPlayer.url = url;
+
+        //Set Audio Output to AudioSource
+        videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
+
+        //Assign the Audio from Video to AudioSource to be played
+        videoPlayer.EnableAudioTrack(0, true);
+        videoPlayer.SetTargetAudioSource(0, audioSource);
+
+        //Set video To Play then prepare Audio to prevent Buffering
+        videoPlayer.Prepare();
+
+        //Wait until video is prepared
+        while (!videoPlayer.isPrepared)
         {
-            Debug.Log($"{Application.dataPath}/Sprites/{filename}.jpg");
-            //musclesAffectedDiagram.sprite = Resources.Load<Sprite>($"{Application.dataPath}/Sprites/{filename}.jpg");
+            yield return null;
         }
-        else
+
+        Debug.Log("Done Preparing Video");
+        animator.SetTrigger("TurnToTV");
+        //Assign the Texture from Video to RawImage to be displayed
+        image.texture = videoPlayer.texture;
+
+        //Play Video & Audio
+        videoPlayer.Play();
+        audioSource.Play();
+        Debug.Log("Playing Video");
+
+        while (videoPlayer.isPlaying)
         {
-            Debug.Log("No need to set muscles affected diagram");
+            yield return null;
         }
+        Debug.Log("Done Playing Video");
+        animator.SetTrigger("TurnToUser");
+        image.texture = null;
+    }
+
+    public void ShowIndividualExercise(GameObject buttonChosen)
+    {
+        PanelSetActive(individualExercisePanel, true);
+        individualExerciseName = GameObject.Find("IndividualExerciseName").GetComponentInChildren<TextMeshProUGUI>();
+        individualExerciseName.text = buttonChosen.GetComponentInChildren<TextMeshProUGUI>().text;
+        PanelSetActive(scrollArea, false);
+        PanelSetActive(exercisesPanel, false);
+        individualExerciseDescription = GameObject.Find("IndividualExerciseDescription").GetComponent<TextMeshProUGUI>();
+        int index = exerciseDetails.GetArrayIndex(individualExerciseName.text);
+        if (index != -1)
+        {
+            individualExerciseURL = exerciseDetails.GetArrayValue(index, 1);
+            individualExerciseDescription.text = exerciseDetails.GetArrayValue(index, 2);
+        }
+    }
+
+    public void ShowMuscleDiagram()
+    {
+        PanelSetActive(muscleDiagramPanel, true);
+        PanelSetActive(individualExercisePanel, false);
+        muscleDiagram = GameObject.Find("MuscleDiagram").GetComponent<Image>();
+        muscleDiagram.GetComponent<Image>().sprite = Resources.Load<Sprite>(diagramToShow);
+    }
+
+    public void PlayExerciseVideo()
+    {
+        PanelSetActive(individualExercisePanel, false);
+        Application.runInBackground = true;
+        StartCoroutine(PlayTheExerciseVideo(individualExerciseURL));
+    }
+
+    IEnumerator PlayTheExerciseVideo(string url)
+    {
+        //Add VideoPlayer/AudioSource to the GameObject
+        videoPlayer = gameObject.AddComponent<VideoPlayer>();
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+        //Disable Play on Awake for both Video and Audio
+        videoPlayer.playOnAwake = false;
+        audioSource.playOnAwake = false;
+
+        //Pass URL to the source
+        videoPlayer.source = VideoSource.Url;
+        videoPlayer.url = url;
+
+        //Set Audio Output to AudioSource
+        videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
+
+        //Assign the Audio from Video to AudioSource to be played
+        videoPlayer.EnableAudioTrack(0, true);
+        videoPlayer.SetTargetAudioSource(0, audioSource);
+
+        //Set video To Play then prepare Audio to prevent Buffering
+        videoPlayer.Prepare();
+
+        //Wait until video is prepared
+        while (!videoPlayer.isPrepared)
+        {
+            yield return null;
+        }
+
+        Debug.Log("Done Preparing Video");
+        animator.SetTrigger("TurnToTV");
+        //Assign the Texture from Video to RawImage to be displayed
+        image.texture = videoPlayer.texture;
+
+        //Play Video & Audio
+        videoPlayer.Play();
+        audioSource.Play();
+        Debug.Log("Playing Video");
+
+        while (videoPlayer.isPlaying)
+        {
+            yield return null;
+        }
+        Debug.Log("Done Playing Video");
+        animator.SetTrigger("TurnToUser");
+        image.texture = null;
+        PanelSetActive(individualExercisePanel, true);
     }
 }
