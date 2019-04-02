@@ -80,7 +80,6 @@
     <Compile Include="Assets\Scripts\ExerciseDetails.cs" />
     <Compile Include="Assets\Scripts\JimBot.cs" />
     <Compile Include="Assets\Scripts\MicInput.cs" />
-    <Compile Include="Assets\Scripts\PlayVideoScript.cs" />
     <Compile Include="Assets\Scripts\StartingScreen.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

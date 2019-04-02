@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [RequireComponent(typeof(AudioSource))]
 
@@ -65,14 +66,14 @@ public class MicInput : MonoBehaviour
         {
             if (!Microphone.IsRecording(null))
             {
-                buttonTalkToBot.GetComponentInChildren<Text>().text = "Stop Recording";
+                buttonTalkToBot.GetComponentInChildren<TextMeshProUGUI>().text = "Stop Recording";
                 goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
                 recordedClip = goAudioSource.clip;
                 samples = new float[goAudioSource.clip.samples];
             }
             else
             {
-                buttonTalkToBot.GetComponentInChildren<Text>().text = "Talk to JimBot";
+                buttonTalkToBot.GetComponentInChildren<TextMeshProUGUI>().text = "Talk to JimBot";
                 Microphone.End(null); //Stop the audio recording  
                 Convert.ToByte(goAudioSource.clip);
                 byte[] byteArray = WavUtility.FromAudioClip(goAudioSource.clip);
@@ -85,7 +86,7 @@ public class MicInput : MonoBehaviour
         }
         else
         {
-            buttonTalkToBot.GetComponentInChildren<Text>().text = "Can't use microphone";
+            buttonTalkToBot.GetComponentInChildren<TextMeshProUGUI>().text = "Can't use microphone";
             Debug.Log("Microphone not connected");
         }
     }
