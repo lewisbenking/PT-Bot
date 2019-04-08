@@ -10,13 +10,13 @@ using TMPro;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
-public class DialogflowAPIScript : MonoBehaviour
+public class  DialogflowAPIScript : MonoBehaviour
 {
     public InputField inputField;
     private Animator animator;
     private AudioSource audioSource;
     private ExerciseDetails exerciseDetails;
-    private GameObject jimBotCharacter, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel;
+    private GameObject jimBotCharacter, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, startWorkoutPanel, workoutEndPanel;
     private readonly VideoSource videoSource;
     private string url, diagramToShow;
     private string AccessToken { get; set; }
@@ -25,7 +25,7 @@ public class DialogflowAPIScript : MonoBehaviour
 
     private void Awake()
     {
-        jimBot = GameObject.Find("PT").AddComponent<JimBot>();
+        jimBot = GameObject.Find("JimBot").AddComponent<JimBot>();
         scrollArea = GameObject.Find("ScrollArea");
         exercisesPanel = GameObject.Find("ExercisesPanel");
         jimBot.PanelSetActive(exercisesPanel, false);
@@ -36,8 +36,12 @@ public class DialogflowAPIScript : MonoBehaviour
         jimBot.PanelSetActive(muscleDiagramPanel, false);
         areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
         jimBot.PanelSetActive(areasToTrainPanel, false);
-        jimBotCharacter = GameObject.Find("PT");
-        audioSource = GameObject.Find("PT").GetComponentInChildren<AudioSource>();
+        startWorkoutPanel = GameObject.Find("StartWorkoutPanel");
+        jimBot.PanelSetActive(startWorkoutPanel, false);
+        workoutEndPanel = GameObject.Find("WorkoutEndPanel");
+        jimBot.PanelSetActive(workoutEndPanel, false);
+        jimBotCharacter = GameObject.Find("JimBot");
+        audioSource = GameObject.Find("JimBot").GetComponentInChildren<AudioSource>();
     }
 
     private void Start()
@@ -102,6 +106,7 @@ public class DialogflowAPIScript : MonoBehaviour
         jimBot.PanelSetActive(exercisesPanel, false);
         chatbotResponse.text = "I'm thinking of a response, please wait...";
         animator.SetTrigger("Thinking");
+        Debug.Log("Should be thinking");
         JsonData.RequestBody requestBody = CreateRequestBodyInputText(inputText);
         Debug.Log(requestBody.ToString());
         StartCoroutine(PostRequestText(requestBody));
@@ -120,8 +125,10 @@ public class DialogflowAPIScript : MonoBehaviour
         {
             chatbotResponse.text = "I'm thinking of a response, please wait...";
             animator.SetTrigger("Thinking");
+            Debug.Log("should be thinking");
             JsonData.RequestBody requestBody = CreateRequestBodyInputText(inputField.text.ToString());
             Debug.Log(requestBody.ToString());
+            inputField.text = "";
             StartCoroutine(PostRequestText(requestBody));
         }
     }
@@ -167,8 +174,8 @@ public class DialogflowAPIScript : MonoBehaviour
             JsonData.ResponseBody content = (JsonData.ResponseBody)JsonUtility.FromJson<JsonData.ResponseBody>(result);
             Debug.Log(content.queryResult.fulfillmentText);
             chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
-            File.WriteAllBytes($"{Application.dataPath}/Audio/chatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
-            jimBot.PlayAudio("chatbotResponse");
+            File.WriteAllBytes($"{Application.dataPath}/Audio/ChatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
+            jimBot.PlayAudio("ChatbotResponse");
             ResponseHandler(chatbotResponse.text);
         }
     }
@@ -224,7 +231,7 @@ public class DialogflowAPIScript : MonoBehaviour
             {
                 chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
                 File.WriteAllBytes($"{Application.dataPath}/Audio/chatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
-                jimBot.PlayAudio("chatbotResponse");
+                jimBot.PlayAudio("ChatbotResponse");
                 ResponseHandler(chatbotResponse.text);
             }
         }
@@ -238,5 +245,20 @@ public class DialogflowAPIScript : MonoBehaviour
     {
         Application.runInBackground = true;
         jimBot.PlayExerciseVideo();
+    }
+
+    public void StartWorkout()
+    {
+        jimBot.StartWorkoutTimer();
+    }
+
+    public void GoBackToExerciseList()
+    {
+        jimBot.GoBackToExerciseList();
+    }
+
+    public void NextExercise()
+    {
+        jimBot.NextExercise();
     }
 }
