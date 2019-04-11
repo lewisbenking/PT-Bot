@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-public class ExerciseDetails
+﻿public class ExerciseDetails
 {
     private string[][] Exercises = new string[][]
     {
@@ -48,16 +43,10 @@ public class ExerciseDetails
     {
         for (int i = 0; i < Exercises.GetLength(0); i++)
         {
-            if (Exercises[i][0] == value)
-            {
-                return i;
-            }
+            if (Exercises[i][0] == value) { return i; }
         }
         return -1;
     }
 
-    public string GetArrayValue(int firstIndex, int secondIndex)
-    {
-        return Exercises[firstIndex][secondIndex];
-    }
+    public string GetArrayValue(int firstIndex, int secondIndex) { return Exercises[firstIndex][secondIndex]; }
 }

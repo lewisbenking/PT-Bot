@@ -10,13 +10,13 @@ using TMPro;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
-public class  DialogflowAPIScript : MonoBehaviour
+public class DialogflowAPIScript : MonoBehaviour
 {
     public InputField inputField;
     private Animator animator;
     private AudioSource audioSource;
     private ExerciseDetails exerciseDetails;
-    private GameObject jimBotCharacter, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, startWorkoutPanel, workoutEndPanel;
+    private GameObject jimBotCharacter, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, startWorkoutPanel, workoutEndPanel, lastPanel;
     private readonly VideoSource videoSource;
     private string url, diagramToShow;
     private string AccessToken { get; set; }
@@ -64,18 +64,16 @@ public class  DialogflowAPIScript : MonoBehaviour
     private void ResponseHandler(string chatbotResponse)
     {
         if ((chatbotResponse.Contains("Bye")) || (chatbotResponse.Contains("Thanks for your time")) || (chatbotResponse.Contains("No worries, take care")) || (chatbotResponse.Contains("Thanks for using JimBot"))) { LoadScene(1); }
-        jimBot.PanelSetActive(areasToTrainPanel, (chatbotResponse.ToLower().Contains("which area would you like to train today")));
+        jimBot.PanelSetActive(areasToTrainPanel, chatbotResponse.ToLower().Contains("which area would you like to train today"));
+        jimBot.PanelSetActive(scrollArea, chatbotResponse.ToLower().Contains("which area would you like to train today"));
         if (chatbotResponse.Contains("Arms")) { diagramToShow = "ArmsDiagram"; }
         else if (chatbotResponse.Contains("Back")) { diagramToShow = "BackDiagram"; }
         else if (chatbotResponse.Contains("Chest")) { diagramToShow = "ChestDiagram"; }
         else if (chatbotResponse.Contains("Core")) { diagramToShow = "CoreDiagram"; }
         else if (chatbotResponse.Contains("Legs")) { diagramToShow = "LegsDiagram"; }
+        else if (chatbotResponse.Contains("No Equipment")) { diagramToShow = "CoreDiagram"; }
 
-        // Get the exercise details
-        if (chatbotResponse.ToLower().Contains("- "))
-        {
-            jimBot.GetExerciseDetails(chatbotResponse);
-        }
+        if (chatbotResponse.ToLower().Contains("- ")) { jimBot.GetExerciseDetails(chatbotResponse); }
     }
 
     private string GetAccessToken()
@@ -95,7 +93,6 @@ public class  DialogflowAPIScript : MonoBehaviour
         animator.SetTrigger("Thinking");
         chatbotResponse.text = "I'm thinking of a response, please wait...";
         JsonDataAudioInput.RequestBody requestBody = CreateRequestBodyInputAudio(inputAudio);
-        Debug.Log("Got Request Body");
         StartCoroutine(PostRequestAudio(requestBody));
     }
 
@@ -106,9 +103,7 @@ public class  DialogflowAPIScript : MonoBehaviour
         jimBot.PanelSetActive(exercisesPanel, false);
         chatbotResponse.text = "I'm thinking of a response, please wait...";
         animator.SetTrigger("Thinking");
-        Debug.Log("Should be thinking");
         JsonData.RequestBody requestBody = CreateRequestBodyInputText(inputText);
-        Debug.Log(requestBody.ToString());
         StartCoroutine(PostRequestText(requestBody));
     }
 
@@ -125,9 +120,7 @@ public class  DialogflowAPIScript : MonoBehaviour
         {
             chatbotResponse.text = "I'm thinking of a response, please wait...";
             animator.SetTrigger("Thinking");
-            Debug.Log("should be thinking");
             JsonData.RequestBody requestBody = CreateRequestBodyInputText(inputField.text.ToString());
-            Debug.Log(requestBody.ToString());
             inputField.text = "";
             StartCoroutine(PostRequestText(requestBody));
         }
@@ -175,8 +168,8 @@ public class  DialogflowAPIScript : MonoBehaviour
             Debug.Log(content.queryResult.fulfillmentText);
             chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
             File.WriteAllBytes($"{Application.dataPath}/Audio/ChatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
-            jimBot.PlayAudio("ChatbotResponse");
             ResponseHandler(chatbotResponse.text);
+            jimBot.PlayAudio("ChatbotResponse");
         }
     }
 
@@ -231,15 +224,15 @@ public class  DialogflowAPIScript : MonoBehaviour
             {
                 chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
                 File.WriteAllBytes($"{Application.dataPath}/Audio/chatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
-                jimBot.PlayAudio("ChatbotResponse");
                 ResponseHandler(chatbotResponse.text);
+                jimBot.PlayAudio("ChatbotResponse");
             }
         }
     }
 
-    public void ShowIndividualExercise(GameObject buttonChosen) {  jimBot.ShowIndividualExercise(buttonChosen); }
+    public void ShowIndividualExercise(GameObject buttonChosen) { jimBot.ShowIndividualExercise(buttonChosen); }
 
-    public void ShowMuscleDiagram() {  jimBot.ShowMuscleDiagram(diagramToShow); }
+    public void ShowMuscleDiagram() { jimBot.ShowMuscleDiagram(diagramToShow); }
 
     public void PlayExerciseVideo()
     {
@@ -247,18 +240,9 @@ public class  DialogflowAPIScript : MonoBehaviour
         jimBot.PlayExerciseVideo();
     }
 
-    public void StartWorkout()
-    {
-        jimBot.StartWorkoutTimer();
-    }
+    public void StartWorkout() { jimBot.StartWorkoutTimer(); }
 
-    public void GoBackToExerciseList()
-    {
-        jimBot.GoBackToExerciseList();
-    }
+    public void GoBackToExerciseList() { jimBot.GoBackToExerciseList(); }
 
-    public void NextExercise()
-    {
-        jimBot.NextExercise();
-    }
+    public void NextExercise() { jimBot.NextExercise(); }
 }

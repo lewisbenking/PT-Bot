@@ -23,8 +23,5 @@ public class Instructions : MonoBehaviour
         Debug.Log("Played Audio");
     }
 
-    public void LoadScene(int sceneNumber)
-    {
-        SceneManager.LoadScene(sceneNumber);
-    }
+    public void LoadScene(int sceneNumber)  {  SceneManager.LoadScene(sceneNumber); }
 }

@@ -9,7 +9,7 @@ using UnityEngine.Video;
 public class JimBot : MonoBehaviour
 {
     private Animator animator;
-    private GameObject jimBot, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, startWorkoutPanel, workoutEndPanel, exercise1, exercise2, exercise3;
+    private GameObject jimBot, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, startWorkoutPanel, workoutEndPanel, exercise1, exercise2, exercise3, HUD;
     private ArrayList exerciseNames;
     private AudioClip audioClip;
     private AudioSource audioSource;
@@ -37,13 +37,14 @@ public class JimBot : MonoBehaviour
         areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
         startWorkoutPanel = GameObject.Find("StartWorkoutPanel");
         workoutEndPanel = GameObject.Find("WorkoutEndPanel");
+        HUD = GameObject.Find("HUD");
 
         jimBot = GameObject.Find("JimBot");
         tvScreen = GameObject.Find("TV Screen").GetComponent<RawImage>();
         audioSource = GameObject.Find("JimBot").GetComponentInChildren<AudioSource>();
         timerLabel = GameObject.Find("WorkoutTimer").GetComponent<TextMeshProUGUI>();
         currentExercise = GameObject.Find("CurrentExercise").GetComponentInChildren<TextMeshProUGUI>();
-        timerTime = 60f;
+        timerTime = 600f;
         exerciseNameArrayIndex = 0;
     }
 
@@ -57,7 +58,7 @@ public class JimBot : MonoBehaviour
     {
         while (timerTime > 0f && !isWorkoutPaused)
         {
-            if (timerTime == 30f)
+            if (timerTime == 300f)
             {
                 animator.SetTrigger("WellDone");
                 PlayAudio("HalfwayTime");
@@ -74,17 +75,14 @@ public class JimBot : MonoBehaviour
             }
             yield return new WaitForSeconds(1);
             timerTime--;
-            Debug.Log(timerTime);
         }
-        Debug.Log("timerTime is 0");
-        Debug.Log($"ArrayIndex is {exerciseNameArrayIndex}. ArrayList Count is {exerciseNames.Count - 1}");
         NextExercise();
         yield return null;
     }
 
     public void NextExercise()
     {
-        timerTime = 60f;
+        timerTime = 600f;
         exerciseNameArrayIndex++;
         if (exerciseNameArrayIndex > (exerciseNames.Count - 1))
         {
@@ -93,14 +91,8 @@ public class JimBot : MonoBehaviour
         }
         else
         {
-            if (exerciseNameArrayIndex == (exerciseNames.Count - 1))
-            {
-                PlayAudio("TheLastExercise");
-            }
-            else
-            {
-                PlayAudio("NextExercise");
-            }
+            if (exerciseNameArrayIndex == (exerciseNames.Count - 1)) { PlayAudio("TheLastExercise"); }
+            else { PlayAudio("NextExercise"); }
             StopCoroutine("TimerCountdown");
             StartCoroutine("TimerCountdown");
         }
@@ -109,14 +101,8 @@ public class JimBot : MonoBehaviour
     public void StartWorkoutTimer()
     {
         isWorkoutPaused = false;
-        if (hasWorkoutBeenPaused)
-        {
-            PlayAudio("ResumeWorkout");
-        }
-        else
-        {
-            PlayAudio("StartWorkout");
-        }
+        if (hasWorkoutBeenPaused) { PlayAudio("ResumeWorkout"); }
+        else { PlayAudio("StartWorkout"); }
         StartCoroutine("TimerCountdown");
     }
 
@@ -151,7 +137,6 @@ public class JimBot : MonoBehaviour
         audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/Audio/{fileName}.wav");
         audioSource.spatialBlend = 0.0f;
         audioSource.PlayOneShot(audioClip);
-        Debug.Log("Played Audio");
     }
 
     public string GetEquipmentText()
@@ -185,18 +170,20 @@ public class JimBot : MonoBehaviour
         foreach (string iteration in chatbotResponseSplit)
         {
             word = iteration;
-            word = word.Replace("workout for you!\n\n", ""); word = word.Replace("- ", ""); word = word.Replace(".\n", ""); word = word.Replace("\nYou can see more about each exercise by clicking the buttons\nWhen you're ready to work out, please select \"Start Workout\".", "");
+            word = word.Replace("workout for you!\n\n", ""); word = word.Replace("- ", ""); word = word.Replace(".\n", ""); word = word.Replace("\nYou can see more about each exercise by selecting them from the list\nWhen you're ready to work out, please select \"Start Workout\".", "");
             index = exerciseDetails.GetArrayIndex(word);
-            Debug.Log(word);
             if (index != -1) { exerciseNames.Add(word); }
         }
-        // Set individual exercise panel to active
-        exercise1 = GameObject.Find("ButtonExercise1");
-        exercise2 = GameObject.Find("ButtonExercise2");
-        exercise3 = GameObject.Find("ButtonExercise3");
-        exercise1.SetActive(false); exercise2.SetActive(false); exercise3.SetActive(false);
+        //exercise1 = GameObject.Find("ButtonExercise1");
+        //exercise2 = GameObject.Find("ButtonExercise2");
+        //exercise3 = GameObject.Find("ButtonExercise3");
+        exercise1 = exercisesPanel.transform.Find("ButtonExercise1").gameObject;
+        exercise2 = exercisesPanel.transform.Find("ButtonExercise2").gameObject;
+        exercise3 = exercisesPanel.transform.Find("ButtonExercise3").gameObject;
+        exercise1.SetActive(false);
+        exercise2.SetActive(false);
+        exercise3.SetActive(false);
 
-        // Assign the exercise names to buttons
         if (exerciseNames.Count >= 1)
         {
             exercise1.SetActive(true);
@@ -247,32 +234,39 @@ public class JimBot : MonoBehaviour
 
     IEnumerator PlayTheExerciseVideo(string url)
     {
-        //Add VideoPlayer/AudioSource to the GameObject
+        PanelSetActive(HUD, false);
+        audioSource.Stop();
         videoPlayer = gameObject.AddComponent<VideoPlayer>();
         audioSource = gameObject.AddComponent<AudioSource>();
         videoPlayer.playOnAwake = false;
         audioSource.playOnAwake = false;
-        //Pass URL to the source
         videoPlayer.source = VideoSource.Url;
         videoPlayer.url = url;
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
-        //Assign the Audio from Video to AudioSource to be played
         videoPlayer.EnableAudioTrack(0, true);
         videoPlayer.SetTargetAudioSource(0, audioSource);
         videoPlayer.Prepare();
-        //Wait until video is prepared
         while (!videoPlayer.isPrepared) { yield return null; }
         animator.SetTrigger("TurnToTV");
-        //Assign the Texture from Video to RawImage to be displayed
         tvScreen.texture = videoPlayer.texture;
-        //Play Video & Audio
         videoPlayer.Play();
         audioSource.Play();
-
         while (videoPlayer.isPlaying) { yield return null; }
         animator.SetTrigger("TurnToCamera");
         tvScreen.texture = null;
         PanelSetActive(individualExercisePanel, true);
         audioSource = GameObject.Find("JimBot").GetComponentInChildren<AudioSource>();
+        PanelSetActive(HUD, true);
+    }
+
+    public void HelpMe()
+    {
+        if (areasToTrainPanel.activeInHierarchy) { PlayAudio("Help_AreasToTrainPanel"); }
+        else if (exercisesPanel.activeInHierarchy) { PlayAudio("Help_ExercisesPanel"); }
+        else if (individualExercisePanel.activeInHierarchy) { PlayAudio("Help_IndividualExercisePanel"); }
+        else if (muscleDiagramPanel.activeInHierarchy) { PlayAudio("Help_IndividualExercisePanel"); }
+        else if (startWorkoutPanel.activeInHierarchy) { PlayAudio("Help_StartWorkoutPanel"); }
+        else if (workoutEndPanel.activeInHierarchy) { PlayAudio("Help_WorkoutEndPanel"); }
+        else if (workoutEquipmentPanel.activeInHierarchy) { PlayAudio("Help_WorkoutEquipmentPanel"); }
     }
 }
