@@ -67,7 +67,7 @@ public class JimBot : MonoBehaviour
             if (exerciseNameArrayIndex <= (exerciseNames.Count - 1))
             {
                 currentExercise.text = exerciseNames[exerciseNameArrayIndex].ToString();
-                timerLabel.text = $"Time Left:  {Mathf.Floor(timerTime / 60).ToString("00")}:{(timerTime % 60).ToString("00")}";
+                timerLabel.text = $"Time Remaining:  {Mathf.Floor(timerTime / 60).ToString("00")}:{(timerTime % 60).ToString("00")}";
             }
             else
             {
