@@ -25,7 +25,7 @@ public class JimBot : MonoBehaviour
     private VideoPlayer videoPlayer;
     private float timerTime;
     private int exerciseNameArrayIndex;
-    private bool isWorkoutPaused, hasWorkoutBeenPaused;
+    private bool isWorkoutStopped, hasWorkoutBeenPaused;
 
     private void Awake()
     {
@@ -56,7 +56,7 @@ public class JimBot : MonoBehaviour
 
     private IEnumerator TimerCountdown()
     {
-        while (timerTime > 0f && !isWorkoutPaused)
+        while (timerTime > 0f && !isWorkoutStopped)
         {
             if (timerTime == 300f)
             {
@@ -100,7 +100,7 @@ public class JimBot : MonoBehaviour
 
     public void StartWorkoutTimer()
     {
-        isWorkoutPaused = false;
+        isWorkoutStopped = false;
         if (hasWorkoutBeenPaused) { PlayAudio("ResumeWorkout"); }
         else { PlayAudio("StartWorkout"); }
         StartCoroutine("TimerCountdown");
@@ -109,7 +109,7 @@ public class JimBot : MonoBehaviour
     public void GoBackToExerciseList()
     {
         StopCoroutine("TimerCountdown");
-        isWorkoutPaused = true;
+        isWorkoutStopped = true;
         hasWorkoutBeenPaused = true;
         PanelSetActive(exercisesPanel, true);
         PanelSetActive(startWorkoutPanel, false);
@@ -117,7 +117,8 @@ public class JimBot : MonoBehaviour
 
     public void EndWorkout()
     {
-        StopAllCoroutines();
+        isWorkoutStopped = true;
+        StopCoroutine("TimerCountdown");
         PanelSetActive(workoutEndPanel, true);
         PanelSetActive(startWorkoutPanel, false);
         animator.SetTrigger("WellDone");
@@ -174,9 +175,7 @@ public class JimBot : MonoBehaviour
             index = exerciseDetails.GetArrayIndex(word);
             if (index != -1) { exerciseNames.Add(word); }
         }
-        //exercise1 = GameObject.Find("ButtonExercise1");
-        //exercise2 = GameObject.Find("ButtonExercise2");
-        //exercise3 = GameObject.Find("ButtonExercise3");
+
         exercise1 = exercisesPanel.transform.Find("ButtonExercise1").gameObject;
         exercise2 = exercisesPanel.transform.Find("ButtonExercise2").gameObject;
         exercise3 = exercisesPanel.transform.Find("ButtonExercise3").gameObject;

@@ -63,17 +63,33 @@ public class DialogflowAPIScript : MonoBehaviour
 
     private void ResponseHandler(string chatbotResponse)
     {
-        if ((chatbotResponse.Contains("Bye")) || (chatbotResponse.Contains("Thanks for your time")) || (chatbotResponse.Contains("No worries, take care")) || (chatbotResponse.Contains("Thanks for using JimBot"))) { LoadScene(1); }
-        jimBot.PanelSetActive(areasToTrainPanel, chatbotResponse.ToLower().Contains("which area would you like to train today"));
-        jimBot.PanelSetActive(scrollArea, chatbotResponse.ToLower().Contains("which area would you like to train today"));
-        if (chatbotResponse.Contains("Arms")) { diagramToShow = "ArmsDiagram"; }
-        else if (chatbotResponse.Contains("Back")) { diagramToShow = "BackDiagram"; }
-        else if (chatbotResponse.Contains("Chest")) { diagramToShow = "ChestDiagram"; }
-        else if (chatbotResponse.Contains("Core")) { diagramToShow = "CoreDiagram"; }
-        else if (chatbotResponse.Contains("Legs")) { diagramToShow = "LegsDiagram"; }
-        else if (chatbotResponse.Contains("No Equipment")) { diagramToShow = "CoreDiagram"; }
+        if (string.IsNullOrWhiteSpace(chatbotResponse))
+        {
+            jimBot.PlayAudio("DefaultErrorResponse");
+        }
+        else
+        {
+            if ((chatbotResponse.Contains("Bye")) || (chatbotResponse.Contains("Thanks for your time")) || (chatbotResponse.Contains("No worries, take care")) || (chatbotResponse.Contains("Thanks for using JimBot"))) { LoadScene(1); }
+            if (chatbotResponse.Contains("Ok. Let's do the workout."))
+            {
+                jimBot.PanelSetActive(exercisesPanel, false); jimBot.PanelSetActive(scrollArea, false); jimBot.PanelSetActive(individualExercisePanel, false); jimBot.PanelSetActive(muscleDiagramPanel, false); jimBot.PanelSetActive(startWorkoutPanel, true);
+                StartWorkout();
+            }
+            else
+            {
+                jimBot.PanelSetActive(areasToTrainPanel, chatbotResponse.ToLower().Contains("which area would you like to train today"));
+                jimBot.PanelSetActive(scrollArea, chatbotResponse.ToLower().Contains("which area would you like to train today"));
+                if (chatbotResponse.Contains("Arms")) { diagramToShow = "ArmsDiagram"; }
+                else if (chatbotResponse.Contains("Back")) { diagramToShow = "BackDiagram"; }
+                else if (chatbotResponse.Contains("Chest")) { diagramToShow = "ChestDiagram"; }
+                else if (chatbotResponse.Contains("Core")) { diagramToShow = "CoreDiagram"; }
+                else if (chatbotResponse.Contains("Legs")) { diagramToShow = "LegsDiagram"; }
+                else if (chatbotResponse.Contains("No Equipment")) { diagramToShow = "CoreDiagram"; }
 
-        if (chatbotResponse.ToLower().Contains("- ")) { jimBot.GetExerciseDetails(chatbotResponse); }
+                if (chatbotResponse.ToLower().Contains("- ")) { jimBot.GetExerciseDetails(chatbotResponse); }
+                jimBot.PlayAudio("ChatbotResponse");
+            }
+        }
     }
 
     private string GetAccessToken()
@@ -169,7 +185,6 @@ public class DialogflowAPIScript : MonoBehaviour
             chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
             File.WriteAllBytes($"{Application.dataPath}/Audio/ChatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
             ResponseHandler(chatbotResponse.text);
-            jimBot.PlayAudio("ChatbotResponse");
         }
     }
 
@@ -225,7 +240,6 @@ public class DialogflowAPIScript : MonoBehaviour
                 chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
                 File.WriteAllBytes($"{Application.dataPath}/Audio/chatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
                 ResponseHandler(chatbotResponse.text);
-                jimBot.PlayAudio("ChatbotResponse");
             }
         }
     }
