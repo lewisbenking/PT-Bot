@@ -54,44 +54,6 @@ public class DialogflowAPIScript : MonoBehaviour
         jimBot.PlayAudio("IntroClip");
     }
 
-    public void LoadScene(int sceneNumber) { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - sceneNumber); }
-
-    public void PanelSetActive(GameObject panel, bool isActive)
-    {
-        if (panel != null) { panel.SetActive(isActive); }
-    }
-
-    private void ResponseHandler(string chatbotResponse)
-    {
-        if (string.IsNullOrWhiteSpace(chatbotResponse))
-        {
-            jimBot.PlayAudio("DefaultErrorResponse");
-        }
-        else
-        {
-            if ((chatbotResponse.Contains("Bye")) || (chatbotResponse.Contains("Thanks for your time")) || (chatbotResponse.Contains("No worries, take care")) || (chatbotResponse.Contains("Thanks for using JimBot"))) { LoadScene(1); }
-            if (chatbotResponse.Contains("Ok. Let's do the workout."))
-            {
-                jimBot.PanelSetActive(exercisesPanel, false); jimBot.PanelSetActive(scrollArea, false); jimBot.PanelSetActive(individualExercisePanel, false); jimBot.PanelSetActive(muscleDiagramPanel, false); jimBot.PanelSetActive(startWorkoutPanel, true);
-                StartWorkout();
-            }
-            else
-            {
-                jimBot.PanelSetActive(areasToTrainPanel, chatbotResponse.ToLower().Contains("which area would you like to train today"));
-                jimBot.PanelSetActive(scrollArea, chatbotResponse.ToLower().Contains("which area would you like to train today"));
-                if (chatbotResponse.Contains("Arms")) { diagramToShow = "ArmsDiagram"; }
-                else if (chatbotResponse.Contains("Back")) { diagramToShow = "BackDiagram"; }
-                else if (chatbotResponse.Contains("Chest")) { diagramToShow = "ChestDiagram"; }
-                else if (chatbotResponse.Contains("Core")) { diagramToShow = "CoreDiagram"; }
-                else if (chatbotResponse.Contains("Legs")) { diagramToShow = "LegsDiagram"; }
-                else if (chatbotResponse.Contains("No Equipment")) { diagramToShow = "CoreDiagram"; }
-
-                if (chatbotResponse.ToLower().Contains("- ")) { jimBot.GetExerciseDetails(chatbotResponse); }
-                jimBot.PlayAudio("ChatbotResponse");
-            }
-        }
-    }
-
     private string GetAccessToken()
     {
         //https://stackoverflow.com/questions/52607901/authenticating-request-with-google-apis-dialogflow-v2
@@ -259,4 +221,42 @@ public class DialogflowAPIScript : MonoBehaviour
     public void GoBackToExerciseList() { jimBot.GoBackToExerciseList(); }
 
     public void NextExercise() { jimBot.NextExercise(); }
+
+    public void LoadScene(int sceneNumber) { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - sceneNumber); }
+
+    public void PanelSetActive(GameObject panel, bool isActive)
+    {
+        if (panel != null) { panel.SetActive(isActive); }
+    }
+
+    private void ResponseHandler(string chatbotResponse)
+    {
+        if (string.IsNullOrWhiteSpace(chatbotResponse))
+        {
+            jimBot.PlayAudio("DefaultErrorResponse");
+        }
+        else
+        {
+            if ((chatbotResponse.Contains("Bye")) || (chatbotResponse.Contains("Thanks for your time")) || (chatbotResponse.Contains("No worries, take care")) || (chatbotResponse.Contains("Thanks for using JimBot"))) { LoadScene(1); }
+            if (chatbotResponse.Contains("Ok. Let's do the workout."))
+            {
+                jimBot.PanelSetActive(exercisesPanel, false); jimBot.PanelSetActive(scrollArea, false); jimBot.PanelSetActive(individualExercisePanel, false); jimBot.PanelSetActive(muscleDiagramPanel, false); jimBot.PanelSetActive(startWorkoutPanel, true);
+                StartWorkout();
+            }
+            else
+            {
+                jimBot.PanelSetActive(areasToTrainPanel, chatbotResponse.ToLower().Contains("which area would you like to train today"));
+                jimBot.PanelSetActive(scrollArea, chatbotResponse.ToLower().Contains("which area would you like to train today"));
+                if (chatbotResponse.Contains("Arms")) { diagramToShow = "ArmsDiagram"; }
+                else if (chatbotResponse.Contains("Back")) { diagramToShow = "BackDiagram"; }
+                else if (chatbotResponse.Contains("Chest")) { diagramToShow = "ChestDiagram"; }
+                else if (chatbotResponse.Contains("Core")) { diagramToShow = "CoreDiagram"; }
+                else if (chatbotResponse.Contains("Legs")) { diagramToShow = "LegsDiagram"; }
+                else if (chatbotResponse.Contains("No Equipment")) { diagramToShow = "CoreDiagram"; }
+
+                if (chatbotResponse.ToLower().Contains("- ")) { jimBot.GetExerciseDetails(chatbotResponse); }
+                jimBot.PlayAudio("ChatbotResponse");
+            }
+        }
+    }
 }

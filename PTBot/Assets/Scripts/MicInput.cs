@@ -19,6 +19,7 @@ public class MicInput : MonoBehaviour
     void Start()
     {
         inputField = GameObject.Find("InputField").GetComponent<InputField>();
+        // Validates a microphone is connected.
         if (Microphone.devices.Length <= 0)
         {
             Debug.LogWarning("Microphone not connected!");
@@ -26,6 +27,7 @@ public class MicInput : MonoBehaviour
         else
         {
             micConnected = true;
+            // Gets default microphone recording capabilities.
             Microphone.GetDeviceCaps(null, out minFreq, out maxFreq);
             if (minFreq == 0 && maxFreq == 0) { maxFreq = 44100; }
             goAudioSource = this.GetComponent<AudioSource>();
@@ -57,10 +59,8 @@ public class MicInput : MonoBehaviour
                 Convert.ToByte(goAudioSource.clip);
                 byte[] byteArray = WavUtility.FromAudioClip(goAudioSource.clip);
                 string base64string = Convert.ToBase64String(byteArray);
-                Debug.Log(base64string);
                 dialogFlowAPIScript = GameObject.Find("DialogFlowAPIObject").GetComponentInChildren<DialogflowAPIScript>();
                 dialogFlowAPIScript.SendSpeechToChatbot(base64string);
-                Debug.Log(recordedClip.length);
             }
         }
         else
