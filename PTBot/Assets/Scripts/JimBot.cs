@@ -37,7 +37,6 @@ public class JimBot : MonoBehaviour
         startWorkoutPanel = GameObject.Find("StartWorkoutPanel");
         workoutEndPanel = GameObject.Find("WorkoutEndPanel");
         HUD = GameObject.Find("HUD");
-
         jimBot = GameObject.Find("JimBot");
         tvScreen = GameObject.Find("TV Screen").GetComponent<RawImage>();
         audioSource = GameObject.Find("JimBot").GetComponentInChildren<AudioSource>();
@@ -90,8 +89,8 @@ public class JimBot : MonoBehaviour
         }
         else
         {
-            if (exerciseNameArrayIndex == (exerciseNames.Count - 1)) { PlayAudio("TheLastExercise"); }
-            else { PlayAudio("NextExercise"); }
+            if (exerciseNameArrayIndex == (exerciseNames.Count - 1)) PlayAudio("TheLastExercise");
+            else PlayAudio("NextExercise");
             StopCoroutine("TimerCountdown");
             StartCoroutine("TimerCountdown");
         }
@@ -100,8 +99,8 @@ public class JimBot : MonoBehaviour
     public void StartWorkoutTimer()
     {
         isWorkoutStopped = false;
-        if (hasWorkoutBeenPaused) { PlayAudio("ResumeWorkout"); }
-        else { PlayAudio("StartWorkout"); }
+        if (hasWorkoutBeenPaused) PlayAudio("ResumeWorkout");
+        else PlayAudio("StartWorkout");
         StartCoroutine("TimerCountdown");
     }
 
@@ -128,7 +127,7 @@ public class JimBot : MonoBehaviour
 
     public void PanelSetActive(GameObject panel, bool isActive)
     {
-        if (panel != null) { panel.SetActive(isActive); }
+        if (panel != null) panel.SetActive(isActive);
     }
 
     public void PlayAudio(string fileName)
@@ -146,17 +145,17 @@ public class JimBot : MonoBehaviour
         dumbbellToggle = GameObject.Find("ToggleDumbbells").GetComponent<Toggle>();
         if (barbellToggle.isOn)
         {
-            if (cableMachineToggle.isOn && dumbbellToggle.isOn) { return "All 3"; }
-            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn) { return "Barbell and Cable Machine"; }
-            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn) { return "Barbell and Dumbbells"; }
-            else { return "Barbell Only"; }
+            if (cableMachineToggle.isOn && dumbbellToggle.isOn) return "All 3";
+            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn) return "Barbell and Cable Machine";
+            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn) return "Barbell and Dumbbells";
+            else return "Barbell Only";
         }
         else
         {
-            if (cableMachineToggle.isOn && dumbbellToggle.isOn) { return "Cable Machine and Dumbbells"; }
-            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn) { return "Cable Machine Only"; }
-            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn) { return "Dumbbells Only"; }
-            else { return "None selected"; }
+            if (cableMachineToggle.isOn && dumbbellToggle.isOn) return "Cable Machine and Dumbbells";
+            else if (cableMachineToggle.isOn && !dumbbellToggle.isOn) return "Cable Machine Only";
+            else if (!cableMachineToggle.isOn && dumbbellToggle.isOn) return "Dumbbells Only";
+            else return "None selected";
         }
     }
 
@@ -172,7 +171,7 @@ public class JimBot : MonoBehaviour
             word = iteration;
             word = word.Replace("workout for you!\n\n", ""); word = word.Replace("- ", ""); word = word.Replace(".\n", ""); word = word.Replace("\nYou can see more about each exercise by selecting them from the list\nWhen you're ready to work out, please select \"Start Workout\".", "");
             index = exerciseDetails.GetArrayIndex(word);
-            if (index != -1) { exerciseNames.Add(word); }
+            if (index != -1) exerciseNames.Add(word);
         }
 
         exercise1 = exercisesPanel.transform.Find("ButtonExercise1").gameObject;
@@ -244,12 +243,12 @@ public class JimBot : MonoBehaviour
         videoPlayer.EnableAudioTrack(0, true);
         videoPlayer.SetTargetAudioSource(0, audioSource);
         videoPlayer.Prepare();
-        while (!videoPlayer.isPrepared) { yield return null; }
+        while (!videoPlayer.isPrepared) yield return null;
         animator.SetTrigger("TurnToTV");
         tvScreen.texture = videoPlayer.texture;
         videoPlayer.Play();
         audioSource.Play();
-        while (videoPlayer.isPlaying) { yield return null; }
+        while (videoPlayer.isPlaying) yield return null;
         animator.SetTrigger("TurnToCamera");
         tvScreen.texture = null;
         PanelSetActive(individualExercisePanel, true);
@@ -259,12 +258,12 @@ public class JimBot : MonoBehaviour
 
     public void HelpMe()
     {
-        if (areasToTrainPanel.activeInHierarchy) { PlayAudio("Help_AreasToTrainPanel"); }
-        else if (exercisesPanel.activeInHierarchy) { PlayAudio("Help_ExercisesPanel"); }
-        else if (individualExercisePanel.activeInHierarchy) { PlayAudio("Help_IndividualExercisePanel"); }
-        else if (muscleDiagramPanel.activeInHierarchy) { PlayAudio("Help_IndividualExercisePanel"); }
-        else if (startWorkoutPanel.activeInHierarchy) { PlayAudio("Help_StartWorkoutPanel"); }
-        else if (workoutEndPanel.activeInHierarchy) { PlayAudio("Help_WorkoutEndPanel"); }
-        else if (workoutEquipmentPanel.activeInHierarchy) { PlayAudio("Help_WorkoutEquipmentPanel"); }
+        if (areasToTrainPanel.activeInHierarchy) PlayAudio("Help_AreasToTrainPanel");
+        else if (exercisesPanel.activeInHierarchy) PlayAudio("Help_ExercisesPanel");
+        else if (individualExercisePanel.activeInHierarchy) PlayAudio("Help_IndividualExercisePanel");
+        else if (muscleDiagramPanel.activeInHierarchy) PlayAudio("Help_IndividualExercisePanel");
+        else if (startWorkoutPanel.activeInHierarchy) PlayAudio("Help_StartWorkoutPanel");
+        else if (workoutEndPanel.activeInHierarchy) PlayAudio("Help_WorkoutEndPanel");
+        else if (workoutEquipmentPanel.activeInHierarchy) PlayAudio("Help_WorkoutEquipmentPanel");
     }
 }

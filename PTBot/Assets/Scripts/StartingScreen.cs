@@ -5,26 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class StartingScreen : MonoBehaviour
 {
-    private GameObject pt;
-    private static Animator animator;
-    private JimBot jimBot;
     private AudioClip audioClip;
     private AudioSource audioSource;
+    public bool audioPlayed;
 
     void Start()
     {
-        pt = GameObject.Find("JimBot");
-        audioSource = GameObject.Find("JimBot").GetComponentInChildren<AudioSource>();
-        PlayAudio("StartingScreen");
+        PlayAudio();
     }
     
-    public void PlayAudio(string fileName)
+    public void PlayAudio()
     {
+        audioPlayed = false;
+        audioSource = GameObject.Find("JimBot").GetComponentInChildren<AudioSource>();
         audioSource.Stop();
-        audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/Audio/{fileName}.wav");
+        audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/Audio/StartingScreen.wav");
         audioSource.spatialBlend = 0.0f;
         audioSource.PlayOneShot(audioClip);
-        Debug.Log("Played Audio");
+        audioPlayed = true;
     }
 
     public void LoadScene(int sceneNumber)

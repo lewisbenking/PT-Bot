@@ -76,7 +76,7 @@ public class DialogflowAPIScript : MonoBehaviour
 
     public void SendTextToChatbot(string inputText)
     {
-        if (inputText == "Continue") { inputText = jimBot.GetEquipmentText(); }
+        if (inputText == "Continue") inputText = jimBot.GetEquipmentText();
         jimBot.PanelSetActive(workoutEquipmentPanel, false);
         jimBot.PanelSetActive(exercisesPanel, false);
         chatbotResponse.text = "I'm thinking of a response, please wait...";
@@ -226,7 +226,7 @@ public class DialogflowAPIScript : MonoBehaviour
 
     public void PanelSetActive(GameObject panel, bool isActive)
     {
-        if (panel != null) { panel.SetActive(isActive); }
+        if (panel != null) panel.SetActive(isActive);
     }
 
     private void ResponseHandler(string chatbotResponse)
@@ -237,7 +237,7 @@ public class DialogflowAPIScript : MonoBehaviour
         }
         else
         {
-            if ((chatbotResponse.Contains("Bye")) || (chatbotResponse.Contains("Thanks for your time")) || (chatbotResponse.Contains("No worries, take care")) || (chatbotResponse.Contains("Thanks for using JimBot"))) { LoadScene(1); }
+            if ((chatbotResponse.Contains("Bye")) || (chatbotResponse.Contains("Thanks for your time")) || (chatbotResponse.Contains("No worries, take care")) || (chatbotResponse.Contains("Thanks for using JimBot"))) LoadScene(1); 
             if (chatbotResponse.Contains("Ok. Let's do the workout."))
             {
                 jimBot.PanelSetActive(exercisesPanel, false); jimBot.PanelSetActive(scrollArea, false); jimBot.PanelSetActive(individualExercisePanel, false); jimBot.PanelSetActive(muscleDiagramPanel, false); jimBot.PanelSetActive(startWorkoutPanel, true);
@@ -247,14 +247,14 @@ public class DialogflowAPIScript : MonoBehaviour
             {
                 jimBot.PanelSetActive(areasToTrainPanel, chatbotResponse.ToLower().Contains("which area would you like to train today"));
                 jimBot.PanelSetActive(scrollArea, chatbotResponse.ToLower().Contains("which area would you like to train today"));
-                if (chatbotResponse.Contains("Arms")) { diagramToShow = "ArmsDiagram"; }
-                else if (chatbotResponse.Contains("Back")) { diagramToShow = "BackDiagram"; }
-                else if (chatbotResponse.Contains("Chest")) { diagramToShow = "ChestDiagram"; }
-                else if (chatbotResponse.Contains("Core")) { diagramToShow = "CoreDiagram"; }
-                else if (chatbotResponse.Contains("Legs")) { diagramToShow = "LegsDiagram"; }
-                else if (chatbotResponse.Contains("No Equipment")) { diagramToShow = "CoreDiagram"; }
+                if (chatbotResponse.Contains("Arms")) diagramToShow = "ArmsDiagram"; 
+                else if (chatbotResponse.Contains("Back")) diagramToShow = "BackDiagram"; 
+                else if (chatbotResponse.Contains("Chest")) diagramToShow = "ChestDiagram"; 
+                else if (chatbotResponse.Contains("Core")) diagramToShow = "CoreDiagram"; 
+                else if (chatbotResponse.Contains("Legs")) diagramToShow = "LegsDiagram"; 
+                else if (chatbotResponse.Contains("No Equipment")) diagramToShow = "CoreDiagram"; 
 
-                if (chatbotResponse.ToLower().Contains("- ")) { jimBot.GetExerciseDetails(chatbotResponse); }
+                if (chatbotResponse.ToLower().Contains("- ")) jimBot.GetExerciseDetails(chatbotResponse); 
                 jimBot.PlayAudio("ChatbotResponse");
             }
         }

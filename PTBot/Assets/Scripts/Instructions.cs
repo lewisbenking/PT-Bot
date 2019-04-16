@@ -31,7 +31,7 @@ public class Instructions : MonoBehaviour
 
     public void PanelSetActive(GameObject panel, bool isActive)
     {
-        if (panel != null) { panel.SetActive(isActive); }
+        if (panel != null) panel.SetActive(isActive);
     }
 
     public void PlayAudio(string fileName)
