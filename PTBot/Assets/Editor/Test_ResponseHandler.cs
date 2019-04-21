@@ -20,7 +20,7 @@ namespace Assets.Editor
                Given => TheResponseIsEmpty(null),
                When => TheResponseIsChecked(),
                Then => TheAudioToPlayIsTheDefaultError());
-        }
+        }   
 
         [Label("The returned value for goHome should be true when the response contains 'Bye'")]
         [Scenario]
@@ -30,16 +30,6 @@ namespace Assets.Editor
                 Given => TheResponseIsNotEmpty("Bye"),
                 When => TheResponseIsChecked(),
                 Then => GoHomeIsTrue());
-        }
-
-        [Label("The areasToTrainPanel should be displayed when the response is 'which area would you like to train today.")]
-        [Scenario]
-        public void ValidResponse_AreasToTrain()
-        {
-            Runner.RunScenario(
-                Given => TheResponseIsNotEmpty("which area would you like to train today"),
-                When => TheResponseIsChecked(),
-                Then => TheAreasPanelShouldBeDisplayed());
         }
 
         [Label("The assumes the user has chosen their equipment and the relevant panels will be returned and set active")]
@@ -82,5 +72,24 @@ namespace Assets.Editor
                 Then => TheWorkoutShouldStart());
         }
 
+        [Label("The correct panel should be displayed based on the chatbot response.")]
+        [Scenario]
+        public void ValidResponse_PanelToBeDisplayed()
+        {
+            Runner.RunScenario(
+                Given => TheResponseIsNotEmpty("which area would you like to train today"),
+                When => TheResponseIsChecked(),
+                Then => TheCorrectPanelShouldBeActive("AreasToTrainPanel"));
+
+            Runner.RunScenario(
+                Given => TheResponseIsNotEmpty("- "),
+                When => TheResponseIsChecked(),
+                Then => TheCorrectPanelShouldBeActive("ExercisesPanel"));
+
+            Runner.RunScenario(
+                Given => TheResponseIsNotEmpty("Ok. Let's do the workout."),
+                When => TheResponseIsChecked(),
+                Then => TheCorrectPanelShouldBeActive("StartWorkoutPanel"));
+        }
     }
 }

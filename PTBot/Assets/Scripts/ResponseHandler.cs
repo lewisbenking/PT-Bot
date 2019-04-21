@@ -1,19 +1,16 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 
 public class ResponseHandler
 {
     private string diagramToShow, audioToPlay;
-    private ArrayList panelsToSetActive, panelsToSetInactive;
+    private ArrayList panelsToSetActive;
     private bool goHome, startWorkout, getExerciseDetails;
-    JimBot jimbot = new JimBot();
 
     public void HandleResponse(string chatbotResponse)
     {
         goHome = false; startWorkout = false; getExerciseDetails = false;
         diagramToShow = "";
         panelsToSetActive = new ArrayList();
-        panelsToSetInactive = new ArrayList();
 
         if (string.IsNullOrWhiteSpace(chatbotResponse))
         {
@@ -21,15 +18,11 @@ public class ResponseHandler
         }
         else
         {
-            if ((!chatbotResponse.Contains("Bye")) || (!chatbotResponse.Contains("Thanks for your time")) || (!chatbotResponse.Contains("No worries, take care")) || (!chatbotResponse.Contains("Thanks for using JimBot")))
+            if ((!chatbotResponse.Contains("Bye")) && (!chatbotResponse.Contains("Thanks for your time")) && (!chatbotResponse.Contains("No worries, take care")) && (!chatbotResponse.Contains("Thanks for using JimBot")))
             {
                 if (chatbotResponse.Contains("Ok. Let's do the workout."))
                 {
                     panelsToSetActive.Add("StartWorkoutPanel");
-                    panelsToSetInactive.Add("ExercisesPanel");
-                    panelsToSetInactive.Add("scrollArea");
-                    panelsToSetInactive.Add("IndividualExercisePanel");
-                    panelsToSetInactive.Add("MuscleDiagramPanel");
                     startWorkout = true;
                 }
                 else
@@ -47,20 +40,22 @@ public class ResponseHandler
                     else if (chatbotResponse.Contains("Legs")) diagramToShow = "LegsDiagram";
                     else if (chatbotResponse.Contains("No Equipment")) diagramToShow = "CoreDiagram";
 
-                    if (chatbotResponse.ToLower().Contains("- ")) getExerciseDetails = true;
+                    if (chatbotResponse.ToLower().Contains("- "))
+                    {
+                        panelsToSetActive.Add("ExercisesPanel");
+                        getExerciseDetails = true;
+                    }
                 }
-                audioToPlay = "ChatbotResponse";
             }
             else
             {
                 goHome = true;
             }
+            audioToPlay = "ChatbotResponse";
         }
     }
     
     public ArrayList PanelsToSetActive() { return panelsToSetActive; }
-
-    public ArrayList PanelsToSetInactive() { return panelsToSetInactive; }
 
     public bool CheckGetExerciseDetails() { return getExerciseDetails; }
 
@@ -71,13 +66,4 @@ public class ResponseHandler
     public string CheckAudioToPlay() { return audioToPlay; }
 
     public string CheckDiagramToShow() { return diagramToShow; }
-
-
-    public void REE()
-    {
-        foreach (string item in panelsToSetActive)
-        {
-            //JimBot.PanelSetActive(GameObject.Find(item));
-        }
-    }
 }

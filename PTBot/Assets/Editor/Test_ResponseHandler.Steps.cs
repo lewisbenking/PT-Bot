@@ -1,8 +1,5 @@
 ﻿using LightBDD.NUnit3;
 using NUnit.Framework;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace Assets.Editor
 {
@@ -44,9 +41,9 @@ namespace Assets.Editor
             Assert.That(responseHandler.PanelsToSetActive().Contains("StartWorkoutPanel"));
         }
 
-        private void TheAreasPanelShouldBeDisplayed()
+        private void TheCorrectPanelShouldBeActive(string panel)
         {
-            Assert.That(responseHandler.PanelsToSetActive().Contains("AreasToTrainPanel"));
+            Assert.That(responseHandler.PanelsToSetActive().Contains(panel));
         }
 
         private void TheDiagramShouldBeCorrect(string diagramToShow)
@@ -59,6 +56,5 @@ namespace Assets.Editor
             responseHandler.PlayAudio();
             yield return null;
         }*/
-
     }
 }

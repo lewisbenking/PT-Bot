@@ -1,0 +1,47 @@
+﻿2019-04-17T14:38:33.0948629+01:00;VSTestExecutionThread;Info;SpecFlow+Runner execution started
+2019-04-17T14:38:33.0948629+01:00;VSTestExecutionThread;Info;SpecFlow+Runner 3.0.284 in Framework clr40 in x86 mode execution started
+2019-04-17T14:38:33.0948629+01:00;VSTestExecutionThread;Info;TestAdapter Location: C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\TechTalk.SpecRun.VisualStudio.TestAdapter.dll
+2019-04-17T14:38:33.1407395+01:00;VSTestExecutionThread;Info;SpecRun: running tests in C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Assembly-CSharp-Editor.dll
+2019-04-17T14:38:33.1407395+01:00;VSTestExecutionThread;Info;Output folder configured to "C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\TestResults" (default)
+2019-04-17T14:38:33.1407395+01:00;VSTestExecutionThread;Info;Profile: 
+2019-04-17T14:38:33.1606878+01:00;VSTestExecutionThread;Info;Log file path: C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\TestResults\Unnamed project__2019-04-17T143833.log
+2019-04-17T14:38:33.1626861+01:00;VSTestExecutionThread;Error;Invalid project license: The test assembly name must contain the licensed project name
+2019-04-17T14:38:33.1667085+01:00;VSTestExecutionThread;Info;SpecFlow+Runner Evaluation Mode: Please purchase at http://www.specflow.org/plus to remove test execution delay.
+2019-04-17T14:38:33.1706936+01:00;Thread#13;Info;Checking license
+2019-04-17T14:38:33.1717072+01:00;Thread#13;Error;Invalid project license: The test assembly name must contain the licensed project name
+2019-04-17T14:38:33.1717072+01:00;Thread#13;Error;Invalid project license: The test assembly name must contain the licensed project name
+2019-04-17T14:38:33.1866484+01:00;Thread#13;Info;Evaluation mode: test execution starts in 5 seconds... (this delay is removed in the registered version)
+2019-04-17T14:38:38.1885105+01:00;Thread#13;Info;Evaluation delay finished.
+2019-04-17T14:38:38.1924743+01:00;Thread#13;Info;License check completed
+2019-04-17T14:38:38.1924743+01:00;Thread#13;Info;starting test run
+2019-04-17T14:38:38.1994547+01:00;Thread#13;Info;Discovering target: Default
+2019-04-17T14:38:38.2004502+01:00;Thread#13;Info;Discovering tests from assembly: C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Assembly-CSharp-Editor.dll
+2019-04-17T14:38:38.2628065+01:00:Appdomain Disposed
+2019-04-17T14:38:38.2628065+01:00;Thread#13;Info;Discovered tests from assembly: C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Assembly-CSharp-Editor.dll
+2019-04-17T14:38:38.2628065+01:00:Test Suite Dump
+2019-04-17T14:38:38.2648011+01:00:#0: Unnamed project/ - 
+2019-04-17T14:38:38.2648011+01:00:End: Test Suite Dump
+2019-04-17T14:38:38.2867417+01:00:Thread#0:Scheduler: get next test for thread 0
+2019-04-17T14:38:38.2887616+01:00:Thread#:Scheduler: at the end of normal test queue
+2019-04-17T14:38:38.2887616+01:00:Thread#0:Scheduler: enumerator for thread is at end
+2019-04-17T14:38:38.2887616+01:00:Thread#0:Scheduler: No more tests for thread
+2019-04-17T14:38:38.2897341+01:00:Trying to cancel thread
+2019-04-17T14:38:38.2897341+01:00:Thread cancelled
+2019-04-17T14:38:38.2967349+01:00:Thread#-1:Scheduler: get next test for thread -1
+2019-04-17T14:38:38.2967349+01:00:Thread#:Scheduler: at the end of normal test queue
+2019-04-17T14:38:38.2967349+01:00:Thread#-1:Scheduler: enumerator for thread is at end
+2019-04-17T14:38:38.2977123+01:00;Thread#13;Info;test run finished
+2019-04-17T14:38:38.2977123+01:00;Thread#13;Info;publishing test results
+2019-04-17T14:38:38.3216737+01:00;Thread#13;Info;test results published
+2019-04-17T14:38:38.3216737+01:00;Thread#13;Info;generating reports
+2019-04-17T14:38:38.3735335+01:00;Thread#13;Info;Starting external report generation process
+2019-04-17T14:38:39.4060893+01:00;Thread#13;Error;Could not generate test run result reports. An error occurred in the generator.
+2019-04-17T14:38:39.4060893+01:00;Thread#13;Error;Error output of external program:
+2019-04-17T14:38:39.4220707+01:00:Total: 0
+2019-04-17T14:38:39.4230561+01:00:Succeeded: 0
+2019-04-17T14:38:39.4230561+01:00:Ignored: 0
+2019-04-17T14:38:39.4240395+01:00:Pending: 0
+2019-04-17T14:38:39.4240395+01:00:Skipped: 0
+2019-04-17T14:38:39.4240395+01:00:Failed: 0
+2019-04-17T14:38:39.4310218+01:00;VSTestExecutionThread;Info;Adding attachments to VSTest
+========== End of log file ==========
