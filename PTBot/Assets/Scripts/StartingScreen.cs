@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartingScreen : MonoBehaviour
+public class StartingScreen: MonoBehaviour
 {
     private AudioClip audioClip;
     private AudioSource audioSource;
@@ -11,13 +11,13 @@ public class StartingScreen : MonoBehaviour
 
     void Start()
     {
+        audioSource = GameObject.Find("JimBot").GetComponentInChildren<AudioSource>();
         PlayAudio();
     }
     
     public void PlayAudio()
     {
         audioPlayed = false;
-        audioSource = GameObject.Find("JimBot").GetComponentInChildren<AudioSource>();
         audioSource.Stop();
         audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/Audio/StartingScreen.wav");
         audioSource.spatialBlend = 0.0f;

@@ -9,6 +9,11 @@ public class Instructions : MonoBehaviour
 
     void Start()
     {
+        Setup();
+    }
+
+    public void Setup()
+    {
         audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
         mainPanel = GameObject.Find("MainPanel");
         panelAreasToTrain = GameObject.Find("Help_AreasToTrainPanel"); PanelSetActive(panelAreasToTrain, false);

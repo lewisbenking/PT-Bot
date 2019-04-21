@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{E169AC5C-5DCA-5A0B-19A6-C83AC321B08D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -81,6 +82,7 @@
     <Compile Include="Assets\Scripts\Instructions.cs" />
     <Compile Include="Assets\Scripts\JimBot.cs" />
     <Compile Include="Assets\Scripts\MicInput.cs" />
+    <Compile Include="Assets\Scripts\ResponseHandler.cs" />
     <Compile Include="Assets\Scripts\StartingScreen.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -115,13 +117,12 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
-    <None Include="Assets\Scripts\JimBot.txt" />
+    <None Include="app.config" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Crazy Minnow Studio\SALSA with RandomEyes\Third Party Support\Fuse Character Creator\ReadMe.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\Scripts\DialogflowAPIScript.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -371,6 +372,12 @@
     <Reference Include="Google.Apis">
       <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR_4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Google.Apis.dll</HintPath>
     </Reference>
+    <Reference Include="LightBDD.Framework">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR_4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/LightBDD.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="LightBDD.NUnit3">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR_4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/LightBDD.NUnit3.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR_4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -388,6 +395,12 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR_4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="LightBDD.Core">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR_4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/LightBDD.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NUnit3.TestAdapter">
+      <HintPath>C:/Users/lbk95/Documents/_ASTON/YEAR_4/CS3010_IndividualProject/FYP/Repos/PT-Bot/PTBot/Assets/Plugins/NUnit3.TestAdapter.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

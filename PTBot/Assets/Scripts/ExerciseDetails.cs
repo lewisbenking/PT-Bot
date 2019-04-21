@@ -5,7 +5,7 @@
         // { name, url, description}
         // Arm Exercises
        new string[] {" Alternate Dumbbell Curls", "https://videos.bodybuilding.com/video/mp4/28000/28901m.mp4", "1. Stand up straight with a dumbbell in each hand. Keep upper arms stationary.\n2. Exhale and curl left hand dumbbell while contracting your left bicep. Rotate the dumbbell during this motion so your palms are facing towards your upper body.\n3. When fully contracted squeeze your bicep, then lower the weight back down to the starting position as you inhale.\n4. Repeat with right arm.\n5. Continue alternating arms for desired amount of repetitions.\n"},
-       new string[] { " AlternateDumbbellCurlsIncline", "https://videos.bodybuilding.com/video/mp4/24000/25601m.mp4", "1. Sit down on incline bench with dumbbells held in each hand at arm’s length.\n2. Exhale and curl left hand dumbbell while contracting your left bicep.\n3. When fully contracted squeeze your bicep, then lower the weight back down to the starting position as you inhale.\n4. Repeat with right arm.\n5. Continue alternating arms for desired amount of repetitions.\n"},
+       new string[] { " Alternate Dumbbell Curls Incline", "https://videos.bodybuilding.com/video/mp4/24000/25601m.mp4", "1. Sit down on incline bench with dumbbells held in each hand at arm’s length.\n2. Exhale and curl left hand dumbbell while contracting your left bicep.\n3. When fully contracted squeeze your bicep, then lower the weight back down to the starting position as you inhale.\n4. Repeat with right arm.\n5. Continue alternating arms for desired amount of repetitions.\n"},
        new string[] { " Barbell Curls", "https://videos.bodybuilding.com/video/mp4/24000/25681m.mp4", "1. Stand upright and hold the barbell at a shoulder-width grip.\n2. Hold upper arms stationary, curl the barbell and contract whilst exhaling.\n3. Squeeze the biceps when contracted.\n4. Inhale whilst lowering the barbell to the starting position.\n5. Repeat for desired amount of repetitions.\n"},
        new string[] { " Barbell Curls Incline", "https://videos.bodybuilding.com/video/mp4/24000/25691m.mp4", "1. Lie against an incline bench holding the barbell hanging down.\n2. Hold upper arms stationary, curl the barbell and contract whilst exhaling.\n3. Squeeze the biceps when contracted.\n4. Inhale whilst lowering the barbell to the starting position.\n5. Repeat for desired number of repetitions.\n"},
        new string[] { " Concentration Curls", "https://videos.bodybuilding.com/video/mp4/32000/32091m.mp4", "1. Sit on a flat bench and hold a dumbbell between your legs.\n2. Use your left arm to pick the dumbbell up and place your upper left arm on your inner left thigh. The palm of your left hand should face away from your left thigh.\n3. Hold the upper arm stationary and curl the dumbbell whilst exhaling and contracting the bicep.\n4. Squeeze the bicep when contracted.\n5. Lower the dumbbell to the starting position as you inhale.\n6. Repeat for desired number of repetitions, then repeat with your right arm.\n"},
@@ -38,6 +38,11 @@
        new string[] { " Dumbbell Lunges", "https://videos.bodybuilding.com/video/mp4/54000/54851m.mp4", "1. Stand upright and hold a dumbbell in each hand by your sides.\n2. Step forward with your left leg and lower your upper body down. Keep your knee behind your toes. Make sure to inhale during this step.\n3. Use the heel of your foot to push up and return to the starting position. Make sure to exhale during this step.\n4. Repeat for desired number of repetitions whilst alternating with your right leg."},
        new string[] { " Romanian Deadlift", "https://videos.bodybuilding.com/video/mp4/120000/120001m.mp4", "1. Hold the bar at hip level with your palms facing down. Keep your back arched and slightly bend your knees.\n2. Lower the bar by moving your bum back as far as you can. Keep looking forward and keep the bar close to your body.\n3. Drive your hips forward to stand up tall.\n4. Repeat for desired number of repetitions." }
     };
+
+    public string[][] GetEntireArray()
+    {
+        return Exercises;
+    }
 
     public int GetArrayIndex(string value)
     {

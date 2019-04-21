@@ -23,6 +23,8 @@ public class DialogflowAPIScript : MonoBehaviour
     private TextMeshProUGUI chatbotResponse;
     private JimBot jimBot;
 
+    private ResponseHandler responseHandler;
+
     private void Awake()
     {
         jimBot = GameObject.Find("JimBot").AddComponent<JimBot>();
@@ -47,6 +49,7 @@ public class DialogflowAPIScript : MonoBehaviour
     private void Start()
     {
         exerciseDetails = new ExerciseDetails();
+        responseHandler = new ResponseHandler();
         animator = jimBotCharacter.GetComponent<Animator>();
         url = "https://dialogflow.googleapis.com/v2beta1/projects/pt-bot-d56dd/agent/sessions/34563:detectIntent";
         AccessToken = GetAccessToken();
@@ -231,6 +234,35 @@ public class DialogflowAPIScript : MonoBehaviour
 
     private void ResponseHandler(string chatbotResponse)
     {
+        responseHandler.HandleResponse(chatbotResponse);
+        jimBot.PlayAudio(responseHandler.CheckAudioToPlay());
+        if (responseHandler.CheckGoHome()) LoadScene(1);
+
+        if (string.IsNullOrWhiteSpace(responseHandler.CheckDiagramToShow()))
+        {
+            diagramToShow = responseHandler.CheckDiagramToShow();
+        }
+
+        foreach (string item in responseHandler.PanelsToSetInactive())
+        {
+            jimBot.PanelSetActive(GameObject.Find(item), false);
+        }
+        foreach (string item in responseHandler.PanelsToSetActive())
+        {
+            jimBot.PanelSetActive(GameObject.Find(item), true);
+        }
+
+        if (responseHandler.CheckGetExerciseDetails())
+        {
+            jimBot.GetExerciseDetails(chatbotResponse);
+        }
+        else if (responseHandler.CheckStartWorkout())
+        {
+            StartWorkout();
+        }
+
+
+        /*
         if (string.IsNullOrWhiteSpace(chatbotResponse))
         {
             jimBot.PlayAudio("DefaultErrorResponse");
@@ -257,6 +289,6 @@ public class DialogflowAPIScript : MonoBehaviour
                 if (chatbotResponse.ToLower().Contains("- ")) jimBot.GetExerciseDetails(chatbotResponse); 
                 jimBot.PlayAudio("ChatbotResponse");
             }
-        }
+        }*/
     }
 }

@@ -1,0 +1,2762 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LightBDD.Framework</name>
+    </assembly>
+    <members>
+        <member name="T:LightBDD.Framework.CompositeStep">
+            <summary>
+            Class representing composite step that consists of sub-step collection and optional context provider defining context instance that should be shared between all steps.
+            If a step method returns instance of <see cref="T:LightBDD.Framework.CompositeStep"/>, the specified sub-steps will be included in step execution, making given parent step passing only if all are successful.<br/>
+            Example usage:
+            <code>
+            CompositeStep Given_invoice_with_item()
+            {
+                return CompositeStep.DefineNew()
+                    .AddAsyncSteps(
+                        _ => Given_product_is_available_in_product_storage("wooden desk"),
+                        _ => When_customer_buys_product("wooden desk"),
+                        _ => Then_invoice_should_contain_product_with_price_of_AMOUNT_pounds("wooden desk", 62))
+                    .Build();
+            }
+            </code>
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.CompositeStep.DefineNew">
+            <summary>
+            Instantiates a new <see cref="T:LightBDD.Framework.Scenarios.ICompositeStepBuilder"/> allowing to build <see cref="T:LightBDD.Framework.CompositeStep"/> instance.<br/>
+            Example usage:
+            <code>
+            CompositeStep Given_invoice_with_item()
+            {
+                return CompositeStep.DefineNew()
+                    .AddAsyncSteps(
+                        _ => Given_product_is_available_in_product_storage("wooden desk"),
+                        _ => When_customer_buys_product("wooden desk"),
+                        _ => Then_invoice_should_contain_product_with_price_of_AMOUNT_pounds("wooden desk", 62))
+                    .Build();
+            }
+            </code>
+            </summary>
+            <returns><see cref="T:LightBDD.Framework.Scenarios.ICompositeStepBuilder"/> instance.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Configuration.FeatureProgressNotifierConfiguration">
+            <summary>
+            Configuration class allowing to customize feature progress notification behavior.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Configuration.FeatureProgressNotifierConfiguration.Notifier">
+            <summary>
+            Returns feature progress notifier.
+            By default it is initialized with <see cref="P:LightBDD.Framework.Notification.NoProgressNotifier.Default"/> instance.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.FeatureProgressNotifierConfiguration.UpdateNotifier(LightBDD.Core.Notification.IFeatureProgressNotifier)">
+            <summary>
+            Replaces the <see cref="P:LightBDD.Framework.Configuration.FeatureProgressNotifierConfiguration.Notifier"/> with <paramref name="notifier"/> value.
+            </summary>
+            <param name="notifier">New notifier to set.</param>
+            <returns>Self.</returns>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="notifier"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.FeatureProgressNotifierConfiguration.AppendNotifiers(LightBDD.Core.Notification.IFeatureProgressNotifier[])">
+            <summary>
+            Appends <paramref name="notifiers"/> to existing <see cref="P:LightBDD.Framework.Configuration.FeatureProgressNotifierConfiguration.Notifier"/> making all of them used during notification.
+            </summary>
+            <param name="notifiers">Notifiers to append</param>
+            <returns>Self</returns>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="notifiers"/> collection or any of it's item is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.FeatureProgressNotifierConfiguration.ClearNotifiers">
+            <summary>
+            Sets <see cref="P:LightBDD.Framework.Configuration.FeatureProgressNotifierConfiguration.Notifier"/> to <see cref="P:LightBDD.Framework.Notification.NoProgressNotifier.Default"/> instance that does not report any notifications.
+            </summary>
+            <returns>Self.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Configuration.FrameworkConfigurationExtensions">
+            <summary>
+            Extensions allowing to apply and configure framework default configuration.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.FrameworkConfigurationExtensions.WithFrameworkDefaults(LightBDD.Core.Configuration.LightBddConfiguration)">
+            <summary>
+            Applies framework default configuration.
+            </summary>
+            <param name="configuration">Configuration.</param>
+            <returns><paramref name="configuration"/>.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.FrameworkConfigurationExtensions.RegisterFrameworkDefaultGeneralFormatters(LightBDD.Core.Configuration.ValueFormattingConfiguration)">
+            <summary>
+            Applies framework default general formatters.
+            </summary>
+            <param name="configuration">Configuration.</param>
+            <returns><paramref name="configuration"/>.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.FrameworkConfigurationExtensions.RegisterFrameworkDefaultReportWriters(LightBDD.Core.Configuration.ReportWritersConfiguration)">
+            <summary>
+            Applies default report generators to generate <c>~\\Reports\\FeaturesReport.html</c>(Win) <c>~/Reports/FeaturesReport.html</c>(Unix) reports.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.FrameworkConfigurationExtensions.FeatureProgressNotifierConfiguration(LightBDD.Core.Configuration.LightBddConfiguration)">
+            <summary>
+            Retrieves <see cref="M:LightBDD.Framework.Configuration.FrameworkConfigurationExtensions.FeatureProgressNotifierConfiguration(LightBDD.Core.Configuration.LightBddConfiguration)"/> from <paramref name="configuration"/> for further customizations.
+            </summary>
+            <param name="configuration">Configuration object.</param>
+            <returns>Configuration object.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.FrameworkConfigurationExtensions.ScenarioProgressNotifierConfiguration(LightBDD.Core.Configuration.LightBddConfiguration)">
+            <summary>
+            Retrieves <see cref="M:LightBDD.Framework.Configuration.FrameworkConfigurationExtensions.ScenarioProgressNotifierConfiguration(LightBDD.Core.Configuration.LightBddConfiguration)"/> from <paramref name="configuration"/> for further customizations.
+            </summary>
+            <param name="configuration">Configuration object.</param>
+            <returns>Configuration object.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.FrameworkConfigurationExtensions.AddFileWriter``1(LightBDD.Core.Configuration.ReportWritersConfiguration,System.String)">
+            <summary>
+            Adds <see cref="T:LightBDD.Framework.Reporting.ReportFileWriter"/> instance configured to format report with <typeparamref name="TFormatter"/> and write it to <paramref name="outputPath"/>.
+            </summary>
+            <typeparam name="TFormatter">Type of report formatter.</typeparam>
+            <param name="configuration">Configuration.</param>
+            <param name="outputPath">Output path for the report.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration">
+            <summary>
+            Configuration class allowing to customize scenario progress notification behavior.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.NotifierProvider">
+            <summary>
+            Returns function providing scenario progress notifier, where function parameter is feature fixture class instance.
+            By default it is initialized to return <see cref="P:LightBDD.Framework.Notification.NoProgressNotifier.Default"/> instance.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.UpdateNotifierProvider(System.Func{LightBDD.Core.Notification.IScenarioProgressNotifier})">
+            <summary>
+            Replaces the <see cref="P:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.NotifierProvider"/> with <paramref name="notifierProvider"/> value.
+            </summary>
+            <param name="notifierProvider">New provider to set.</param>
+            <returns>Self.</returns>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="notifierProvider"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.UpdateNotifierProvider``1(System.Func{``0,LightBDD.Core.Notification.IScenarioProgressNotifier})">
+            <summary>
+            Replaces the <see cref="P:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.NotifierProvider"/> with <paramref name="notifierProvider"/> value.
+            </summary>
+            <param name="notifierProvider">New provider to set.</param>
+            <typeparam name="TFixture">Feature fixture type.</typeparam>
+            <returns>Self.</returns>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="notifierProvider"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.AppendNotifierProviders(System.Func{LightBDD.Core.Notification.IScenarioProgressNotifier}[])">
+            <summary>
+            Appends <paramref name="notifierProviders"/> to existing <see cref="P:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.NotifierProvider"/> making all of them used during notification.
+            </summary>
+            <param name="notifierProviders">Notifiers to append</param>
+            <returns>Self</returns>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="notifierProviders"/> collection or any of it's item is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.AppendNotifierProviders``1(System.Func{``0,LightBDD.Core.Notification.IScenarioProgressNotifier}[])">
+            <summary>
+            Appends <paramref name="notifierProviders"/> to existing <see cref="P:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.NotifierProvider"/> making all of them used during notification.
+            </summary>
+            <param name="notifierProviders">Notifiers to append</param>
+            <returns>Self</returns>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="notifierProviders"/> collection or any of it's item is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.ClearNotifierProviders">
+            <summary>
+            Clears <see cref="P:LightBDD.Framework.Configuration.ScenarioProgressNotifierConfiguration.NotifierProvider"/> to use <see cref="P:LightBDD.Framework.Notification.NoProgressNotifier.Default"/> instance that does not report any notifications.
+            </summary>
+            <returns>Self.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Execution.Coordination.FrameworkFeatureCoordinator">
+            <summary>
+            Framework level feature coordinator.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Execution.Coordination.FrameworkFeatureCoordinator.#ctor(LightBDD.Core.Extensibility.IntegrationContext)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="context">Integration context</param>
+        </member>
+        <member name="T:LightBDD.Framework.Expectations.Expect">
+            <summary>
+            Type allowing to define expectations.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Expectations.Expect.To">
+            <summary>
+            Creates expectation composer.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.Expect.Type``1">
+            <summary>
+            Returns <see cref="T:LightBDD.Framework.Expectations.TypeRef`1"/> that is used for inferring type <typeparamref name="T"/> in generic methods.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Expectations.Expectation`1">
+            <summary>
+            Base class that should be used for all <see cref="T:LightBDD.Framework.Expectations.IExpectation`1"/> implementations.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.Expectation`1.Verify(`0,LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.Expectation`1.Format(LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.Expectation`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.Expectation`1.FormatFailure(LightBDD.Core.Formatting.Values.IValueFormattingService,System.String,System.String[])">
+            <summary>
+            A helper methods used to format failure message for the expectation.
+            It allows to format a default format failure message and add details in new line, shifted with tabulator character
+            </summary>
+            <param name="formattingService">Formatting service.</param>
+            <param name="failureMessage">Failure message</param>
+            <param name="details">Failure details that will be added to the message in new line, shifted with tabulator character.</param>
+            <returns>Expectation result.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.Expectation`1.FormatFailure(LightBDD.Core.Formatting.Values.IValueFormattingService,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            A helper methods used to format failure message for the expectation.
+            It allows to format a default format failure message and add details in new line, shifted with tabulator character
+            </summary>
+            <param name="formattingService">Formatting service.</param>
+            <param name="failureMessage">Failure message</param>
+            <param name="details">Failure details that will be added to the message in new line, shifted with tabulator character.</param>
+            <returns>Expectation result.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Expectations.ExpectationExtensions">
+            <summary>
+            Extensions offering methods for defining expectations.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.ComposeSimple``1(LightBDD.Framework.Expectations.IExpectationComposer,System.Func{LightBDD.Core.Formatting.Values.IValueFormattingService,System.String},System.Func{``0,System.Boolean})">
+            <summary>
+            Helper method creating simple expectation based on <paramref name="predicateFn"/> and <paramref name="descriptionFn"/>.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="descriptionFn">Expectation description</param>
+            <param name="predicateFn">Expectation predicate</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.Equal``1(LightBDD.Framework.Expectations.IExpectationComposer,``0)">
+            <summary>
+            Creates expectation for values to be equal to <paramref name="expected"/> value.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="expected">Expected value</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeIn``1(LightBDD.Framework.Expectations.IExpectationComposer,``0[])">
+            <summary>
+            Creates expectation for values to be equal one of values in <paramref name="expectedCollection"/>.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="expectedCollection">Collection of expected values</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.Contain``1(LightBDD.Framework.Expectations.IExpectationComposer,``0)">
+            <summary>
+            Creates expectation for collections to contain value specified by <paramref name="value"/> parameter.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="value">Expected value</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.EqualCollection``1(LightBDD.Framework.Expectations.IExpectationComposer,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates expectation for collections to equal sequence specified by <paramref name="collection"/> parameter.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="collection">Expected collection</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="collection"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.EqualCollection``1(LightBDD.Framework.Expectations.IExpectationComposer,``0[])">
+            <summary>
+            Creates expectation for collections to equal sequence specified by <paramref name="collection"/> parameter.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="collection">Expected collection</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="collection"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.EquivalentCollection``1(LightBDD.Framework.Expectations.IExpectationComposer,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates expectation for collections to equivalent sequence specified by <paramref name="collection"/> parameter.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="collection">Expected collection</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="collection"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.EquivalentCollection``1(LightBDD.Framework.Expectations.IExpectationComposer,``0[])">
+            <summary>
+            Creates expectation for collections to equivalent sequence specified by <paramref name="collection"/> parameter.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="collection">Expected collection</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="collection"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.AnyItem``1(LightBDD.Framework.Expectations.IExpectationComposer,System.Func{LightBDD.Framework.Expectations.IExpectationComposer,LightBDD.Framework.Expectations.IExpectation{``0}})">
+            <summary>
+            Creates expectation for collections with at least one item fulfilling expectation specified by <paramref name="expectationBuilder"/> parameter.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="expectationBuilder">Expectation builder</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.EveryItem``1(LightBDD.Framework.Expectations.IExpectationComposer,System.Func{LightBDD.Framework.Expectations.IExpectationComposer,LightBDD.Framework.Expectations.IExpectation{``0}})">
+            <summary>
+            Creates expectation for collections with every item fulfilling expectation specified by <paramref name="expectationBuilder"/> parameter.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="expectationBuilder">Expectation builder</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeLike(LightBDD.Framework.Expectations.IExpectationComposer,System.String)">
+             <summary>
+             Creates expectation for strings to match pattern specified by <paramref name="pattern"/> parameter.
+            
+             The <paramref name="pattern"/> may have special characters:
+             <list type="bullet">
+             <item><description>* - 0-more characters</description></item>
+             <item><description>? - 1 character</description></item>
+             <item><description># - 1 digit</description></item>
+             </list>
+             </summary>
+             <param name="composer">Composer</param>
+             <param name="pattern">Expected pattern</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeLikeIgnoreCase(LightBDD.Framework.Expectations.IExpectationComposer,System.String)">
+             <summary>
+             Creates expectation for strings to match pattern specified by <paramref name="pattern"/> parameter, where character case is ignored.
+            
+             The <paramref name="pattern"/> may have special characters:
+             <list type="bullet">
+             <item><description>* - 0-more characters</description></item>
+             <item><description>? - 1 character</description></item>
+             <item><description># - 1 digit</description></item>
+             </list>
+             </summary>
+             <param name="composer">Composer</param>
+             <param name="pattern">Expected pattern</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.Match(LightBDD.Framework.Expectations.IExpectationComposer,System.String)">
+            <summary>
+            Creates expectation for strings to match regex pattern specified by <paramref name="pattern"/> parameter.
+            </summary>
+            <param name="composer">Composer</param>
+            <param name="pattern">Expected pattern</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.MatchIgnoreCase(LightBDD.Framework.Expectations.IExpectationComposer,System.String)">
+            <summary>
+            Creates expectation for strings to match regex pattern specified by <paramref name="pattern"/> parameter, where character case is ignored.
+            </summary>
+            <param name="composer">Composer</param>
+            <param name="pattern">Expected pattern</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeNull(LightBDD.Framework.Expectations.IExpectationComposer)">
+            <summary>
+            Creates expectation for values to be null.
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeNull``1(LightBDD.Framework.Expectations.IExpectationComposer)">
+            <summary>
+            Creates expectation for values to be null.
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeEmpty(LightBDD.Framework.Expectations.IExpectationComposer)">
+            <summary>
+            Creates expectation for collections to be empty.
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeEmpty``1(LightBDD.Framework.Expectations.IExpectationComposer)">
+            <summary>
+            Creates expectation for collections to be empty.
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeBetween``1(LightBDD.Framework.Expectations.IExpectationComposer,``0,``0)">
+            <summary>
+            Creates expectation for comparable types to be between values specified by <paramref name="a"/> and <paramref name="b"/> parameters, where parameter values are not included.
+            The <paramref name="a"/> parameter value may be greater or lower than value of <paramref name="b"/> - both scenarios are supported.
+            None of the provided parameters can be null.
+            </summary>
+            <param name="composer">Composer</param>
+            <param name="a">Parameter A.</param>
+            <param name="b">Parameter B.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="a"/> or <paramref name="b"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeGreaterThan``1(LightBDD.Framework.Expectations.IExpectationComposer,``0)">
+            <summary>
+            Creates expectation for comparable types to be greater than value specified by <paramref name="value"/>, where the value cannot be null.
+            </summary>
+            <param name="composer">Composer</param>
+            <param name="value">Value</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="value"/> parameter value is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeLessThan``1(LightBDD.Framework.Expectations.IExpectationComposer,``0)">
+            <summary>
+            Creates expectation for comparable types to be less than value specified by <paramref name="value"/>, where the value cannot be null.
+            </summary>
+            <param name="composer">Composer</param>
+            <param name="value">Value</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="value"/> parameter value is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeGreaterOrEqual``1(LightBDD.Framework.Expectations.IExpectationComposer,``0)">
+            <summary>
+            Creates expectation for comparable types to be greater or equal value specified by <paramref name="value"/>, where the value cannot be null.
+            </summary>
+            <param name="composer">Composer</param>
+            <param name="value">Value</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="value"/> parameter value is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeLessOrEqual``1(LightBDD.Framework.Expectations.IExpectationComposer,``0)">
+            <summary>
+            Creates expectation for comparable types to be less or equal value specified by <paramref name="value"/>, where the value cannot be null.
+            </summary>
+            <param name="composer">Composer</param>
+            <param name="value">Value</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="value"/> parameter value is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeAllTrue``1(LightBDD.Framework.Expectations.IExpectationComposer,System.Func{LightBDD.Framework.Expectations.IExpectationComposer,LightBDD.Framework.Expectations.IExpectation{``0}}[])">
+            <summary>
+            Creates expectation for values to fulfill all expectations specified by <paramref name="expectationBuilder"/> parameter.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="expectationBuilder">Expectation builder</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.BeAnyTrue``1(LightBDD.Framework.Expectations.IExpectationComposer,System.Func{LightBDD.Framework.Expectations.IExpectationComposer,LightBDD.Framework.Expectations.IExpectation{``0}}[])">
+            <summary>
+            Creates expectation for values to fulfill any expectation specified by <paramref name="expectationBuilder"/> parameter.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="composer">Composer</param>
+            <param name="expectationBuilder">Expectation builder</param>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.And``1(LightBDD.Framework.Expectations.IExpectation{``0},System.Func{LightBDD.Framework.Expectations.IExpectationComposer,LightBDD.Framework.Expectations.IExpectation{``0}})">
+            <summary>
+            Combines the existing expectation with one specified by <paramref name="andExpectation"/> parameter where both have to be fulfilled by values.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.Or``1(LightBDD.Framework.Expectations.IExpectation{``0},System.Func{LightBDD.Framework.Expectations.IExpectationComposer,LightBDD.Framework.Expectations.IExpectation{``0}})">
+            <summary>
+            Combines the existing expectation with one specified by <paramref name="orExpectation"/> parameter where at least one has to be fulfilled by values.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.CastFrom``2(LightBDD.Framework.Expectations.IExpectation{``0},LightBDD.Framework.Expectations.TypeRef{``1})">
+             <summary>
+             Creates a base type expectation for given expectation, that internally will cast <typeparamref name="TBase"/> to <typeparamref name="TDerived"/> during evaluation.
+            
+             Example usage: <code>Expect.To.MatchRegex("[0-9]+").CastFrom(Expect.Type&lt;object&gt;)</code>
+             </summary>
+             <typeparam name="TDerived">Derived type.</typeparam>
+             <typeparam name="TBase">Base type.</typeparam>
+             <param name="expectation">Expectation.</param>
+             <param name="baseTypeRef">Base type.</param>
+             <returns>Base type expectation.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationExtensions.ToVerifiable``1(LightBDD.Framework.Expectations.IExpectation{``0})">
+            <summary>
+            Creates <see cref="T:LightBDD.Framework.Parameters.Verifiable`1"/> out of the expectation.
+            </summary>
+            <typeparam name="T">Expectation value type</typeparam>
+            <param name="expectation">Expectation</param>
+            <returns>Verifiable.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Expectations.ExpectationResult">
+            <summary>
+            Expectation verification result.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Expectations.ExpectationResult.Success">
+            <summary>
+            Default result representing success.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Expectations.ExpectationResult.IsValid">
+            <summary>
+            Returns <c>true</c> if verification passed.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Expectations.ExpectationResult.Message">
+            <summary>
+            Returns verification message, provided upon failure.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationResult.op_Implicit(LightBDD.Framework.Expectations.ExpectationResult)~System.Boolean">
+            <summary>
+            Returns <c>true</c> if verification passed.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationResult.op_True(LightBDD.Framework.Expectations.ExpectationResult)">
+            <summary>
+            Returns <c>true</c> if verification passed.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationResult.op_False(LightBDD.Framework.Expectations.ExpectationResult)">
+            <summary>
+            Returns <c>true</c> if verification failed.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.ExpectationResult.Failure(System.String)">
+            <summary>
+            Creates result representing verification failure.
+            </summary>
+            <param name="message">Failure message</param>
+        </member>
+        <member name="T:LightBDD.Framework.Expectations.IExpectation`1">
+            <summary>
+            Interface representing expectation that can be used to verify against specified value.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.IExpectation`1.Verify(`0,LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <summary>
+            Verifies if specified <paramref name="value"/> meets the expectation.
+            </summary>
+            <param name="value">Value to verify.</param>
+            <param name="formattingService">Formatting service.</param>
+            <returns>Expectation verification result.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Expectations.IExpectationComposer">
+            <summary>
+            Interface representing expectation composer.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Expectations.IExpectationComposer.Not">
+            <summary>
+            Negates the expectation that is going to be composed.
+            It can be used multiple times, flipping the negation flag every time.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.IExpectationComposer.Compose``1(LightBDD.Framework.Expectations.Expectation{``0})">
+            <summary>
+            Composes the expectation from <paramref name="expectation"/> parameter and the negation state defined by <see cref="P:LightBDD.Framework.Expectations.IExpectationComposer.Not"/> property.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="expectation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBDD.Framework.Expectations.IExpectationComposer.Equals(System.Object)">
+            <summary>
+            This method should not be used as it does not describe an expectation.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Expectations.TypeRef`1">
+            <summary>
+            Helper type allowing to infer type <typeparamref name="T"/> in generic methods.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Extensibility.BddRunnerExtensions">
+            <summary>
+            <see cref="T:LightBDD.Framework.IBddRunner`1"/> extensions.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Extensibility.BddRunnerExtensions.GetBddRunner(LightBDD.Core.Extensibility.IFeatureRunner,System.Object)">
+            <summary>
+            Method allowing to retrieve the <see cref="T:LightBDD.Framework.IBddRunner"/> instance from <see cref="T:LightBDD.Core.Extensibility.IFeatureRunner"/>.
+            The <see cref="T:LightBDD.Framework.IBddRunner"/> is a main runner interface that should be used for executing LightBDD scenarios, while the interfaces coming from LightBDD.Core namespace should be used only in integration projects.
+            </summary>
+            <param name="featureRunner">Instance of <see cref="T:LightBDD.Core.Extensibility.IFeatureRunner"/>.</param>
+            <param name="fixture">Feature fixture instance.</param>
+            <returns></returns>
+        </member>
+        <member name="T:LightBDD.Framework.Extensibility.DefaultIntegrationContext">
+            <summary>
+            A default implementation of <see cref="T:LightBDD.Core.Extensibility.IntegrationContext"/>.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.DefaultIntegrationContext.MetadataProvider">
+            <inheritdoc />
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.DefaultIntegrationContext.ExceptionToStatusMapper">
+            <inheritdoc />
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.DefaultIntegrationContext.FeatureProgressNotifier">
+            <inheritdoc />
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.DefaultIntegrationContext.ScenarioProgressNotifierProvider">
+            <inheritdoc />
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.DefaultIntegrationContext.ExecutionExtensions">
+            <inheritdoc />
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.DefaultIntegrationContext.Configuration">
+            <inheritdoc />
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.DefaultIntegrationContext.DependencyContainer">
+            <inheritdoc />
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.DefaultIntegrationContext.NameFormatter">
+            <inheritdoc />
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.DefaultIntegrationContext.ValueFormattingService">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Extensibility.DefaultIntegrationContext.#ctor(LightBDD.Core.Configuration.LightBddConfiguration,LightBDD.Core.Extensibility.CoreMetadataProvider,System.Func{System.Exception,LightBDD.Core.Results.ExecutionStatus})">
+            <summary>
+            Default constructor sealing provided <paramref name="configuration"/> and initializing all properties.
+            </summary>
+            <param name="configuration">Configuration to use.</param>
+            <param name="metadataProvider"><see cref="T:LightBDD.Core.Extensibility.CoreMetadataProvider"/> instance to use.</param>
+            <param name="exceptionToStatusMapper">Exception to status mapper function.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Extensibility.IIntegrableCompositeStepBuilder">
+            <summary>
+            Interface allowing to build composite step from list of sub-steps described by <see cref="T:LightBDD.Core.Extensibility.StepDescriptor"/> instances and step context.
+            The interface is dedicated for projects extending LightBDD with user friendly API for defining composite steps - it should not be used directly by regular LightBDD users. 
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Extensibility.IIntegrableCompositeStepBuilder.WithStepContext(System.Func{System.Object},System.Boolean)">
+            <summary>
+            Uses <paramref name="contextProvider"/> to instantiate context that will be shared with all sub-steps.
+            Please note that context can be specified only once and only when there is no steps added yet.
+            </summary>
+            <param name="contextProvider">Context provider function.</param>
+            <param name="takeOwnership">Specifies if scenario runner should take ownership of the context instance. If set to true and context instance implements <see cref="T:System.IDisposable"/>, it will be disposed after scenario finish.</param>
+            <returns>Self.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if context is already specified or if some steps has been already added.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Extensibility.IIntegrableCompositeStepBuilder.WithStepContext(System.Func{LightBDD.Core.Dependencies.IDependencyResolver,System.Object},System.Action{LightBDD.Core.Dependencies.ContainerConfigurator})">
+            <summary>
+            Uses <paramref name="contextProvider"/> to instantiate context that will be shared with all sub-steps.
+            Please note that context can be specified only once and only when there is no steps added yet.
+            </summary>
+            <param name="contextProvider">Context provider function.</param>
+            <param name="scopeConfigurator">Scope configurator used to configure container, if provided.</param>
+            <returns>Self.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if context is already specified or if some steps has been already added.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Extensibility.IIntegrableCompositeStepBuilder.Build">
+            <summary>
+            Builds <see cref="T:LightBDD.Framework.CompositeStep"/> based on specified steps and step context provider.
+            </summary>
+            <returns><see cref="T:LightBDD.Framework.CompositeStep"/> instance.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Extensibility.IIntegrableStepGroupBuilder">
+            <summary>
+            Interface allowing to configure step group such as scenario or composite step from list of sub-steps described by <see cref="T:LightBDD.Core.Extensibility.StepDescriptor"/> instances.
+            The interface is dedicated for projects extending LightBDD with user friendly API for defining composite steps - it should not be used directly by regular LightBDD users. 
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Extensibility.IIntegrableStepGroupBuilder.AddSteps(System.Collections.Generic.IEnumerable{LightBDD.Core.Extensibility.StepDescriptor})">
+            <summary>
+            Adds <paramref name="steps"/> to the sub-step collection.
+            </summary>
+            <param name="steps">Steps to add.</param>
+            <returns>Self.</returns>
+        </member>
+        <member name="P:LightBDD.Framework.Extensibility.IIntegrableStepGroupBuilder.Configuration">
+            <summary>
+            Configuration.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.FeatureDescriptionAttribute">
+             <summary>
+             Feature description attribute that can be applied on feature test class.
+             May be used to enrich feature class with description like "In order to... As a... I want to..."
+             or similar, that would be used by progress notifier and would be included in summary.
+            
+             If given implementation supports alternative description attributes, and both are applied on class, this one would be used.
+             </summary>
+        </member>
+        <member name="P:LightBDD.Framework.FeatureDescriptionAttribute.Description">
+            <summary>
+            Feature description.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.FeatureDescriptionAttribute.#ctor(System.String)">
+            <summary>
+            Constructor allowing to associate description.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Formatting.DefaultNameFormatter">
+            <summary>
+            Default implementation of <see cref="T:LightBDD.Core.Formatting.INameFormatter"/> interface.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Formatting.DefaultNameFormatter.Instance">
+            <summary>
+            Returns instance of the <see cref="T:LightBDD.Framework.Formatting.DefaultNameFormatter"/>.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.DefaultNameFormatter.FormatName(System.String)">
+            <summary>
+            Formats name into readable text.
+            This method applies following replacements:<br/>
+            "__" -> ": "<br/>
+            "_s_" -> "'s "<br/>
+            "_" -> " "<br/>
+            </summary>
+            <param name="name">Name to format.</param>
+            <returns>Formatted text.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Formatting.FormatAttribute">
+            <summary>
+            Attribute allowing to define how step parameter value should be formatted.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.FormatAttribute.#ctor(System.String)">
+            <summary>
+            Constructor allowing to define how step parameter should be formatted.
+            The <paramref name="format"/> argument represents string.Format() format parameter, where <c>{0}</c> would be a passed parameter instance.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.FormatAttribute.FormatValue(System.Object,LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.FormatAttribute.CanFormat(System.Type)">
+            <summary>
+            Returns true if <paramref name="type"/> is assignable to <see cref="P:LightBDD.Framework.Formatting.FormatAttribute.SupportedType"/>.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Formatting.FormatAttribute.SupportedType">
+            <summary>
+            Specifies types for which this formatter is applicable for.
+            Any type that is assignable to <see cref="P:LightBDD.Framework.Formatting.FormatAttribute.SupportedType"/> would be formattable by this formatter.
+            By default, <see cref="P:LightBDD.Framework.Formatting.FormatAttribute.SupportedType"/> is <see cref="T:System.Object"/>.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Formatting.FormatBooleanAttribute">
+            <summary>
+            Attribute allowing to define formatting rules for step parameter of boolean type.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.FormatBooleanAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Constructor allowing to associate string constants that would be used for <c>true</c> and <c>false</c> value.
+            </summary>
+            <param name="trueValue">String constant used for <c>true</c> value.</param>
+            <param name="falseValue">String constant used for <c>false</c> value.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.FormatBooleanAttribute.FormatValue(System.Object,LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <summary>
+            Formats provided <paramref name="value"/> as boolean.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.FormatBooleanAttribute.CanFormat(System.Type)">
+            <summary>
+            Returns true if <paramref name="type"/> is <see cref="T:System.Boolean"/> type.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Formatting.FormatCollectionAttribute">
+            <summary>
+            Attribute allowing to define formatting rules for method parameter of type implementing <see cref="T:System.Collections.IEnumerable"/> interface.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.FormatCollectionAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Constructor allowing to specify separator and value format.
+            </summary>
+            <param name="separator">Value separator. If <c>null</c>, <c>", "</c> will be used.</param>
+            <param name="valueFormat">Value format. If <c>null</c>, <c>"{0}"</c> will be used.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.FormatCollectionAttribute.CanFormat(System.Type)">
+            <summary>
+            Returns true if <paramref name="type"/> implements <see cref="T:System.Collections.IEnumerable"/> type.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.FormatCollectionAttribute.FormatValue(System.Object,LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <summary>
+            Formats provided <paramref name="value"/> as collection.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Formatting.Values.CollectionFormatter">
+            <summary>
+            Formatter allowing to format collections that implements <see cref="T:System.Collections.IEnumerable"/> interface.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.Values.CollectionFormatter.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="containerFormat">Format used to format whole collection.</param>
+            <param name="separator">Separator used to separate collection items.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.Values.CollectionFormatter.FormatValue(System.Object,LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <summary>
+            Formats <paramref name="value"/> as collection.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.Values.CollectionFormatter.CanFormat(System.Type)">
+            <summary>
+            Returns true if <paramref name="type"/> implements <see cref="T:System.Collections.IEnumerable"/> type.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Formatting.Values.DictionaryFormatter">
+            <summary>
+            Formatter allowing to format dictionaries implementing <see cref="T:System.Collections.IDictionary"/> interface.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.Values.DictionaryFormatter.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="containerFormat">Format used to format whole dictionary.</param>
+            <param name="pairFormat">Format used to format key-value pair.</param>
+            <param name="separator">Separator used to separate key-value pairs.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.Values.DictionaryFormatter.FormatValue(System.Object,LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <summary>
+            Formats <paramref name="value"/> as dictionary, where key-value pairs will be formatted in order based on key.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Formatting.Values.DictionaryFormatter.CanFormat(System.Type)">
+            <summary>
+            Returns true if <paramref name="type"/> implements <see cref="T:System.Collections.IDictionary"/> type.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Formatting.Values.ValueFormattingServices">
+            <summary>
+            Class offering access to current <see cref="T:LightBDD.Core.Formatting.Values.IValueFormattingService"/> instance.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Formatting.Values.ValueFormattingServices.Current">
+            <summary>
+            Returns current <see cref="T:LightBDD.Core.Formatting.Values.IValueFormattingService"/> instance that has been configured or default instance if LightBDD is not initialized yet.
+            Please note that this property would not include formatters declared with <see cref="T:LightBDD.Core.Formatting.Parameters.ParameterFormatterAttribute"/> attributes on the method parameters.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.IBddRunner`1">
+            <summary>
+            The base runner interface describing runner that can execute scenarios within specified context.
+            See also: <seealso cref="T:LightBDD.Framework.IBddRunner"/>.
+            </summary>
+            <typeparam name="TContext">The context type that would be used in scenario execution.</typeparam>
+        </member>
+        <member name="T:LightBDD.Framework.IBddRunner">
+            <summary>
+            Main LightBDD runner interface that should be used in all LightBDD tests.
+            The interface describes the runner with no context - please browse "LightBDD.Framework.Scenarios.Contextual" namespace for contextual runners extension methods.
+            <param>The runner instance can be obtained by installing package from "LightBDD.Integration.*" group and deriving test class from <c>FeatureFixture</c> class offered by integration package.</param>
+            <param>The "LightBDD.Framework.Scenarios.*" namespaces offers a set of extension methods to execute tests with this runner.</param>
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.LabelAttribute">
+            <summary>
+            Label attribute that can be applied on feature test class or scenario method.
+            May be used to link feature/scenario with external tools by storing ticket number.
+            Multiple labels per item are supported.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.LabelAttribute.Label">
+            <summary>
+            Specified label.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.LabelAttribute.#ctor(System.String)">
+            <summary>
+            Constructor allowing to associate label text.
+            </summary>
+            <param name="label">Label.</param>
+        </member>
+        <member name="T:LightBDD.Framework.MultiAssertAttribute">
+            <summary>
+            Multi Assert Attribute allows to configure scenario and/or step method to always execute all sub-steps no matter what is their outcome and report any exceptions after all sub-steps are executed.
+            If any sub-step execution finish with failed status, an <see cref="T:System.AggregateException"/> will be thrown with exceptions of all failed sub-steps.
+            If none sub-steps failed but there are some with ignored status, the exception of first ignored sub-step would be thrown in order to properly ignore test in underlying test framework.
+            All exceptions that have occurred during sub-steps execution would be included in the LightBDD report.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.MultiAssertAttribute.ExecuteAsync(LightBDD.Core.Execution.IStep,System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Method allowing to decorate step invocation specified by <paramref name="stepInvocation"/>.
+            </summary>
+            <param name="step">Step that is being executed.</param>
+            <param name="stepInvocation">Invocation that should be called in the method body.</param>
+            <returns>Execution task.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.MultiAssertAttribute.ExecuteAsync(LightBDD.Core.Execution.IScenario,System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Method allowing to decorate scenario invocation specified by <paramref name="scenarioInvocation"/>.
+            </summary>
+            <param name="scenario">Scenario that is being executed.</param>
+            <param name="scenarioInvocation">Invocation that should be called in the method body.</param>
+            <returns>Execution task.</returns>
+        </member>
+        <member name="P:LightBDD.Framework.MultiAssertAttribute.Order">
+            <summary>
+            Order in which extensions should be applied, where instances of lower values would be executed first.
+            The default value for <see cref="T:LightBDD.Framework.MultiAssertAttribute"/> is -1.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.NoContext">
+            <summary>
+            Class used to indicate that IBddRunner will execute scenarios without any additional context.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Notification.DefaultProgressNotifier">
+            <summary>
+            The default implementation of <see cref="T:LightBDD.Core.Notification.IScenarioProgressNotifier"/> and <see cref="T:LightBDD.Core.Notification.IFeatureProgressNotifier"/> which renders the notification text and delegates to provided notification actions configured in constructor.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DefaultProgressNotifier.#ctor(System.Action{System.String}[])">
+            <summary>
+            Initializes the notifier with <paramref name="onNotify"/> actions that will be used to delegate the rendered notification text.
+            </summary>
+            <param name="onNotify"></param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DefaultProgressNotifier.NotifyScenarioStart(LightBDD.Core.Metadata.IScenarioInfo)">
+            <summary>
+            Notifies that scenario has started.
+            </summary>
+            <param name="scenario">Scenario info.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DefaultProgressNotifier.NotifyScenarioFinished(LightBDD.Core.Results.IScenarioResult)">
+            <summary>
+            Notifies that scenario has finished.
+            </summary>
+            <param name="scenario">Scenario result.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DefaultProgressNotifier.NotifyStepStart(LightBDD.Core.Metadata.IStepInfo)">
+            <summary>
+            Notifies that step has started.
+            </summary>
+            <param name="step">Step info.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DefaultProgressNotifier.NotifyStepFinished(LightBDD.Core.Results.IStepResult)">
+            <summary>
+            Notifies that step has finished.
+            </summary>
+            <param name="step">Step result.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DefaultProgressNotifier.NotifyStepComment(LightBDD.Core.Metadata.IStepInfo,System.String)">
+            <summary>
+            Notifies that step has been commented.
+            </summary>
+            <param name="step">Step info.</param>
+            <param name="comment">Comment.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DefaultProgressNotifier.NotifyFeatureStart(LightBDD.Core.Metadata.IFeatureInfo)">
+            <summary>
+            Notifies that feature has started.
+            </summary>
+            <param name="feature">Feature info.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DefaultProgressNotifier.NotifyFeatureFinished(LightBDD.Core.Results.IFeatureResult)">
+            <summary>
+            Notifies that feature has finished.
+            </summary>
+            <param name="feature">Feature result.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Notification.DelegatingFeatureProgressNotifier">
+            <summary>
+            Feature progress notifier allowing to delegate notification to zero or more notifiers.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Notification.DelegatingFeatureProgressNotifier.Notifiers">
+            <summary>
+            Returns notifiers used for notifications.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingFeatureProgressNotifier.#ctor(LightBDD.Core.Notification.IFeatureProgressNotifier[])">
+            <summary>
+            Constructor configuring notifier to delegate all the notifications to provided <paramref name="notifiers"/>.
+            </summary>
+            <param name="notifiers">Notifiers to delegate notifications to.</param>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="notifiers"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingFeatureProgressNotifier.NotifyFeatureStart(LightBDD.Core.Metadata.IFeatureInfo)">
+            <summary>
+            Notifies that feature has started.
+            </summary>
+            <param name="feature">Feature info.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingFeatureProgressNotifier.NotifyFeatureFinished(LightBDD.Core.Results.IFeatureResult)">
+            <summary>
+            Notifies that feature has finished.
+            </summary>
+            <param name="feature">Feature result.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingFeatureProgressNotifier.Compose(System.Collections.Generic.IEnumerable{LightBDD.Core.Notification.IFeatureProgressNotifier})">
+            <summary>
+            Composes <see cref="T:LightBDD.Core.Notification.IFeatureProgressNotifier"/> from provided notifiers where
+            any notifiers of <see cref="T:LightBDD.Framework.Notification.NoProgressNotifier"/> will be excluded
+            and any notifiers of <see cref="T:LightBDD.Framework.Notification.DelegatingFeatureProgressNotifier"/> will be flattened.
+            </summary>
+            <param name="notifiers">Notifiers to compose.</param>
+            <returns>Composition of provided notifiers.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="notifiers"/> or any of it's items is null.</exception>
+        </member>
+        <member name="T:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier">
+            <summary>
+            Scenario progress notifier allowing to delegate notification to zero or more notifiers.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier.Notifiers">
+            <summary>
+            Returns notifiers used for notifications.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier.#ctor(LightBDD.Core.Notification.IScenarioProgressNotifier[])">
+            <summary>
+            Constructor configuring notifier to delegate all the notifications to provided <paramref name="notifiers"/>.
+            </summary>
+            <param name="notifiers">Notifiers to delegate notifications to.</param>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="notifiers"/> is null.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier.NotifyScenarioStart(LightBDD.Core.Metadata.IScenarioInfo)">
+            <summary>
+            Notifies that scenario has started.
+            </summary>
+            <param name="scenario">Scenario info.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier.NotifyScenarioFinished(LightBDD.Core.Results.IScenarioResult)">
+            <summary>
+            Notifies that scenario has finished.
+            </summary>
+            <param name="scenario">Scenario result.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier.NotifyStepStart(LightBDD.Core.Metadata.IStepInfo)">
+            <summary>
+            Notifies that step has started.
+            </summary>
+            <param name="step">Step info.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier.NotifyStepFinished(LightBDD.Core.Results.IStepResult)">
+            <summary>
+            Notifies that step has finished.
+            </summary>
+            <param name="step">Step result.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier.NotifyStepComment(LightBDD.Core.Metadata.IStepInfo,System.String)">
+            <summary>
+            Notifies that step has been commented.
+            </summary>
+            <param name="step">Step info.</param>
+            <param name="comment">Comment.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier.Compose(System.Collections.Generic.IEnumerable{LightBDD.Core.Notification.IScenarioProgressNotifier})">
+            <summary>
+            Composes <see cref="T:LightBDD.Core.Notification.IScenarioProgressNotifier"/> from provided notifiers where
+            any notifiers of <see cref="T:LightBDD.Framework.Notification.NoProgressNotifier"/> will be excluded
+            and any notifiers of <see cref="T:LightBDD.Framework.Notification.DelegatingScenarioProgressNotifier"/> will be flattened.
+            </summary>
+            <param name="notifiers">Notifiers to compose.</param>
+            <returns>Composition of provided notifiers.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="notifiers"/> or any of it's items is null.</exception>
+        </member>
+        <member name="T:LightBDD.Framework.Notification.NoProgressNotifier">
+            <summary>
+            Progress notifier implementation that does nothing when called.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Notification.NoProgressNotifier.Default">
+            <summary>
+            Returns default instance.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.NoProgressNotifier.NotifyFeatureStart(LightBDD.Core.Metadata.IFeatureInfo)">
+            <summary>
+            Does nothing.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.NoProgressNotifier.NotifyFeatureFinished(LightBDD.Core.Results.IFeatureResult)">
+            <summary>
+            Does nothing.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.NoProgressNotifier.NotifyScenarioStart(LightBDD.Core.Metadata.IScenarioInfo)">
+            <summary>
+            Does nothing.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.NoProgressNotifier.NotifyScenarioFinished(LightBDD.Core.Results.IScenarioResult)">
+            <summary>
+            Does nothing.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.NoProgressNotifier.NotifyStepStart(LightBDD.Core.Metadata.IStepInfo)">
+            <summary>
+            Does nothing.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.NoProgressNotifier.NotifyStepFinished(LightBDD.Core.Results.IStepResult)">
+            <summary>
+            Does nothing.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.NoProgressNotifier.NotifyStepComment(LightBDD.Core.Metadata.IStepInfo,System.String)">
+            <summary>
+            Does nothing.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Notification.ParallelProgressNotifierProvider">
+            <summary>
+            Class providing implementations of <see cref="T:LightBDD.Core.Notification.IFeatureProgressNotifier"/> and <see cref="T:LightBDD.Core.Notification.IScenarioProgressNotifier"/> interfaces.
+            The implementations are designed to provide notifications that would be still understandable when scenarios are executed in parallel.
+            Each notification entry is prefixed with text showing total number of processed, failed and currently running scenarios as well as scenario number the message is notified for.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Notification.ParallelProgressNotifierProvider.Default">
+            <summary>
+            Returns default instance of provider.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.ParallelProgressNotifierProvider.#ctor">
+            <summary>
+            Default constructor.
+            The class should not be instantiated directly, but rather <see cref="P:LightBDD.Framework.Notification.ParallelProgressNotifierProvider.Default"/> property should be used to get provider instance.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.ParallelProgressNotifierProvider.CreateFeatureProgressNotifier(System.Action{System.String}[])">
+            <summary>
+            Creates <see cref="T:LightBDD.Core.Notification.IFeatureProgressNotifier"/> instance which would call <paramref name="onNotify"/> actions with formatted notifications.
+            The created notifier does nothing with formatted notifications that is why <paramref name="onNotify"/> should contain at least 1 action in order to get notifications working.
+            </summary>
+            <param name="onNotify">Actions that would be called with formatted notifications.</param>
+            <returns><see cref="T:LightBDD.Core.Notification.IFeatureProgressNotifier"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="onNotify"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Notification.ParallelProgressNotifierProvider.CreateScenarioProgressNotifier(System.Action{System.String}[])">
+            <summary>
+            Creates <see cref="T:LightBDD.Core.Notification.IScenarioProgressNotifier"/> instance which would call <paramref name="onNotify"/> actions with formatted notifications.
+            The created notifier does nothing with formatted notifications that is why <paramref name="onNotify"/> should contain at least 1 action in order to get notifications working.
+            </summary>
+            <param name="onNotify">Actions that would be called with formatted notifications.</param>
+            <returns><see cref="T:LightBDD.Core.Notification.IScenarioProgressNotifier"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="onNotify"/> is <c>null</c>.</exception>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.ColumnValue">
+            <summary>
+            Type representing column value.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.ColumnValue.HasValue">
+            <summary>
+            Returns true if value is specified.
+            False means that this column value does not exists for the given row (like there was no property defined on the object etc.).
+            Please note that if column value exists but it's null, the <see cref="P:LightBDD.Framework.Parameters.ColumnValue.HasValue"/> should be true and <see cref="P:LightBDD.Framework.Parameters.ColumnValue.Value"/> should be null.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.ColumnValue.Value">
+            <summary>
+            Returns provided column value, or null if no value is specified (<see cref="P:LightBDD.Framework.Parameters.ColumnValue.HasValue"/> is false).
+            </summary>
+        </member>
+        <member name="F:LightBDD.Framework.Parameters.ColumnValue.None">
+            <summary>
+            Represents no value, which means that for given row, this column value does not exists.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.ColumnValue.From(System.Object)">
+            <summary>
+            Creates column value object with <see cref="P:LightBDD.Framework.Parameters.ColumnValue.HasValue"/> equal true and <see cref="P:LightBDD.Framework.Parameters.ColumnValue.Value"/> equal <paramref name="value"/>.
+            </summary>
+            <param name="value">Value.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.ColumnValue.Format(LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.ColumnValue.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.IInputTableBuilder`1">
+            <summary>
+            Interface allowing to define <see cref="T:LightBDD.Framework.Parameters.InputTable`1"/>.
+            </summary>
+            <typeparam name="TRow">Type of table row.</typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IInputTableBuilder`1.WithColumn``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value.
+            The <paramref name="columnExpression"/> has to be a field/property accessor expression, where the accessed member will be used for column name.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if <paramref name="columnExpression"/> is not member expression.</exception>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IInputTableBuilder`1.WithColumn``1(System.String,System.Func{`0,``0})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value and it can be any kind of expression (including computed ones).
+            The <paramref name="columnName"/> defines column name.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnName">Column name.</param>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IInputTableBuilder`1.WithInferredColumns">
+            <summary>
+            Instructs <see cref="T:LightBDD.Framework.Parameters.IInputTableBuilder`1"/> to infer columns basing on the <typeparamref name="TRow"/> type.
+            It is possible to use this methods together with <c>WithColumn()</c> methods, where manually specified columns will override inferred columns of the same name.
+            </summary>
+            <returns>Self.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.InputTable`1">
+             <summary>
+             Type representing tabular step parameter.
+             When used in step methods, the tabular representation of the parameter will be rendered in reports and progress notification.<br/>
+            
+             Beside special rendering, the table behaves as a standard collection, i.e it offers <see cref="P:LightBDD.Framework.Parameters.InputTable`1.Count"/>, <see cref="M:LightBDD.Framework.Parameters.InputTable`1.GetEnumerator"/> and indexing operator members.<br/>
+            
+             Please see <see cref="T:LightBDD.Framework.Parameters.Table"/> type to learn how to create tables effectively.
+             </summary>
+             <typeparam name="TRow">Row type.</typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.InputTable`1.#ctor(System.Collections.Generic.IEnumerable{LightBDD.Framework.Parameters.InputTableColumn},System.Collections.Generic.IReadOnlyList{`0})">
+            <summary>
+            Constructor creating table with specified <paramref name="columns"/> and <paramref name="rows"/>
+            </summary>
+            <param name="columns">Table columns.</param>
+            <param name="rows">Table rows.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.InputTable`1.Format(LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <summary>
+            Returns inline representation of table.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.InputTable`1.Count">
+            <summary>
+            Returns number of rows.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.InputTable`1.GetEnumerator">
+            <summary>
+            Returns enumerator for the table rows.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.InputTable`1.Item(System.Int32)">
+            <summary>
+            Returns row at specified <paramref name="index"/>.
+            </summary>
+            <param name="index">Row index</param>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.InputTable`1.Columns">
+            <summary>
+            Returns columns collection.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.InputTableColumn">
+            <summary>
+            Type representing <see cref="T:LightBDD.Framework.Parameters.InputTable`1"/> column.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.InputTableColumn.Name">
+            <summary>
+            Column name.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.InputTableColumn.GetValue">
+            <summary>
+            Function providing column value for specified row object.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.InputTableColumn.#ctor(System.String,System.Func{System.Object,LightBDD.Framework.Parameters.ColumnValue})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="name">Column name.</param>
+            <param name="getValue">Function providing column value for specified row object.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.ITableValidatorBuilder`1">
+            <summary>
+            Builder interface allowing to define <see cref="T:LightBDD.Framework.Parameters.TableValidator`1"/> instance.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.ITableValidatorBuilder`1.WithColumn``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},LightBDD.Framework.Expectations.IExpectation{``0})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value.
+            The <paramref name="columnExpression"/> has to be a field/property accessor expression, where the accessed member will be used for column name.
+            The <paramref name="expectation"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectation">Function returning column expectation expression.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if <paramref name="columnExpression"/> is not member expression.</exception>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.ITableValidatorBuilder`1.WithColumn``1(System.String,System.Func{`0,``0},LightBDD.Framework.Expectations.IExpectation{``0})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value and it can be any kind of expression (including computed ones).
+            The <paramref name="columnName"/> defines column name.
+            The <paramref name="expectation"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnName">Column name.</param>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectation">Function returning column expectation expression.</param>
+            <returns>Self</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1">
+            <summary>
+            Interface allowing to define <see cref="T:LightBDD.Framework.Parameters.VerifiableTable`1"/>.
+            </summary>
+            <typeparam name="TRow">Type of table row.</typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithColumn``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value.
+            The <paramref name="columnExpression"/> has to be a field/property accessor expression, where the accessed member will be used for column name.
+            The <c>Expect.To.Equal(value)</c> expression is used for verifying column values.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if <paramref name="columnExpression"/> is not member expression.</exception>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithColumn``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Func{``0,LightBDD.Framework.Expectations.IExpectation{``0}})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value.
+            The <paramref name="columnExpression"/> has to be a field/property accessor expression, where the accessed member will be used for column name.
+            The <paramref name="expectationFn"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectationFn">Function returning column expectation expression.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if <paramref name="columnExpression"/> is not member expression.</exception>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithColumn``1(System.String,System.Func{`0,``0},System.Func{``0,LightBDD.Framework.Expectations.IExpectation{``0}})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value and it can be any kind of expression (including computed ones).
+            The <paramref name="columnName"/> defines column name.
+            The <paramref name="expectationFn"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnName">Column name.</param>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectationFn">Function returning column expectation expression.</param>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithColumn``1(System.String,System.Func{`0,``0})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value and it can be any kind of expression (including computed ones).
+            The <paramref name="columnName"/> defines column name.
+            The <c>Expect.To.Equal(value)</c> expression is used for verifying column values.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnName">Column name.</param>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithColumn``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},LightBDD.Framework.Expectations.IExpectation{``0})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value.
+            The <paramref name="columnExpression"/> has to be a field/property accessor expression, where the accessed member will be used for column name.
+            The <paramref name="expectation"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectation">Function returning column expectation expression.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if <paramref name="columnExpression"/> is not member expression.</exception>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithColumn``1(System.String,System.Func{`0,``0},LightBDD.Framework.Expectations.IExpectation{``0})">
+            <summary>
+            Defines column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value and it can be any kind of expression (including computed ones).
+            The <paramref name="columnName"/> defines column name.
+            The <paramref name="expectation"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnName">Column name.</param>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectation">Function returning column expectation expression.</param>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithKey``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Defines key column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value.
+            The <paramref name="columnExpression"/> has to be a field/property accessor expression, where the accessed member will be used for column name.
+            The <c>Expect.To.Equal(value)</c> expression is used for verifying column values.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if <paramref name="columnExpression"/> is not member expression.</exception>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithKey``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Func{``0,LightBDD.Framework.Expectations.IExpectation{``0}})">
+            <summary>
+            Defines key column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value.
+            The <paramref name="columnExpression"/> has to be a field/property accessor expression, where the accessed member will be used for column name.
+            The <paramref name="expectationFn"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectationFn">Function returning column expectation expression.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if <paramref name="columnExpression"/> is not member expression.</exception>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithKey``1(System.String,System.Func{`0,``0},System.Func{``0,LightBDD.Framework.Expectations.IExpectation{``0}})">
+            <summary>
+            Defines key column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value and it can be any kind of expression (including computed ones).
+            The <paramref name="columnName"/> defines column name.
+            The <paramref name="expectationFn"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnName">Column name.</param>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectationFn">Function returning column expectation expression.</param>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithKey``1(System.String,System.Func{`0,``0})">
+            <summary>
+            Defines key column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value and it can be any kind of expression (including computed ones).
+            The <paramref name="columnName"/> defines column name.
+            The <c>Expect.To.Equal(value)</c> expression is used for verifying column values.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnName">Column name.</param>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithKey``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},LightBDD.Framework.Expectations.IExpectation{``0})">
+            <summary>
+            Defines key column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value.
+            The <paramref name="columnExpression"/> has to be a field/property accessor expression, where the accessed member will be used for column name.
+            The <paramref name="expectation"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectation">Function returning column expectation expression.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if <paramref name="columnExpression"/> is not member expression.</exception>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithKey``1(System.String,System.Func{`0,``0},LightBDD.Framework.Expectations.IExpectation{``0})">
+            <summary>
+            Defines key column, based on <paramref name="columnExpression"/>.
+            The <paramref name="columnExpression"/> is an expression used to provide column value and it can be any kind of expression (including computed ones).
+            The <paramref name="columnName"/> defines column name.
+            The <paramref name="expectation"/> function is used to return expression for verifying column value.
+            </summary>
+            <typeparam name="TValue">Column value type.</typeparam>
+            <param name="columnName">Column name.</param>
+            <param name="columnExpression">Field/property accessor expression</param>
+            <param name="expectation">Function returning column expectation expression.</param>
+            <returns>Self</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.IVerifiableDataTableBuilder`1.WithInferredColumns">
+            <summary>
+            Instructs <see cref="T:LightBDD.Framework.Parameters.IInputTableBuilder`1"/> to infer columns basing on the <typeparamref name="TRow"/> type.
+            It is possible to use this methods together with <c>WithColumn() / WithKey()</c> methods, where manually specified columns will override inferred columns of the same name.
+            The inferred columns will always use <c>Expect.To.Equal(value)</c> expression for verifying column values.
+            </summary>
+            <returns>Self.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.Table">
+            <summary>
+            Static class allowing to create various type of table parameters.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.ToTable``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns <see cref="T:LightBDD.Framework.Parameters.InputTable`1"/> with inferred columns and rows specified by <paramref name="items"/> collection.
+            </summary>
+            <param name="items">Table rows.</param>
+            <returns>Table</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.ToTable``2(System.Collections.Generic.IReadOnlyDictionary{``0,``1})">
+            <summary>
+            Returns <see cref="T:LightBDD.Framework.Parameters.InputTable`1"/> with inferred columns and rows specified by <paramref name="items"/> collection.
+            </summary>
+            <param name="items">Table rows.</param>
+            <returns>Table</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.ToTable``1(System.Collections.Generic.IEnumerable{``0},System.Action{LightBDD.Framework.Parameters.IInputTableBuilder{``0}})">
+            <summary>
+            Returns <see cref="T:LightBDD.Framework.Parameters.InputTable`1"/> defined by <paramref name="definitionBuilder"/> and rows specified by <paramref name="items"/> collection.
+            </summary>
+            <param name="items">Table rows.</param>
+            <param name="definitionBuilder">Table definition builder.</param>
+            <returns>Table</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.For``1(``0[])">
+            <summary>
+            Returns <see cref="T:LightBDD.Framework.Parameters.InputTable`1"/> with inferred columns and rows specified by <paramref name="items"/> collection.
+            </summary>
+            <param name="items">Table rows.</param>
+            <returns>Table</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.For``1(System.Action{LightBDD.Framework.Parameters.IInputTableBuilder{``0}},``0[])">
+            <summary>
+            Returns <see cref="T:LightBDD.Framework.Parameters.InputTable`1"/> defined by <paramref name="definitionBuilder"/> and rows specified by <paramref name="items"/> collection.
+            </summary>
+            <param name="items">Table rows.</param>
+            <param name="definitionBuilder">Table definition builder.</param>
+            <returns>Table</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.Validate``1(System.Action{LightBDD.Framework.Parameters.ITableValidatorBuilder{``0}})">
+            <summary>
+            Returns <see cref="T:LightBDD.Framework.Parameters.TableValidator`1"/> defined by <paramref name="definitionBuilder"/>.
+            </summary>
+            <param name="definitionBuilder">Definition builder.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.ExpectData``1(``0[])">
+             <summary>
+             Returns <see cref="T:LightBDD.Framework.Parameters.VerifiableDataTable`1"/> with inferred columns and rows specified by <paramref name="items"/> collection.<br/>
+            
+             The created table will have no key columns (the row verification will be index based).<br/>
+             All columns will use equality expression for verifying values.
+             </summary>
+             <param name="items">Table rows.</param>
+             <returns>Verifiable table</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.ExpectData``1(System.Action{LightBDD.Framework.Parameters.IVerifiableDataTableBuilder{``0}},``0[])">
+            <summary>
+            Returns <see cref="T:LightBDD.Framework.Parameters.VerifiableDataTable`1"/> defined by <paramref name="definitionBuilder"/> and rows specified by <paramref name="items"/> collection.<br/>
+            </summary>
+            <param name="items">Table rows.</param>
+            <param name="definitionBuilder">Table definition builder.</param>
+            <returns>Verifiable table</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.ToVerifiableDataTable``1(System.Collections.Generic.IEnumerable{``0})">
+             <summary>
+             Returns <see cref="T:LightBDD.Framework.Parameters.VerifiableDataTable`1"/> with inferred columns and rows specified by <paramref name="items"/> collection.<br/>
+            
+             The created table will have no key columns (the row verification will be index based).<br/>
+             All columns will use equality expression for verifying values.
+             </summary>
+             <param name="items">Table rows.</param>
+             <returns>Verifiable table</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.ToVerifiableDataTable``1(System.Collections.Generic.IEnumerable{``0},System.Action{LightBDD.Framework.Parameters.IVerifiableDataTableBuilder{``0}})">
+            <summary>
+            Returns <see cref="T:LightBDD.Framework.Parameters.VerifiableDataTable`1"/> defined by <paramref name="definitionBuilder"/> and rows specified by <paramref name="items"/> collection.<br/>
+            </summary>
+            <param name="items">Table rows.</param>
+            <param name="definitionBuilder">Table definition builder.</param>
+            <returns>Verifiable table</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Table.ToVerifiableDataTable``2(System.Collections.Generic.IReadOnlyDictionary{``0,``1})">
+             <summary>
+             Returns <see cref="T:LightBDD.Framework.Parameters.Implementation.VerifiableDataTableBuilder`1"/> with inferred columns and rows specified by <paramref name="items"/> collection.<br/>
+            
+             The created table will use Key column to compare rows.<br/>
+             All columns will use equality expression for verifying values.
+             </summary>
+             <param name="items">Table rows.</param>
+             <returns>Verifiable table</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.TableValidator`1">
+            <summary>
+            Type allowing to validate collection content against specified column expectations.
+            </summary>
+            <typeparam name="TRow">Row type.</typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.TableValidator`1.#ctor(System.Collections.Generic.IEnumerable{LightBDD.Framework.Parameters.VerifiableTableColumn})">
+            <summary>
+            Constructor allowing to create validator instance.
+            </summary>
+            <param name="columns">Columns defintions.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.TableValidator`1.GetExpectedRowResults">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.TableValidator`1.ToColumnValueResult(LightBDD.Framework.Parameters.VerifiableTableColumn,LightBDD.Framework.Parameters.ColumnValue,LightBDD.Framework.Parameters.ColumnValue)">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.TableValidator`1.MatchRows(System.Collections.Generic.IReadOnlyList{`0})">
+            <inheritdoc />
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.Verifiable`1">
+            <summary>
+            Type allowing to specify verifiable parameters for LightBDD steps, which outcome is inlined in the step name.
+            It is initialized with expectation expression that has to be fulfilled upon validation in the step method body, with one of <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.SetActual(`0)"/>, <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.SetActual(System.Func{`0})"/> or <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.SetActualAsync(System.Func{System.Threading.Tasks.Task{`0}})"/> method call.
+            In contrary to regular assertions, it is possible to evaluate all the verifiable parameters, as mentioned methods does not throw upon failed validation, but their outcome is collected after step method is finished.<br/>
+            
+            Example:
+            <example>
+            void Then_user_should_have_login_and_email(Verifiable&lt;string&gt; login, Verifiable&lt;string&gt; email)
+            {
+                login.SetActual(_user.Login);
+                email.SetActual(_user.Email);
+            }
+            <br/>
+            _ => Then_user_should_have_login_and_email("bob123", Expect.To.MatchRegex("^\\w{6,12}@mymail\\.com$"))
+            </example>
+            </summary>
+            <typeparam name="T">Type of the expected parameter</typeparam>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.Verifiable`1.Expectation">
+            <summary>
+            Specified expectation.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Verifiable`1.GetActual">
+            <summary>
+            Returns actual value if set.
+            Throws exception if value is not provided or when setting the actual value failed.
+            </summary>
+            <returns>Actual value</returns>
+            <exception cref="T:System.InvalidOperationException">Throws when value was not set.</exception>
+            <exception>Rethrows the exception captured by <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.SetActual(System.Func{`0})"/> or <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.SetActualAsync(System.Func{System.Threading.Tasks.Task{`0}})"/> methods.</exception>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.Verifiable`1.Status">
+            <summary>
+            Returns the status of the expected parameter. 
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Verifiable`1.#ctor(LightBDD.Framework.Expectations.IExpectation{`0})">
+            <summary>
+            Initializes the instance with the provided expectation.
+            </summary>
+            <param name="expectation">Expectation.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Verifiable`1.SetActual(`0)">
+             <summary>
+             Sets the actual value and performs the validation against the expectation, updating <see cref="P:LightBDD.Framework.Parameters.Verifiable`1.Status"/> property.
+             The value specified by <paramref name="value"/> parameter can be retrieved by <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.GetActual"/> method.
+            
+             If actual value is already set, an exception is thrown.
+             </summary>
+             <param name="value">Value to set.</param>
+             <returns>Self.</returns>
+             <exception cref="T:System.InvalidOperationException">Thrown when actual value is already set.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Verifiable`1.SetActual(System.Func{`0})">
+             <summary>
+             Sets the actual value and performs the validation against the expectation, updating <see cref="P:LightBDD.Framework.Parameters.Verifiable`1.Status"/> property.
+             The <paramref name="valueFn"/> function is evaluated and it's value can be retrieved later by <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.GetActual"/> method.
+             If <paramref name="valueFn"/> function throws, the exception is captured and <see cref="P:LightBDD.Framework.Parameters.Verifiable`1.Status"/> is updated respectively (the <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.SetActual(System.Func{`0})"/> does not throw).
+            
+             If actual value is already set, an exception is thrown.
+             </summary>
+             <param name="valueFn">Function providing actual value.</param>
+             <returns>Self.</returns>
+             <exception cref="T:System.InvalidOperationException">Thrown when actual value is already set.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Verifiable`1.SetActualAsync(System.Func{System.Threading.Tasks.Task{`0}})">
+             <summary>
+             Sets the actual value and performs the validation against the expectation, updating <see cref="P:LightBDD.Framework.Parameters.Verifiable`1.Status"/> property.
+             The <paramref name="valueFn"/> function is evaluated and it's value can be retrieved later by <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.GetActual"/> method.
+             If <paramref name="valueFn"/> function throws, the exception is captured and <see cref="P:LightBDD.Framework.Parameters.Verifiable`1.Status"/> is updated respectively (the <see cref="M:LightBDD.Framework.Parameters.Verifiable`1.SetActualAsync(System.Func{System.Threading.Tasks.Task{`0}})"/> does not throw).
+            
+             If actual value is already set, an exception is thrown.
+             </summary>
+             <param name="valueFn">Function providing actual value.</param>
+             <returns>Self.</returns>
+             <exception cref="T:System.InvalidOperationException">Thrown when actual value is already set.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Verifiable`1.op_Implicit(`0)~LightBDD.Framework.Parameters.Verifiable{`0}">
+            <summary>
+            Initializes the instance with expectation that the actual value should equal to <paramref name="expected"/> value.
+            </summary>
+            <param name="expected"></param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Verifiable`1.op_Implicit(LightBDD.Framework.Expectations.Expectation{`0})~LightBDD.Framework.Parameters.Verifiable{`0}">
+            <summary>
+            Initializes the instance with provided expectation.
+            </summary>
+            <param name="expectation"></param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.Verifiable`1.ToString">
+            <summary>
+            Returns the text reflecting actual state.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.VerifiableDataTable`1">
+             <summary>
+             Type representing verifiable tabular step parameter.
+             When used in step methods, the tabular representation of the parameter will be rendered in reports and progress notification, including verification details.<br/>
+             The table rows and column values will be verified independently, and included in the reports, where any unsuccessful verification will make step to fail.
+            
+             Please see <see cref="T:LightBDD.Framework.Parameters.Table"/> type to learn how to create tables effectively.
+             </summary>
+             <typeparam name="TRow">Row type.</typeparam>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableDataTable`1.ExpectedRows">
+            <summary>
+            Returns list of expected rows.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableDataTable`1.#ctor(System.Collections.Generic.IEnumerable{LightBDD.Framework.Parameters.VerifiableTableColumn},System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Constructor creating verifiable table with specified <paramref name="columns"/> and <paramref name="expectedRows"/>.
+            </summary>
+            <param name="columns">Table columns.</param>
+            <param name="expectedRows">Table rows.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableDataTable`1.SetActual(System.Func{`0,`0})">
+            <summary>
+            Sets the actual rows by calling <paramref name="actualRowLookup"/> for each expected row and verifies them against <see cref="P:LightBDD.Framework.Parameters.VerifiableDataTable`1.ExpectedRows"/> collection.<br/>
+            If evaluation of <paramref name="actualRowLookup"/> throws, the exception will be included in the report, but won't be propagated out of this method.
+            </summary>
+            <param name="actualRowLookup">Actual row lookup function that will be called for each expected row.</param>
+            <returns>Self.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="actualRowLookup"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown if <see cref="P:LightBDD.Framework.Parameters.VerifiableTable`1.ActualRows"/> collection has been already set.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableDataTable`1.SetActualAsync(System.Func{`0,System.Threading.Tasks.Task{`0}})">
+             <summary>
+             Sets the actual rows by calling <paramref name="actualRowLookup"/> for each expected row and verifies them against <see cref="P:LightBDD.Framework.Parameters.VerifiableDataTable`1.ExpectedRows"/> collection.<br/>
+             If evaluation of <paramref name="actualRowLookup"/> throws, the exception will be included in the report, but won't be propagated out of this method.<br/>
+            
+             Please note that async <paramref name="actualRowLookup"/> calls will be executed concurrently (<see cref="M:System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable{System.Threading.Tasks.Task})"/> is used).
+             </summary>
+             <param name="actualRowLookup">Actual row lookup function that will be called for each expected row.</param>
+             <returns>Self.</returns>
+             <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="actualRowLookup"/> is null.</exception>
+             <exception cref="T:System.InvalidOperationException">Thrown if <see cref="P:LightBDD.Framework.Parameters.VerifiableTable`1.ActualRows"/> collection has been already set.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableDataTable`1.GetExpectedRowResults">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableDataTable`1.ToColumnValueResult(LightBDD.Framework.Parameters.VerifiableTableColumn,LightBDD.Framework.Parameters.ColumnValue,LightBDD.Framework.Parameters.ColumnValue)">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableDataTable`1.MatchRows(System.Collections.Generic.IReadOnlyList{`0})">
+            <inheritdoc />
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.VerifiableTable`1">
+             <summary>
+             Type representing verifiable tabular step parameter.
+             When used in step methods, the tabular representation of the parameter will be rendered in reports and progress notification, including verification details.<br/>
+             The table rows and column values will be verified independently, and included in the reports, where any unsuccessful verification will make step to fail.
+            
+             This class is an abstract base that can be extended to provide specialized verifiable tables.
+             </summary>
+             <typeparam name="TRow">Row type.</typeparam>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTable`1.Details">
+            <summary>
+            Returns verification details.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTable`1.FormattingService">
+            <summary>
+            <see cref="T:LightBDD.Core.Formatting.Values.IValueFormattingService"/> instance.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTable`1.ActualRows">
+            <summary>
+            Returns list of actual rows, or null if actual rows were not provided.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTable`1.Columns">
+            <summary>
+            Returns list of column definitions.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.#ctor(System.Collections.Generic.IEnumerable{LightBDD.Framework.Parameters.VerifiableTableColumn})">
+            <summary>
+            Constructor creating verifiable table with specified <paramref name="columns"/>.
+            </summary>
+            <param name="columns">Table columns.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.SetActual(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Sets the actual rows specified by <paramref name="actualRows"/> parameter and verifies them against expectations.
+            </summary>
+            <param name="actualRows">Actual rows.</param>
+            <returns>Self.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="actualRows"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown if <see cref="P:LightBDD.Framework.Parameters.VerifiableTable`1.ActualRows"/> collection has been already set.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.SetActualAsync(System.Func{System.Threading.Tasks.Task{System.Collections.Generic.IEnumerable{`0}}})">
+            <summary>
+            Sets the actual rows specified by <paramref name="actualRowsProvider"/> parameter and verifies them against expectations.<br/>
+            If evaluation of <paramref name="actualRowsProvider"/> throws, the exception will be included in the report, but won't be propagated out of this method.
+            </summary>
+            <param name="actualRowsProvider">Actual rows provider.</param>
+            <returns>Self.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="actualRowsProvider"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown if <see cref="P:LightBDD.Framework.Parameters.VerifiableTable`1.ActualRows"/> collection has been already set.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.GetExpectedRowResults">
+            <summary>
+            Returns collection of expected rows.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.EnsureActualNotSet">
+            <summary>
+            Ensures that actual values are not set yet.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when actual value is already set.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.Format(LightBDD.Core.Formatting.Values.IValueFormattingService)">
+            <summary>
+            Returns inline representation of table.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.SetRows(System.Collections.Generic.IEnumerable{LightBDD.Framework.Parameters.VerifiableTable{`0}.RowData})">
+            <summary>
+            Sets specified <paramref name="rows"/> as the actual values and generates the details for it.
+            </summary>
+            <param name="rows">Rows to set.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.ToColumnValueResult(LightBDD.Framework.Parameters.VerifiableTableColumn,LightBDD.Framework.Parameters.ColumnValue,LightBDD.Framework.Parameters.ColumnValue)">
+            <summary>
+            Provides <see cref="T:LightBDD.Core.Results.Parameters.IValueResult"/> representation of column value comparison.
+            </summary>
+            <param name="column">Column definition.</param>
+            <param name="expected">Expected value.</param>
+            <param name="actual">Actual value</param>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.MatchRows(System.Collections.Generic.IReadOnlyList{`0})">
+            <summary>
+            Created collection of <see cref="T:LightBDD.Framework.Parameters.VerifiableTable`1.RowData"/> for the given <paramref name="actual"/> collection.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.VerifiableTable`1.RowData">
+            <summary>
+            Row data containing expected value, actual value as well as row type.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.RowData.#ctor(LightBDD.Core.Results.Parameters.Tabular.TableRowType,`0,LightBDD.Framework.Parameters.VerifiableTable{`0}.RowDataActualValue)">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTable`1.RowData.Type">
+            <summary>
+            Row type.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTable`1.RowData.Expected">
+            <summary>
+            Expected row value (can be null).
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTable`1.RowData.Actual">
+            <summary>
+            Actual row value.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.VerifiableTable`1.RowDataActualValue">
+            <summary>
+            Type representing actual row value that can be row instance or exception.
+            </summary>
+        </member>
+        <member name="F:LightBDD.Framework.Parameters.VerifiableTable`1.RowDataActualValue.None">
+            <summary>
+            Value representing no actual value.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.RowDataActualValue.#ctor(`0)">
+            <summary>
+            Constructor setting row value.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.RowDataActualValue.#ctor(System.Exception)">
+            <summary>
+            Constructor setting exception.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTable`1.RowDataActualValue.Value">
+            <summary>
+            Value.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTable`1.RowDataActualValue.Exception">
+            <summary>
+            Exception.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTable`1.RowDataActualValue.op_Implicit(`0)~LightBDD.Framework.Parameters.VerifiableTable{`0}.RowDataActualValue">
+            <summary>
+            Implicit operator converting row to actual row value.
+            </summary>
+            <param name="row"></param>
+        </member>
+        <member name="T:LightBDD.Framework.Parameters.VerifiableTableColumn">
+            <summary>
+            Type representing <see cref="T:LightBDD.Framework.Parameters.VerifiableTable`1"/> column.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTableColumn.IsKey">
+            <summary>
+            Returns true if column is a key column.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Parameters.VerifiableTableColumn.Expectation">
+            <summary>
+            Returns function providing an <see cref="T:LightBDD.Framework.Expectations.IExpectation`1"/> expectation for provided column value.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Parameters.VerifiableTableColumn.#ctor(System.String,System.Boolean,System.Func{System.Object,LightBDD.Framework.Parameters.ColumnValue},System.Func{System.Object,LightBDD.Framework.Expectations.IExpectation{System.Object}})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="name">Column name.</param>
+            <param name="isKey">Argument specifying if column is a key column.</param>
+            <param name="getValue">Function providing column value for specified row object.</param>
+            <param name="expectation">Function providing an <see cref="T:LightBDD.Framework.Expectations.IExpectation`1"/> expectation for provided column value.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Reporting.ExecutionTimeSummary">
+            <summary>
+            Class providing execution time summary.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Start">
+            <summary>
+            Returns execution start.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.End">
+            <summary>
+            Returns execution end.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Duration">
+            <summary>
+            Returns real execution duration (End - Start)
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Aggregated">
+            <summary>
+            Returns aggregated execution duration.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Average">
+            <summary>
+            Returns average execution duration.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ExecutionTimeSummary.#ctor(System.DateTimeOffset,System.DateTimeOffset,System.TimeSpan,System.TimeSpan)">
+            <summary>
+            Constructor allowing to setup all properties.
+            </summary>
+            <param name="start">Start.</param>
+            <param name="end">End.</param>
+            <param name="aggregated">Aggregated.</param>
+            <param name="average">Average.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ExecutionTimeSummary.#ctor">
+            <summary>
+            Default constructor initializing <see cref="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Start"/> and <see cref="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.End"/> with <see cref="P:System.DateTimeOffset.UtcNow"/> and <see cref="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Average"/> and <see cref="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Aggregated"/> with <see cref="F:System.TimeSpan.Zero"/>.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ExecutionTimeSummary.Calculate(System.Collections.Generic.IEnumerable{LightBDD.Core.Results.ExecutionTime})">
+            <summary>
+            Calculates <see cref="T:LightBDD.Framework.Reporting.ExecutionTimeSummary"/> for all <see cref="T:LightBDD.Core.Results.ExecutionTime"/> instances provided in <paramref name="times"/> argument.
+            The <see cref="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Start"/> is set to the lowest <see cref="P:LightBDD.Core.Results.ExecutionTime.Start"/> value from provided <paramref name="times"/>.
+            The <see cref="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.End"/> is set to the highest <see cref="P:LightBDD.Core.Results.ExecutionTime.End"/> value from provided <paramref name="times"/>.
+            The <see cref="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Aggregated"/> is set to the sum of all <see cref="P:LightBDD.Core.Results.ExecutionTime.Duration"/> values from provided <paramref name="times"/>.
+            The <see cref="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Average"/> is set to the <see cref="P:LightBDD.Framework.Reporting.ExecutionTimeSummary.Aggregated"/> divided by number of values from provided <paramref name="times"/>.
+            </summary>
+            <param name="times">Times to calculate summary for.</param>
+            <returns><see cref="T:LightBDD.Framework.Reporting.ExecutionTimeSummary"/> object.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Reporting.FeatureReportExtensions">
+            <summary>
+            Helper methods to work on feature results
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.GetTestExecutionTimeSummary(System.Collections.Generic.IEnumerable{LightBDD.Core.Results.IFeatureResult})">
+            <summary>
+            Returns execution summary for provided <paramref name="results"/>.
+            </summary>
+            <param name="results">Results to calculate execution summary for.</param>
+            <returns><see cref="T:LightBDD.Framework.Reporting.ExecutionTimeSummary"/> object.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.GetTestExecutionTimeSummary(System.Collections.Generic.IEnumerable{LightBDD.Core.Results.IScenarioResult})">
+            <summary>
+            Returns execution summary for provided <paramref name="results"/>.
+            </summary>
+            <param name="results">Results to calculate execution summary for.</param>
+            <returns><see cref="T:LightBDD.Framework.Reporting.ExecutionTimeSummary"/> object.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.CountScenariosWithStatus(LightBDD.Core.Results.IFeatureResult,LightBDD.Core.Results.ExecutionStatus)">
+            <summary>
+            Counts scenarios that belongs to given feature and have given status.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.CountScenariosWithStatus(System.Collections.Generic.IEnumerable{LightBDD.Core.Results.IFeatureResult},LightBDD.Core.Results.ExecutionStatus)">
+            <summary>
+            Counts all scenarios with given status.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.CountScenarios(System.Collections.Generic.IEnumerable{LightBDD.Core.Results.IFeatureResult})">
+            <summary>
+            Counts all scenarios.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.CountSteps(System.Collections.Generic.IEnumerable{LightBDD.Core.Results.IFeatureResult})">
+            <summary>
+            Counts all steps.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.CountSteps(LightBDD.Core.Results.IFeatureResult)">
+            <summary>
+            Counts all steps.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.CountStepsWithStatus(LightBDD.Core.Results.IFeatureResult,LightBDD.Core.Results.ExecutionStatus)">
+            <summary>
+            Counts all steps with given status.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.CountStepsWithStatus(LightBDD.Core.Results.IScenarioResult,LightBDD.Core.Results.ExecutionStatus)">
+            <summary>
+            Counts all steps with given status.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.CountStepsWithStatus(System.Collections.Generic.IEnumerable{LightBDD.Core.Results.IFeatureResult},LightBDD.Core.Results.ExecutionStatus)">
+            <summary>
+            Counts all steps with given status.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.GetAllSteps(LightBDD.Core.Results.IScenarioResult)">
+            <summary>
+            Returns all the steps with their sub steps, belonging to scenario.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.FeatureReportExtensions.GetAllSteps(LightBDD.Core.Results.IStepResult)">
+            <summary>
+            Returns enumeration over step-sub step hierarchy, including specified step.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Reporting.Formatters.HtmlReportFormatter">
+            <summary>
+            Formats feature results as HTML.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.Formatters.HtmlReportFormatter.Format(System.IO.Stream,LightBDD.Core.Results.IFeatureResult[])">
+            <summary>
+            Formats provided feature results and writes to the <paramref name="stream"/>.
+            </summary>
+            <param name="stream">Stream to write formatted results to.</param>
+            <param name="features">Feature results to format.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Reporting.Formatters.IReportFormatter">
+            <summary>
+            Report formatter interface.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.Formatters.IReportFormatter.Format(System.IO.Stream,LightBDD.Core.Results.IFeatureResult[])">
+            <summary>
+            Formats provided feature results and writes to the <paramref name="stream"/>.
+            </summary>
+            <param name="stream">Stream to write formatted results to.</param>
+            <param name="features">Feature results to format.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Reporting.Formatters.PlainTextReportFormatter">
+            <summary>
+            Formats feature results as plain text.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.Formatters.PlainTextReportFormatter.Format(System.IO.Stream,LightBDD.Core.Results.IFeatureResult[])">
+            <summary>
+            Formats provided feature results and writes to the <paramref name="stream"/>.
+            </summary>
+            <param name="stream">Stream to write formatted results to.</param>
+            <param name="features">Feature results to format.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Reporting.Formatters.XmlReportFormatter">
+            <summary>
+            Formats feature results as XML.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.Formatters.XmlReportFormatter.Format(System.IO.Stream,LightBDD.Core.Results.IFeatureResult[])">
+            <summary>
+            Formats provided feature results and writes to the <paramref name="stream"/>.
+            </summary>
+            <param name="stream">Stream to write formatted results to.</param>
+            <param name="features">Feature results to format.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Reporting.ReportFileWriter">
+            <summary>
+            Summary file writer class allows to save feature results by using associated result formatter and output path.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Reporting.ReportFileWriter.Formatter">
+            <summary>
+            Returns configured formatter.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Reporting.ReportFileWriter.OutputPath">
+            <summary>
+            Returns configured output path.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Reporting.ReportFileWriter.FullOutputPath">
+            <summary>
+            Returns output path resolved to a full path.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ReportFileWriter.#ctor(LightBDD.Framework.Reporting.Formatters.IReportFormatter,System.String)">
+            <summary>
+            Constructor allowing to create ReportFileWriter with associated result formatter and output path.
+            Please note that full output path is being resolved at time when constructor is called, not when results are saved, so any relative paths will be resolved at the construction of this class.
+            </summary>
+            <param name="formatter">Report formatter.</param>
+            <param name="outputPath">Output path. If starts with <c>~</c>, it would be resolved to <c>AppContext.BaseDirectory</c>. It can contain string.Format() like parameters of {name:format} syntax.
+            This constructor uses default <see cref="T:LightBDD.Framework.Reporting.ReportPathFormatter"/> to format these parameters. See <see cref="M:LightBDD.Framework.Reporting.ReportPathFormatter.CreateDefault"/>() for more details on available parameter types.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ReportFileWriter.#ctor(LightBDD.Framework.Reporting.Formatters.IReportFormatter,System.String,LightBDD.Framework.Reporting.ReportPathFormatter)">
+            <summary>
+            Constructor allowing to create ReportFileWriter with associated result formatter, output path and path formatter.
+            Please note that full output path is being resolved at time when constructor is called, not when results are saved, so any relative paths will be resolved at the construction of this class.
+            </summary>
+            <param name="formatter">Report formatter.</param>
+            <param name="outputPath">Output path. If starts with <c>~</c>, it would be resolved to <c>AppContext.BaseDirectory</c>. It can contain string.Format() like parameters of {name:format} syntax.</param>
+            <param name="pathFormatter"><see cref="T:LightBDD.Framework.Reporting.ReportPathFormatter"/> instance used to format <paramref name="outputPath"/>.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ReportFileWriter.Save(LightBDD.Core.Results.IFeatureResult[])">
+            <summary>
+            Saves formatted feature <c>results</c> to file specified in constructor.
+            If output path refers to directory which does not exist, it will be created.
+            </summary>
+            <param name="results">Results to save.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Reporting.ReportFormattablePath">
+            <summary>
+            Report file formattable path.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.Reporting.ReportFormattablePath.FormattablePath">
+            <summary>
+            Returns formattable path specified in constructor.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ReportFormattablePath.#ctor(System.String,System.Collections.Generic.IEnumerable{System.Func{LightBDD.Core.Results.IFeatureResult[],System.Object}})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="formattablePath">Formattable path string with String.Format() syntax.</param>
+            <param name="parameterProviders">Parameter providing functions.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ReportFormattablePath.Resolve(LightBDD.Core.Results.IFeatureResult[])">
+            <summary>
+            Resolves path by applying all the formats and resolving to a full path.
+            </summary>
+            <param name="results">Feature results used in format.</param>
+            <returns></returns>
+        </member>
+        <member name="T:LightBDD.Framework.Reporting.ReportPathFormatter">
+            <summary>
+            Summary file path formatter allowing to specify formattable paths with parameters like current date/time or time when test were executed.
+            Formatter accepts string.Format() like parameters of {name:format} syntax, where <c>name</c> is a parameter name while <c>format</c> is string.Format() parameter format string (it is always required).
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ReportPathFormatter.CreateDefault">
+            <summary>
+            Creates default <see cref="T:LightBDD.Framework.Reporting.ReportPathFormatter"/> that supports following format parameters:
+            <list type="bullet">
+            <item><description>CurrentDateTimeUtc - equivalent to DateTime.UtcNow (DateTime type)</description></item>
+            <item><description>CurrentDateTime - equivalent to DateTime.Now (DateTime type)</description></item>
+            <item><description>TestDateTimeUtc - utc date/time when test execution started (DateTime type)</description></item>
+            <item><description>TestDateTime - local date/time when test execution started (DateTime type)</description></item>
+            </list>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ReportPathFormatter.Add(System.String,System.Func{LightBDD.Core.Results.IFeatureResult[],System.Object})">
+            <summary>
+            Adds new format parameter.
+            </summary>
+            <param name="name">Parameter name</param>
+            <param name="parameterFunction">Parameter function</param>
+            <returns>Parameter object.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Reporting.ReportPathFormatter.ToFormattablePath(System.String)">
+            <summary>
+            Converts <paramref name="formattablePath"/> to <see cref="T:LightBDD.Framework.Reporting.ReportFormattablePath"/> by:
+            * parameterizing path with configured parameter functions,
+            * replacing starting '~' character with value of <c>AppContext.BaseDirectory</c>, if present,
+            * resolving to full path if path is relative.
+            </summary>
+            <param name="formattablePath">Formattable path string</param>
+            <returns>Formattable path.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Resources.ResourceHandle`1">
+            <summary>
+            Class allowing to obtain resource from the <see cref="T:LightBDD.Framework.Resources.ResourcePool`1"/> and return it back upon it's disposal.
+            </summary>
+            <typeparam name="TResource"></typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Resources.ResourceHandle`1.#ctor(LightBDD.Framework.Resources.ResourcePool{`0})">
+            <summary>
+            Constructor creating handle for the <see cref="T:LightBDD.Framework.Resources.ResourcePool`1"/> specified by <paramref name="pool"/> parameter.
+            </summary>
+            <param name="pool"></param>
+        </member>
+        <member name="M:LightBDD.Framework.Resources.ResourceHandle`1.ObtainAsync">
+            <summary>
+            Obtains the resource from the pool.<br/>
+            If there is no available resources on the pool, the method will wait until one becomes available.<br/>
+            If resource was already obtained, it will be returned immediately.
+            </summary>
+            <returns>Obtained resource.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Resources.ResourceHandle`1.ObtainAsync(System.Threading.CancellationToken)">
+            <summary>
+            Obtains the resource from the pool.<br/>
+            If there is no available resources on the pool, the method will wait until one becomes available.<br/>
+            If resource was already obtained, it will be returned immediately.
+            </summary>
+            <returns>Obtained resource.</returns>
+            <param name="token">Cancellation token.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Resources.ResourceHandle`1.Dispose">
+            <summary>
+            Disposes handle and returns the resource back to the pool if it was obtained.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Resources.ResourcePool`1">
+            <summary>
+            Class allowing to create a pool of resources.
+            The class is designed for the scenarios where given resource can be used only by one task at a time, but can be reused later and it supports resource limits.
+            The resource can be obtained from the pool with <see cref="T:LightBDD.Framework.Resources.ResourceHandle`1"/> where it will return it back upon it's disposal.
+            </summary>
+            <typeparam name="TResource"></typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Resources.ResourcePool`1.#ctor(`0[],System.Boolean)">
+            <summary>
+            Creates resource pool with pre-set list of resources, specified by <paramref name="resources"/> parameter.
+            If <paramref name="takeOwnership"/> is set to true, the resources implementing <see cref="T:System.IDisposable"/> interface will be disposed upon pool disposal.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Resources.ResourcePool`1.#ctor(System.Func{`0},System.Int32)">
+            <summary>
+            Creates resource pool of dynamically managed resource number.
+            The pool will start with no resources and grow up to the number of resources specified by <paramref name="limit"/> parameter.
+            The new resources will be created if needed by calling <paramref name="resourceFactory"/> function.
+            If resources implement <see cref="T:System.IDisposable"/> interface, they will be disposed upon pool disposal.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Resources.ResourcePool`1.CreateHandle">
+            <summary>
+            Creates a <see cref="T:LightBDD.Framework.Resources.ResourceHandle`1"/> instance that allow to obtain the resource from the pool and return it upon it's disposal.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Resources.ResourcePool`1.Dispose">
+            <summary>
+            Disposed the pool.
+            If resources belonging to the pool are disposable and pool is configured to own them, they will be disposed as well.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.ScenarioCategoryAttribute">
+             <summary>
+             Scenario category attribute that can be applied on scenario test method.
+             May be used to associate scenarios with specific categories.
+             It is possible to apply multiple ScenarioCategory attributes on given scenario.
+            
+             If given implementation supports alternative category attributes, and both are applied on scenario method, all of them would be used.
+             </summary>
+        </member>
+        <member name="P:LightBDD.Framework.ScenarioCategoryAttribute.Category">
+            <summary>
+            Scenario category name.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.ScenarioCategoryAttribute.#ctor(System.String)">
+            <summary>
+            Constructor accepting category name.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Scenarios.BasicExtensions">
+            <summary>
+            Extensions class allowing to use basic syntax for defining and running LightBDD tests.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.BasicExtensions.AddSteps(LightBDD.Framework.Scenarios.IScenarioBuilder{LightBDD.Framework.NoContext},System.Action[])">
+            <summary>
+            Adds steps specified by <paramref name="steps"/> to the scenario, where steps names are inferred directly from provided action names.<br/>
+            Example usage:
+            <code>
+            AddSteps(
+                    Given_numbers_5_and_8,
+                    When_I_add_them,
+                    I_should_receive_number_13)
+            </code>
+            Expected step signature: <code>void Given_numbers_5_and_8() { /* ... */ }</code>
+            </summary>
+            <param name="builder">Builder.</param>
+            <param name="steps">Steps to add, like: <c>AddSteps(Given_numbers_5_and_8, When_I_add_them, I_should_receive_number_13)</c></param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.BasicExtensions.AddAsyncSteps(LightBDD.Framework.Scenarios.IScenarioBuilder{LightBDD.Framework.NoContext},System.Func{System.Threading.Tasks.Task}[])">
+            <summary>
+            Adds asynchronous steps specified by <paramref name="steps"/> to the scenario, where steps names are inferred directly from provided action names.<br/>
+            Example usage:
+            <code>
+            AddAsyncSteps(
+                    Given_numbers_5_and_8,
+                    When_I_add_them,
+                    I_should_receive_number_13)
+            </code>
+            Expected step signature: <code>Task Given_numbers_5_and_8() { /* ... */ }</code>
+            </summary>
+            <param name="builder">Builder.</param>
+            <param name="steps">Steps to add, like: <c>AddAsyncSteps(Given_numbers_5_and_8, When_I_add_them, I_should_receive_number_13)</c></param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.BasicExtensions.AddSteps(LightBDD.Framework.Scenarios.ICompositeStepBuilder{LightBDD.Framework.NoContext},System.Action[])">
+            <summary>
+            Adds steps specified by <paramref name="steps"/> to the composite step, where steps names are inferred directly from provided action names.<br/>
+            Example usage:
+            <code>
+            AddSteps(
+                    Given_numbers_5_and_8,
+                    When_I_add_them,
+                    I_should_receive_number_13)
+            </code>
+            Expected step signature: <code>void Given_numbers_5_and_8() { /* ... */ }</code>
+            </summary>
+            <param name="builder">Builder.</param>
+            <param name="steps">Steps to add, like: <c>AddSteps(Given_numbers_5_and_8, When_I_add_them, I_should_receive_number_13)</c></param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.BasicExtensions.AddAsyncSteps(LightBDD.Framework.Scenarios.ICompositeStepBuilder{LightBDD.Framework.NoContext},System.Func{System.Threading.Tasks.Task}[])">
+            <summary>
+            Adds asynchronous steps specified by <paramref name="steps"/> to the composite step, where steps names are inferred directly from provided action names.<br/>
+            Example usage:
+            <code>
+            AddAsyncSteps(
+                    Given_numbers_5_and_8,
+                    When_I_add_them,
+                    I_should_receive_number_13)
+            </code>
+            Expected step signature: <code>Task Given_numbers_5_and_8() { /* ... */ }</code>
+            </summary>
+            <param name="builder">Builder.</param>
+            <param name="steps">Steps to add, like: <c>AddAsyncSteps(Given_numbers_5_and_8, When_I_add_them, I_should_receive_number_13)</c></param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.BasicExtensions.RunScenario(LightBDD.Framework.IBddRunner,System.Action[])">
+            <summary>
+            Runs test scenario by executing given steps in specified order.<br/>
+            If given step throws, other are not executed.<br/>
+            The scenario name is determined from the current scenario test method.<br/>
+            Scenario labels are determined from <see cref="T:LightBDD.Framework.LabelAttribute"/> attributes applied on scenario method.<br/>
+            The step name is determined from corresponding action name.<br/>
+            Example usage:
+            <code>
+            Runner.RunScenario(
+                    Given_numbers_5_and_8,
+                    When_I_add_them,
+                    I_should_receive_number_13);
+            </code>
+            Expected step signature: <code>void Given_numbers_5_and_8() { /* ... */ }</code>
+            </summary>
+            <param name="runner">Runner.</param>
+            <param name="steps">List of steps to execute in order.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.BasicExtensions.RunScenarioAsync(LightBDD.Framework.IBddRunner,System.Func{System.Threading.Tasks.Task}[])">
+            <summary>
+            Runs asynchronous test scenario by executing given steps in specified order.<br/>
+            If given step throws, other are not executed.<br/>
+            The scenario name is determined from the current scenario test method.<br/>
+            Scenario labels are determined from <see cref="T:LightBDD.Framework.LabelAttribute"/> attributes applied on scenario method.<br/>
+            The step name is determined from corresponding action name.<br/>
+            Example usage:
+            <code>
+            await Runner.RunScenarioAsync(
+                    Given_numbers_5_and_8,
+                    When_I_add_them,
+                    I_should_receive_number_13);
+            </code>
+            Expected step signature:
+            <code>
+            async Task Given_numbers_5_and_8() { /* ... */ }
+            </code>
+            </summary>
+            <remarks>This is an asynchronous method and should be awaited.</remarks>
+            <param name="runner">Runner.</param>
+            <param name="steps">List of steps to execute in order.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Scenarios.CompactExtensions">
+            <summary>
+            Extensions class allowing to use compact steps for defining LightBDD test steps.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.CompactExtensions.AddStep``1(LightBDD.Framework.Scenarios.ICompositeStepBuilder{``0},System.String,System.Action{``0})">
+            <summary>
+            Adds step with name specified by <paramref name="name"/> parameter and action specified by <paramref name="step"/> parameter to the composite step.
+            </summary>
+            <typeparam name="TContext">Scenario context, if specified.</typeparam>
+            <param name="builder">Builder.</param>
+            <param name="name">Step name to be rendered.</param>
+            <param name="step">Step action</param>
+            <returns>Builder.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.CompactExtensions.AddAsyncStep``1(LightBDD.Framework.Scenarios.ICompositeStepBuilder{``0},System.String,System.Func{``0,System.Threading.Tasks.Task})">
+            <summary>
+            Adds asynchronous step with name specified by <paramref name="name"/> parameter and action specified by <paramref name="step"/> parameter to the composite step.
+            </summary>
+            <typeparam name="TContext">Scenario context, if specified.</typeparam>
+            <param name="builder">Builder.</param>
+            <param name="name">Step name to be rendered.</param>
+            <param name="step">Step action</param>
+            <returns>Builder.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.CompactExtensions.AddStep``1(LightBDD.Framework.Scenarios.IScenarioBuilder{``0},System.String,System.Action{``0})">
+            <summary>
+            Adds step with name specified by <paramref name="name"/> parameter and action specified by <paramref name="step"/> parameter to the scenario.
+            </summary>
+            <typeparam name="TContext">Scenario context, if specified.</typeparam>
+            <param name="builder">Builder.</param>
+            <param name="name">Step name to be rendered.</param>
+            <param name="step">Step action</param>
+            <returns>Builder.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.CompactExtensions.AddAsyncStep``1(LightBDD.Framework.Scenarios.IScenarioBuilder{``0},System.String,System.Func{``0,System.Threading.Tasks.Task})">
+            <summary>
+            Adds asynchronous step with name specified by <paramref name="name"/> parameter and action specified by <paramref name="step"/> parameter to the scenario.
+            </summary>
+            <typeparam name="TContext">Scenario context, if specified.</typeparam>
+            <param name="builder">Builder.</param>
+            <param name="name">Step name to be rendered.</param>
+            <param name="step">Step action</param>
+            <returns>Builder.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Scenarios.ContextualExtensions">
+            <summary>
+            Extensions allowing to create contextual <see cref="T:LightBDD.Framework.IBddRunner"/> instance.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ContextualExtensions.WithContext``1(LightBDD.Framework.IBddRunner,System.Func{``0},System.Boolean)">
+            <summary>
+            Specifies that scenario will be executed in dedicated context of <typeparamref name="TContext"/> type, created by <paramref name="contextFactory"/> function.
+            The context instance will be created by calling default constructor just before scenario execution.
+            
+            The <paramref name="takeOwnership"/> specifies if created context should be disposed (when implements <see cref="T:System.IDisposable"/> interface) by scenario runner. By default is it set to <c>true</c>.
+            </summary>
+            <typeparam name="TContext">Context type.</typeparam>
+            <param name="runner"><see cref="T:LightBDD.Framework.IBddRunner"/> instance.</param>
+            <param name="contextFactory">Context factory function.</param>
+            <param name="takeOwnership">Specifies if scenario runner should take ownership of the context instance. If set to true and context instance implements <see cref="T:System.IDisposable"/>, it will be disposed after scenario finish.</param>
+            <returns>Contextual runner.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ContextualExtensions.WithContext``1(LightBDD.Framework.IBddRunner,``0,System.Boolean)">
+            <summary>
+            Specifies that scenario will be executed in dedicated <paramref name="context"/> of <typeparamref name="TContext"/> type.
+            
+            The <paramref name="takeOwnership"/> specifies if created context should be disposed (when implements <see cref="T:System.IDisposable"/> interface) by scenario runner. By default is it set to <c>false</c>.
+            </summary>
+            <typeparam name="TContext">Context type.</typeparam>
+            <param name="runner"><see cref="T:LightBDD.Framework.IBddRunner"/> instance.</param>
+            <param name="context">Context instance.</param>
+            <param name="takeOwnership">Specifies if scenario runner should take ownership of the context instance. If set to true and context instance implements <see cref="T:System.IDisposable"/>, it will be disposed after scenario finish.</param>
+            <returns>Contextual runner.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ContextualExtensions.WithContext``1(LightBDD.Framework.IBddRunner)">
+            <summary>
+            Specifies that scenario will be executed in dedicated context of <typeparamref name="TContext"/> type.
+            The context instance will be created by calling default constructor just before scenario execution.
+            
+            All context instances implementing <see cref="T:System.IDisposable"/> interface will be disposed after scenario.
+            </summary>
+            <param name="runner"><see cref="T:LightBDD.Framework.IBddRunner"/> instance.</param>
+            <typeparam name="TContext">Context type.</typeparam>
+            <returns>Contextual runner.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ContextualExtensions.WithContext``1(LightBDD.Framework.Scenarios.ICompositeStepBuilder,System.Func{``0},System.Boolean)">
+            <summary>
+            Specifies that composite step will be executed in dedicated context of <typeparamref name="TContext"/> type, created by <paramref name="contextFactory"/> function.
+            The context instance will be created by calling default constructor just before scenario execution.
+            
+            The <paramref name="takeOwnership"/> specifies if created context should be disposed (when implements <see cref="T:System.IDisposable"/> interface) by runner. By default is it set to <c>true</c>.
+            </summary>
+            <typeparam name="TContext">Context type.</typeparam>
+            <param name="runner"><see cref="T:LightBDD.Framework.Scenarios.ICompositeStepBuilder"/> instance.</param>
+            <param name="contextFactory">Context factory function.</param>
+            <param name="takeOwnership">Specifies if scenario runner should take ownership of the context instance. If set to true and context instance implements <see cref="T:System.IDisposable"/>, it will be disposed after scenario finish.</param>
+            <returns>Contextual runner.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ContextualExtensions.WithContext``1(LightBDD.Framework.Scenarios.ICompositeStepBuilder,``0,System.Boolean)">
+            <summary>
+            Specifies that composite step will be executed in dedicated <paramref name="context"/> of <typeparamref name="TContext"/> type.
+            
+            The <paramref name="takeOwnership"/> specifies if created context should be disposed (when implements <see cref="T:System.IDisposable"/> interface) by runner. By default is it set to <c>false</c>.
+            </summary>
+            <typeparam name="TContext">Context type.</typeparam>
+            <param name="runner"><see cref="T:LightBDD.Framework.Scenarios.ICompositeStepBuilder"/> instance.</param>
+            <param name="context">Context instance.</param>
+            <param name="takeOwnership">Specifies if scenario runner should take ownership of the context instance. If set to true and context instance implements <see cref="T:System.IDisposable"/>, it will be disposed after scenario finish.</param>
+            <returns>Contextual runner.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ContextualExtensions.WithContext``1(LightBDD.Framework.Scenarios.ICompositeStepBuilder)">
+            <summary>
+            Specifies that composite step will be executed in dedicated context <typeparamref name="TContext"/> type.
+            The context instance will be created by calling default constructor just before scenario execution.
+            
+            All context instances implementing <see cref="T:System.IDisposable"/> interface will be disposed after scenario.
+            </summary>
+            <param name="runner"><see cref="T:LightBDD.Framework.Scenarios.ICompositeStepBuilder"/> instance.</param>
+            <typeparam name="TContext">Context type.</typeparam>
+            <returns>Contextual runner.</returns>
+        </member>
+        <member name="T:LightBDD.Framework.Scenarios.ExtendedExtensions">
+            <summary>
+            Extensions class allowing to use extended syntax for defining and running LightBDD tests.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ExtendedExtensions.AddSteps``1(LightBDD.Framework.Scenarios.IScenarioBuilder{``0},System.Linq.Expressions.Expression{System.Action{``0}}[])">
+            <summary>
+            Adds steps specified by <paramref name="steps"/> parameter to the scenario.<br/>
+            The step name is determined from lambda parameter name reflecting action type keyword, corresponding action name and passed list of parameters to called method.<br/>
+            If scenario is defined with context, the context instance is provided with lambda parameter.<br/>
+            Example usage:
+            <code>
+            AddSteps(
+                    _ => Given_numbers(5, 8),
+                    _ => When_I_add_them(),
+                    _ => I_should_receive_number(13))
+            </code>
+            Expected step signature: <code>void Given_numbers(params int[] numbers) { /* ... */ }</code>
+            </summary>
+            <param name="builder">Builder.</param>
+            <param name="steps">Steps to add, like: <c>AddSteps(_ => Given_numbers(5, 8), _ => When_I_add_them(), _ => I_should_receive_number(13))</c></param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ExtendedExtensions.AddAsyncSteps``1(LightBDD.Framework.Scenarios.IScenarioBuilder{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Threading.Tasks.Task}}[])">
+            <summary>
+            Adds asynchronous steps specified by <paramref name="steps"/> parameter to the scenario.<br/>
+            The step name is determined from lambda parameter name reflecting action type keyword, corresponding action name and passed list of parameters to called method.<br/>
+            If scenario is defined with context, the context instance is provided with lambda parameter.<br/>
+            Example usage:
+            <code>
+            AddAsyncSteps(
+                    _ => Given_numbers(5, 8),
+                    _ => When_I_add_them(),
+                    _ => I_should_receive_number(13))
+            </code>
+            Expected step signature: <code>Task Given_numbers(params int[] numbers) { /* ... */ }</code>
+            </summary>
+            <param name="builder">Builder.</param>
+            <param name="steps">Steps to add, like: <c>AddAsyncSteps(_ => Given_numbers(5, 8), _ => When_I_add_them(), _ => I_should_receive_number(13))</c></param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ExtendedExtensions.AddSteps``1(LightBDD.Framework.Scenarios.ICompositeStepBuilder{``0},System.Linq.Expressions.Expression{System.Action{``0}}[])">
+            <summary>
+            Adds steps specified by <paramref name="steps"/> parameter to the composite step.<br/>
+            The step name is determined from lambda parameter name reflecting action type keyword, corresponding action name and passed list of parameters to called method.<br/>
+            If scenario is defined with context, the context instance is provided with lambda parameter.<br/>
+            Example usage:
+            <code>
+            AddSteps(
+                    _ => Given_numbers(5, 8),
+                    _ => When_I_add_them(),
+                    _ => I_should_receive_number(13))
+            </code>
+            Expected step signature: <code>void Given_numbers(params int[] numbers) { /* ... */ }</code>
+            </summary>
+            <param name="builder">Builder.</param>
+            <param name="steps">Steps to add, like: <c>AddSteps(_ => Given_numbers(5, 8), _ => When_I_add_them(), _ => I_should_receive_number(13))</c></param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ExtendedExtensions.AddAsyncSteps``1(LightBDD.Framework.Scenarios.ICompositeStepBuilder{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Threading.Tasks.Task}}[])">
+            <summary>
+            Adds asynchronous steps specified by <paramref name="steps"/> parameter to the composite step.<br/>
+            The step name is determined from lambda parameter name reflecting action type keyword, corresponding action name and passed list of parameters to called method.<br/>
+            If scenario is defined with context, the context instance is provided with lambda parameter.<br/>
+            Example usage:
+            <code>
+            AddAsyncSteps(
+                    _ => Given_numbers(5, 8),
+                    _ => When_I_add_them(),
+                    _ => I_should_receive_number(13))
+            </code>
+            Expected step signature: <code>Task Given_numbers(params int[] numbers) { /* ... */ }</code>
+            </summary>
+            <param name="builder">Builder.</param>
+            <param name="steps">Steps to add, like: <c>AddAsyncSteps(_ => Given_numbers(5, 8), _ => When_I_add_them(), _ => I_should_receive_number(13))</c></param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ExtendedExtensions.RunScenario``1(LightBDD.Framework.IBddRunner{``0},System.Linq.Expressions.Expression{System.Action{``0}}[])">
+            <summary>
+            Runs test scenario by executing given steps in specified order.<br/>
+            If given step throws, other are not executed.<br/>
+            The scenario name is determined from the current scenario test method.<br/>
+            Scenario labels are determined from <see cref="T:LightBDD.Framework.LabelAttribute"/> attributes applied on scenario method.<br/>
+            The step name is determined from lambda parameter name reflecting action type keyword, corresponding action name and passed list of parameters to called method.<br/>
+            If scenario is executed with context, the context instance is provided with lambda parameter.<br/>
+            Example usage:
+            <code>
+            Runner.RunScenario(
+                    _ => Given_numbers(5, 8),
+                    _ => When_I_add_them(),
+                    _ => I_should_receive_number(13))
+            </code>
+            Expected step signature: <code>void Given_numbers(params int[] numbers) { /* ... */ }</code>
+            </summary>
+            <param name="runner">Runner.</param>
+            <param name="steps">List of steps to execute in order.</param>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ExtendedExtensions.RunScenarioAsync``1(LightBDD.Framework.IBddRunner{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Threading.Tasks.Task}}[])">
+            <summary>
+            Runs asynchronous test scenario by executing given steps in specified order.<br/>
+            If given step throws, other are not executed.<br/>
+            The scenario name is determined from the current scenario test method.<br/>
+            Scenario labels are determined from <see cref="T:LightBDD.Framework.LabelAttribute"/> attributes applied on scenario method.<br/>
+            The step name is determined from lambda parameter name reflecting action type keyword, corresponding action name and passed list of parameters to called method.<br/>
+            If scenario is executed with context, the context instance is provided with lambda parameter.<br/>
+            Example usage:
+            <code>
+            await Runner.RunScenarioAsync(
+                    _ => Given_numbers(5, 8),
+                    _ => When_I_add_them(),
+                    _ => I_should_receive_number(13))
+            </code>
+            Expected step signature: <code>Task Given_numbers(params int[] numbers) { /* ... */ }</code>
+            </summary>
+            <remarks>This is an asynchronous method and should be awaited.</remarks>
+            <param name="runner">Runner.</param>
+            <param name="steps">List of steps to execute in order.</param>
+        </member>
+        <member name="T:LightBDD.Framework.Scenarios.ICompositeStepBuilder`1">
+            <summary>
+            Generic interface allowing to compose <see cref="T:LightBDD.Framework.CompositeStep"/> instance.
+            </summary>
+            <typeparam name="TContext">Type of context that would be shared between steps.</typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ICompositeStepBuilder`1.Build">
+            <summary>
+            Builds <see cref="T:LightBDD.Framework.CompositeStep"/> based on specified steps and step context.
+            </summary>
+            <returns><see cref="T:LightBDD.Framework.CompositeStep"/> instance.</returns>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.ICompositeStepBuilder`1.Integrate">
+            <summary>
+            This method should not be used by LightBDD users, but code extending LightBDD capabilities.<br/>
+            Returns core version of the builder, allowing to configure composite step.<br/>
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Scenarios.ICompositeStepBuilder">
+            <summary>
+            Interface allowing to compose <see cref="T:LightBDD.Framework.CompositeStep"/> instance.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Scenarios.IIntegratedScenarioBuilder`1">
+            <summary>
+            Interface offering access to core version of scenario builder.
+            </summary>
+            <typeparam name="TContext"></typeparam>
+        </member>
+        <member name="P:LightBDD.Framework.Scenarios.IIntegratedScenarioBuilder`1.Core">
+            <summary>
+            Returns core version of scenario builder.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Scenarios.IScenarioBuilder`1">
+            <summary>
+            Interface allowing to compose scenario in fluent way.
+            </summary>
+            <typeparam name="TContext"></typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.IScenarioBuilder`1.Integrate">
+            <summary>
+            This method should not be used by LightBDD users, but code extending LightBDD capabilities.<br/>
+            Returns core version of the builder, allowing to configure scenario.<br/>
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.Scenarios.IScenarioRunner`1">
+            <summary>
+            Interface allowing to run scenario composed in fluent way.
+            </summary>
+            <typeparam name="TContext"></typeparam>
+        </member>
+        <member name="M:LightBDD.Framework.Scenarios.IScenarioRunner`1.RunAsync">
+            <summary>
+            Runs test scenario by executing all specified steps in provided order.
+            </summary>
+        </member>
+        <member name="T:LightBDD.Framework.State`1">
+            <summary>
+            A helper struct designed to protect scenario state fields from being accessed without former initialization.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.State`1.IsInitialized">
+            <summary>
+            Returns true if state is initialized, otherwise false.
+            The default instance of <see cref="T:LightBDD.Framework.State`1"/> type represents uninitialized state.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.State`1.#ctor(`0)">
+            <summary>
+            Creates state instance, initialized with <paramref name="value"/> value.
+            The <see cref="P:LightBDD.Framework.State`1.IsInitialized"/> is always set to true, even if <paramref name="value"/> itself is null.
+            The <paramref name="value"/> is retrievable with <see cref="M:LightBDD.Framework.State`1.GetValue(System.String)"/> method or implicit cast.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LightBDD.Framework.State`1.GetValue(System.String)">
+            <summary>
+            Returns the held value, or throws <see cref="T:System.InvalidOperationException"/> if state is not initialized.
+            </summary>
+            <param name="memberName">If specified, the member name will be used in exception. If not specified, the state type will be used.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if value is not initialized.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.State`1.GetValueOrDefault(`0)">
+            <summary>
+            Returns the held value or <paramref name="defaultValue"/> if state is not initialized or held value is null (in case where <typeparamref name="T"/> is reference type).
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.State`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:LightBDD.Framework.State`1.op_Implicit(`0)~LightBDD.Framework.State{`0}">
+            <summary>
+            Implicit cast, converting <paramref name="value"/> to initialized state instance.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.State`1.op_Implicit(LightBDD.Framework.State{`0})~`0">
+            <summary>
+            Implicit cast, retrieving value of <paramref name="state"/> or throwing <see cref="T:System.InvalidOperationException"/> if state is not initialized.
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="T:LightBDD.Framework.StepExecution">
+            <summary>
+            Step execution class, allowing to control step execution from method executing step.
+            </summary>
+        </member>
+        <member name="P:LightBDD.Framework.StepExecution.Current">
+            <summary>
+            Returns current step execution instance.
+            Reference by <see cref="P:LightBDD.Framework.StepExecution.Current"/> property enables LightBDD extension packages to add functionality to <see cref="T:LightBDD.Framework.StepExecution"/> with extension methods.
+            </summary>
+        </member>
+        <member name="M:LightBDD.Framework.StepExecution.Bypass(System.String)">
+            <summary>
+            Bypasses currently executed step and continues execution of current scenario, allowing to execute all remaining steps.
+            The step code located after <c>StepExecution.Current.Bypass()</c> call would not be executed.
+            <para>
+            The status of bypassed step would be <see cref="F:LightBDD.Core.Results.ExecutionStatus.Bypassed"/> and the overall status of scenario would be <see cref="F:LightBDD.Core.Results.ExecutionStatus.Bypassed"/>,
+            unless any further step is failed or ignored.
+            </para>
+            <para>Scenarios with <see cref="F:LightBDD.Core.Results.ExecutionStatus.Bypassed"/> status are recognized as successful tests in underlying test framework.</para>
+            
+            <para>The <paramref name="reason"/> argument would be used as step <see cref="P:LightBDD.Core.Results.IStepResult.StatusDetails"/>, and it would be aggregated in overall scenario <see cref="P:LightBDD.Core.Results.IScenarioResult.StatusDetails"/> as well.</para>
+            
+            The <see cref="M:LightBDD.Framework.StepExecution.Bypass(System.String)"/>() method could be used in situations when:
+            <list type="bullet">
+            <item><description>It is not possible to implement given step at the moment (no required API is implemented yet), but all other steps are precise enough to prove that scenario is successful, i.e. situation when scenario checks overall and detailed cost of product and one of price component cannot be retrieved.</description></item>
+            <item><description>Step implementation does not exists, but it is possible to simulate it, so further steps can be executed, i.e. end-to-end tests, where the middle component does not exist yet.</description></item>
+            <item><description>The required API is not exposed yet, but it is possible to implement a workaround like direct data insert to database.</description></item>
+            </list>
+            </summary>
+            <param name="reason">Bypass reason.</param>
+            <exception cref="T:LightBDD.Core.Execution.StepBypassException">Bypass exception used to control scenario execution.</exception>
+        </member>
+        <member name="M:LightBDD.Framework.StepExecution.Comment(System.String)">
+            <summary>
+            Comments currently executed step with a <paramref name="comment"/> text.
+            The comment would be included in progress notification, as well as in execution reports.
+            </summary>
+            <param name="comment">Comment to add. If comment is <c>null</c> or empty, it will not be added.</param>
+        </member>
+        <member name="M:LightBDD.Framework.StepExecution.GetScenarioDependencyResolver">
+            <summary>
+            Retrieves <see cref="T:LightBDD.Core.Dependencies.IDependencyResolver"/> for currently executed scenario.
+            Please note that for contextual scenarios or composite steps, it is better to specify <see cref="T:LightBDD.Core.Dependencies.IDependencyResolver"/> in context constructor.
+            </summary>
+        </member>
+    </members>
+</doc>
