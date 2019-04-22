@@ -20,41 +20,48 @@ namespace Assets.Editor
             Assert.That(!string.IsNullOrWhiteSpace(chatbotResponse));
         }
 
-        private void TheResponseIsChecked()
+        private void TheResponseHandlerIsCalled()
         {
             responseHandler.HandleResponse(chatbotResponse);
         }
 
-        private void TheAudioToPlayIsTheDefaultError()
+        private void CheckTheAudioToPlay(string audioToPlay)
         {
-            Assert.That(responseHandler.CheckAudioToPlay() == "DefaultErrorResponse");
+            Assert.That(responseHandler.CheckAudioToPlay() == audioToPlay);
         }
 
-        private void GoHomeIsTrue()
+        private void CheckGoHome(bool isTrue)
         {
-            Assert.That(responseHandler.CheckGoHome() == true);
+            Assert.That(responseHandler.CheckGoHome() == isTrue);
         }
 
-        private void TheWorkoutShouldStart()
+        private void CheckIfTheWorkoutShouldStart()
         {
-            Assert.That(responseHandler.CheckStartWorkout() == true);
-            Assert.That(responseHandler.PanelsToSetActive().Contains("StartWorkoutPanel"));
+            if (responseHandler.CheckStartWorkout() == true)
+            {
+                Assert.That(responseHandler.CheckPanelsToSetActive().Contains("StartWorkoutPanel"));
+            }
+            else
+            {
+                Assert.That(responseHandler.CheckStartWorkout() == false);
+            }
         }
 
-        private void TheCorrectPanelShouldBeActive(string panel)
+        private void CheckThePanelShouldBeSetActive(string panel)
         {
-            Assert.That(responseHandler.PanelsToSetActive().Contains(panel));
+            if (responseHandler.CheckPanelsToSetActive().Count > 0)
+            {
+                Assert.That(responseHandler.CheckPanelsToSetActive().Contains(panel));
+            }
+            else
+            {
+                Assert.That(responseHandler.CheckPanelsToSetActive().Count <= 0);
+            }
         }
 
-        private void TheDiagramShouldBeCorrect(string diagramToShow)
+        private void CheckTheDiagramToShow(string diagramToShow)
         {
             Assert.That(diagramToShow == responseHandler.CheckDiagramToShow());
         }
-
-        /*public IEnumerator TheResponseIsChecked()
-        {
-            responseHandler.PlayAudio();
-            yield return null;
-        }*/
     }
 }

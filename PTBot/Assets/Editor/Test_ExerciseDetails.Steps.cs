@@ -8,13 +8,29 @@ namespace Assets.Editor
         private ExerciseDetails exerciseDetails = new ExerciseDetails();
         private int indexToSearch;
 
-        private void CheckTheArrayIsNotNull() { Assert.That(exerciseDetails.GetEntireArray() != null); }
+        private void CheckTheArrayIsNotNull()
+        {
+            Assert.That(exerciseDetails.GetEntireArray() != null);
+        }
 
-        private void WhenTheExerciseIsChecked(string exerciseToCheck) { indexToSearch = exerciseDetails.GetArrayIndex(exerciseToCheck); }
+        private void WhenTheExerciseIsChecked(string exerciseToCheck)
+        {
+            indexToSearch = exerciseDetails.GetArrayIndex(exerciseToCheck);
+        }
 
-        private void ThenTheResultIsNotNull() { Assert.That(indexToSearch != -1); }
-        private void AndTheExerciseDetailsAreFound() { Assert.That(exerciseDetails.GetArrayValue(indexToSearch, 1) != null); }
+        private void TheItemExistsInTheArray()
+        {
+            Assert.That(indexToSearch != -1);
+        }
 
-        private void ThenTheResultIsNull() { Assert.That(indexToSearch == -1); }
+        private void TheExerciseDetailsAreFound()
+        {
+            Assert.That(!string.IsNullOrWhiteSpace(exerciseDetails.GetArrayValue(indexToSearch, 1)));
+        }
+
+        private void TheItemDoesNotExistInTheArray()
+        {
+            Assert.That(indexToSearch == -1);
+        }
     }
 }

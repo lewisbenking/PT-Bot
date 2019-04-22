@@ -55,7 +55,7 @@ public class ResponseHandler
         }
     }
     
-    public ArrayList PanelsToSetActive() { return panelsToSetActive; }
+    public ArrayList CheckPanelsToSetActive() { return panelsToSetActive; }
 
     public bool CheckGetExerciseDetails() { return getExerciseDetails; }
 

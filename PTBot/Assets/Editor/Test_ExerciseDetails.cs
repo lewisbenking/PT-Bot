@@ -8,25 +8,41 @@ namespace Assets.Editor
 {
     public partial class Test_ExerciseDetails
     {
-        [Label("Get exercise details based on valid exercise")]
+        [Label("Use an invalid exercise.")]
         [Scenario]
-        public void ValidExercise()
+        public void TestInvalidExercise()
+        {
+            Runner.RunScenario(
+                Given => CheckTheArrayIsNotNull(),
+                When => WhenTheExerciseIsChecked(null),
+                Then => TheItemDoesNotExistInTheArray());
+
+            Runner.RunScenario(
+                Given => CheckTheArrayIsNotNull(),
+                When => WhenTheExerciseIsChecked(string.Empty),
+                Then => TheItemDoesNotExistInTheArray());
+
+            Runner.RunScenario(
+                Given => CheckTheArrayIsNotNull(),
+                When => WhenTheExerciseIsChecked("Fake input."),
+                Then => TheItemDoesNotExistInTheArray());
+        }
+
+        [Label("Use a valid exercise.")]
+        [Scenario]
+        public void TestValidExercise()
         {
             Runner.RunScenario(
                 Given => CheckTheArrayIsNotNull(),
                 When => WhenTheExerciseIsChecked(" Air Bikes"),
-                Then => ThenTheResultIsNotNull(),
-                And => AndTheExerciseDetailsAreFound());
-        }
+                Then => TheItemExistsInTheArray(),
+                And => TheExerciseDetailsAreFound());
 
-        [Label("Try using an invalid exercise")]
-        [Scenario]
-        public void InvalidExercise()
-        {
             Runner.RunScenario(
                 Given => CheckTheArrayIsNotNull(),
-                When => WhenTheExerciseIsChecked("Fake Exercise"),
-                Then => ThenTheResultIsNull());
+                When => WhenTheExerciseIsChecked(" Pullups"),
+                Then => TheItemExistsInTheArray(),
+                And => TheExerciseDetailsAreFound());
         }
     }
 }

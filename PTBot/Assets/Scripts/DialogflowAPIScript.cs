@@ -16,7 +16,7 @@ public class DialogflowAPIScript : MonoBehaviour
     private Animator animator;
     private AudioSource audioSource;
     private ExerciseDetails exerciseDetails;
-    private GameObject jimBotCharacter, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, startWorkoutPanel, workoutEndPanel, lastPanel;
+    private GameObject jimBotCharacter, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, startWorkoutPanel, workoutEndPanel;
     private readonly VideoSource videoSource;
     private string url, diagramToShow;
     private string AccessToken { get; set; }
@@ -28,22 +28,23 @@ public class DialogflowAPIScript : MonoBehaviour
     private void Awake()
     {
         jimBot = GameObject.Find("JimBot").AddComponent<JimBot>();
-        scrollArea = GameObject.Find("ScrollArea");
-        exercisesPanel = GameObject.Find("ExercisesPanel");
-        jimBot.PanelSetActive(exercisesPanel, false);
-        individualExercisePanel = GameObject.Find("IndividualExercisePanel");
-        jimBot.PanelSetActive(individualExercisePanel, false);
-        workoutEquipmentPanel = GameObject.Find("WorkoutEquipmentPanel");
-        muscleDiagramPanel = GameObject.Find("MuscleDiagramPanel");
-        jimBot.PanelSetActive(muscleDiagramPanel, false);
-        areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
-        jimBot.PanelSetActive(areasToTrainPanel, false);
-        startWorkoutPanel = GameObject.Find("StartWorkoutPanel");
-        jimBot.PanelSetActive(startWorkoutPanel, false);
-        workoutEndPanel = GameObject.Find("WorkoutEndPanel");
-        jimBot.PanelSetActive(workoutEndPanel, false);
         jimBotCharacter = GameObject.Find("JimBot");
         audioSource = GameObject.Find("JimBot").GetComponentInChildren<AudioSource>();
+        scrollArea = GameObject.Find("ScrollArea");
+        exercisesPanel = GameObject.Find("ExercisesPanel");
+        individualExercisePanel = GameObject.Find("IndividualExercisePanel");
+        workoutEquipmentPanel = GameObject.Find("WorkoutEquipmentPanel");
+        muscleDiagramPanel = GameObject.Find("MuscleDiagramPanel");
+        areasToTrainPanel = GameObject.Find("AreasToTrainPanel");
+        startWorkoutPanel = GameObject.Find("StartWorkoutPanel");
+        workoutEndPanel = GameObject.Find("WorkoutEndPanel");
+
+        jimBot.PanelSetActive(exercisesPanel, false);
+        jimBot.PanelSetActive(individualExercisePanel, false);
+        jimBot.PanelSetActive(muscleDiagramPanel, false);
+        jimBot.PanelSetActive(areasToTrainPanel, false);
+        jimBot.PanelSetActive(startWorkoutPanel, false);
+        jimBot.PanelSetActive(workoutEndPanel, false);
     }
 
     private void Start()
@@ -68,9 +69,6 @@ public class DialogflowAPIScript : MonoBehaviour
 
     public void SendSpeechToChatbot(string inputAudio)
     {
-        //jimBot.PanelSetActive(workoutEquipmentPanel, false);
-        //jimBot.PanelSetActive(areasToTrainPanel, false);
-        //jimBot.PanelSetActive(exercisesPanel, false);
         animator.SetTrigger("Thinking");
         chatbotResponse.text = "I'm thinking of a response, please wait...";
         JsonDataAudioInput.RequestBody requestBody = CreateRequestBodyInputAudio(inputAudio);
@@ -80,8 +78,6 @@ public class DialogflowAPIScript : MonoBehaviour
     public void SendTextToChatbot(string inputText)
     {
         if (inputText == "Continue") inputText = jimBot.GetEquipmentText();
-        //jimBot.PanelSetActive(workoutEquipmentPanel, false);
-        //jimBot.PanelSetActive(exercisesPanel, false);
         chatbotResponse.text = "I'm thinking of a response, please wait...";
         animator.SetTrigger("Thinking");
         JsonData.RequestBody requestBody = CreateRequestBodyInputText(inputText);
@@ -90,9 +86,6 @@ public class DialogflowAPIScript : MonoBehaviour
 
     public void SendTextToChatbot()
     {
-        //jimBot.PanelSetActive(workoutEquipmentPanel, false);
-        //jimBot.PanelSetActive(areasToTrainPanel, false);
-        //jimBot.PanelSetActive(exercisesPanel, false);
         if (String.IsNullOrWhiteSpace(inputField.text))
         {
             jimBot.PlayAudio("DefaultErrorResponse");
@@ -238,8 +231,8 @@ public class DialogflowAPIScript : MonoBehaviour
         jimBot.PlayAudio(responseHandler.CheckAudioToPlay());
         if (responseHandler.CheckGoHome()) LoadScene(1);
         if (!string.IsNullOrWhiteSpace(responseHandler.CheckDiagramToShow())) diagramToShow = responseHandler.CheckDiagramToShow();
-        
-        if (responseHandler.PanelsToSetActive().Contains("AreasToTrainPanel"))
+
+        if (responseHandler.CheckPanelsToSetActive().Contains("AreasToTrainPanel"))
         {
             jimBot.PanelSetActive(areasToTrainPanel, true);
             jimBot.PanelSetActive(scrollArea, true);
@@ -250,58 +243,30 @@ public class DialogflowAPIScript : MonoBehaviour
             jimBot.PanelSetActive(workoutEquipmentPanel, false);
         }
 
-        if (responseHandler.PanelsToSetActive().Contains("StartWorkoutPanel"))
+        if (responseHandler.CheckPanelsToSetActive().Contains("StartWorkoutPanel"))
         {
-            jimBot.PanelSetActive(areasToTrainPanel, false);
-            jimBot.PanelSetActive(scrollArea, false);
             jimBot.PanelSetActive(startWorkoutPanel, true);
-            jimBot.PanelSetActive(exercisesPanel, false);
-            jimBot.PanelSetActive(individualExercisePanel, false);
-            jimBot.PanelSetActive(muscleDiagramPanel, false);
-            jimBot.PanelSetActive(workoutEquipmentPanel, false);
+            jimBot.PanelSetActive(areasToTrainPanel, false); jimBot.PanelSetActive(scrollArea, false); jimBot.PanelSetActive(exercisesPanel, false); jimBot.PanelSetActive(individualExercisePanel, false); jimBot.PanelSetActive(muscleDiagramPanel, false); jimBot.PanelSetActive(workoutEquipmentPanel, false);
         }
 
-        if (responseHandler.PanelsToSetActive().Contains("ExercisesPanel"))
+        if (responseHandler.CheckPanelsToSetActive().Contains("ExercisesPanel"))
         {
-            jimBot.PanelSetActive(areasToTrainPanel, false);
-            jimBot.PanelSetActive(scrollArea, false);
-            jimBot.PanelSetActive(startWorkoutPanel, false);
             jimBot.PanelSetActive(exercisesPanel, true);
-            jimBot.PanelSetActive(individualExercisePanel, false);
-            jimBot.PanelSetActive(muscleDiagramPanel, false);
-            jimBot.PanelSetActive(workoutEquipmentPanel, false);
+            jimBot.PanelSetActive(areasToTrainPanel, false); jimBot.PanelSetActive(scrollArea, false); jimBot.PanelSetActive(startWorkoutPanel, false); jimBot.PanelSetActive(individualExercisePanel, false); jimBot.PanelSetActive(muscleDiagramPanel, false); jimBot.PanelSetActive(workoutEquipmentPanel, false);
         }
 
-        if (responseHandler.PanelsToSetActive().Contains("IndividualExercisePanel"))
+        if (responseHandler.CheckPanelsToSetActive().Contains("IndividualExercisePanel"))
         {
-            jimBot.PanelSetActive(areasToTrainPanel, false);
-            jimBot.PanelSetActive(scrollArea, false);
-            jimBot.PanelSetActive(startWorkoutPanel, false);
-            jimBot.PanelSetActive(exercisesPanel, false);
             jimBot.PanelSetActive(individualExercisePanel, true);
-            jimBot.PanelSetActive(muscleDiagramPanel, false);
-            jimBot.PanelSetActive(workoutEquipmentPanel, false);
+            jimBot.PanelSetActive(areasToTrainPanel, false); jimBot.PanelSetActive(scrollArea, false); jimBot.PanelSetActive(startWorkoutPanel, false); jimBot.PanelSetActive(exercisesPanel, false); jimBot.PanelSetActive(muscleDiagramPanel, false); jimBot.PanelSetActive(workoutEquipmentPanel, false);
         }
 
-        if (responseHandler.PanelsToSetActive().Contains("MuscleDiagramPanel"))
+        if (responseHandler.CheckPanelsToSetActive().Contains("MuscleDiagramPanel"))
         {
-            jimBot.PanelSetActive(areasToTrainPanel, false);
-            jimBot.PanelSetActive(scrollArea, false);
-            jimBot.PanelSetActive(startWorkoutPanel, false);
-            jimBot.PanelSetActive(exercisesPanel, false);
-            jimBot.PanelSetActive(individualExercisePanel, false);
             jimBot.PanelSetActive(muscleDiagramPanel, true);
-            jimBot.PanelSetActive(workoutEquipmentPanel, false);
+            jimBot.PanelSetActive(areasToTrainPanel, false); jimBot.PanelSetActive(scrollArea, false); jimBot.PanelSetActive(startWorkoutPanel, false);  jimBot.PanelSetActive(exercisesPanel, false); jimBot.PanelSetActive(individualExercisePanel, false); jimBot.PanelSetActive(workoutEquipmentPanel, false);
         }
 
-        /*
-        jimBot.PanelSetActive(areasToTrainPanel, responseHandler.PanelsToSetActive().Contains("AreasToTrainPanel"));
-        jimBot.PanelSetActive(scrollArea, responseHandler.PanelsToSetActive().Contains("scrollArea"));
-        jimBot.PanelSetActive(startWorkoutPanel, responseHandler.PanelsToSetActive().Contains("StartWorkoutPanel"));
-        jimBot.PanelSetActive(exercisesPanel, responseHandler.PanelsToSetActive().Contains("ExercisesPanel"));
-        jimBot.PanelSetActive(individualExercisePanel, responseHandler.PanelsToSetActive().Contains("IndividualExercisePanel"));
-        jimBot.PanelSetActive(muscleDiagramPanel, responseHandler.PanelsToSetActive().Contains("MuscleDiagramPanel"));
-        */
         if (responseHandler.CheckGetExerciseDetails())
         {
             jimBot.GetExerciseDetails(chatbotResponse);
