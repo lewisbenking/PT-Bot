@@ -127,7 +127,6 @@ public class DialogflowAPIScript : MonoBehaviour
         postRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         postRequest.SetRequestHeader("Content-Type", "application/json");
         yield return postRequest.SendWebRequest();
-        Debug.Log("Got Post Request Response");
 
         if (postRequest.isNetworkError || postRequest.isHttpError)
         {

@@ -51,6 +51,7 @@ public class JimBot : MonoBehaviour
     }
 
     // Counts down from 10 minutes, updates timer label every second, and acts at 5 minutes and 0 minutes accordingly
+    // For pausing the timer, general help was provided from https://forum.unity.com/threads/how-to-pause-a-coroutine.161479/
     private IEnumerator TimerCountdown()
     {
         while (timerTime > 0f && !isWorkoutStopped)
@@ -96,6 +97,7 @@ public class JimBot : MonoBehaviour
         }
     }
 
+    // Starts the workout timer
     public void StartWorkoutTimer()
     {
         isWorkoutStopped = false;
@@ -104,6 +106,7 @@ public class JimBot : MonoBehaviour
         StartCoroutine("TimerCountdown");
     }
 
+    // Returns the user to the exercise list screen
     public void GoBackToExerciseList()
     {
         StopCoroutine("TimerCountdown");
@@ -113,6 +116,7 @@ public class JimBot : MonoBehaviour
         PanelSetActive(startWorkoutPanel, false);
     }
 
+    // Ends the workout and changes the active panel
     public void EndWorkout()
     {
         isWorkoutStopped = true;
@@ -123,13 +127,19 @@ public class JimBot : MonoBehaviour
         PlayAudio("CompletedWorkout");
     }
 
-    public void LoadScene(int sceneNumber) { SceneManager.LoadScene(sceneNumber); }
+    // Loads a scene
+    public void LoadScene(int sceneNumber)
+    {
+        SceneManager.LoadScene(sceneNumber);
+    }
 
+    // Sets the panel active/inactive
     public void PanelSetActive(GameObject panel, bool isActive)
     {
         if (panel != null) panel.SetActive(isActive);
     }
 
+    // Plays the audio clip
     public void PlayAudio(string fileName)
     {
         audioSource.Stop();
@@ -138,6 +148,7 @@ public class JimBot : MonoBehaviour
         audioSource.PlayOneShot(audioClip);
     }
 
+    // Returns the selected equipment from the user
     public string GetEquipmentText()
     {
         barbellToggle = GameObject.Find("ToggleBarbell").GetComponent<Toggle>();
@@ -159,6 +170,8 @@ public class JimBot : MonoBehaviour
         }
     }
 
+    // Setup for the exercises list panel, with up to 3 buttons being shown if 3 exercises are in the chatbot response
+    // General help for accessing inactive gameobject was given from https://answers.unity.com/questions/890636/find-an-inactive-game-object.html
     public void GetExerciseDetails(string chatbotResponse)
     {
         exerciseNames = new ArrayList();
@@ -198,13 +211,14 @@ public class JimBot : MonoBehaviour
         }
     }
 
+    // Shows the individual exercise details in another panel
     public void ShowIndividualExercise(GameObject buttonChosen)
     {
+        PanelSetActive(scrollArea, false);
+        PanelSetActive(exercisesPanel, false);
         PanelSetActive(individualExercisePanel, true);
         individualExerciseName = GameObject.Find("IndividualExerciseName").GetComponentInChildren<TextMeshProUGUI>();
         individualExerciseName.text = buttonChosen.GetComponentInChildren<TextMeshProUGUI>().text;
-        PanelSetActive(scrollArea, false);
-        PanelSetActive(exercisesPanel, false);
         individualExerciseDescription = GameObject.Find("IndividualExerciseDescription").GetComponent<TextMeshProUGUI>();
         int index = exerciseDetails.GetArrayIndex(individualExerciseName.text);
         if (index != -1)
@@ -214,6 +228,7 @@ public class JimBot : MonoBehaviour
         }
     }
 
+    // Shows the muscle diagram panel
     public void ShowMuscleDiagram(string diagramToShow)
     {
         PanelSetActive(muscleDiagramPanel, true);
@@ -222,6 +237,7 @@ public class JimBot : MonoBehaviour
         muscleDiagram.GetComponent<Image>().sprite = Resources.Load<Sprite>(diagramToShow);
     }
 
+    // Plays the exercise video
     public void PlayExerciseVideo()
     {
         PanelSetActive(individualExercisePanel, false);
@@ -256,6 +272,7 @@ public class JimBot : MonoBehaviour
         PanelSetActive(HUD, true);
     }
 
+    // Plays the relevant help audio depending on the active panel
     public void HelpMe()
     {
         if (areasToTrainPanel.activeInHierarchy) PlayAudio("Help_AreasToTrainPanel");
