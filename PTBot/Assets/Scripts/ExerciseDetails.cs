@@ -39,19 +39,25 @@
        new string[] { " Romanian Deadlift", "https://videos.bodybuilding.com/video/mp4/120000/120001m.mp4", "1. Hold the bar at hip level with your palms facing down. Keep your back arched and slightly bend your knees.\n2. Lower the bar by moving your bum back as far as you can. Keep looking forward and keep the bar close to your body.\n3. Drive your hips forward to stand up tall.\n4. Repeat for desired number of repetitions." }
     };
 
+    // Returns whole array
     public string[][] GetEntireArray()
     {
         return Exercises;
     }
 
+    // Gets index based on input string
     public int GetArrayIndex(string value)
     {
         for (int i = 0; i < Exercises.GetLength(0); i++)
         {
-            if (Exercises[i][0] == value) { return i; }
+            if (Exercises[i][0] == value) return i;
         }
         return -1;
     }
 
-    public string GetArrayValue(int firstIndex, int secondIndex) { return Exercises[firstIndex][secondIndex]; }
+    // Gets array content based on input index
+    public string GetArrayValue(int firstIndex, int secondIndex)
+    {
+        return Exercises[firstIndex][secondIndex];
+    }
 }

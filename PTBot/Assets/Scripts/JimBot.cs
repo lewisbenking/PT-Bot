@@ -8,23 +8,21 @@ using UnityEngine.Video;
 public class JimBot : MonoBehaviour
 {
     private Animator animator;
-    private GameObject jimBot, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, startWorkoutPanel, workoutEndPanel, exercise1, exercise2, exercise3, HUD;
     private ArrayList exerciseNames;
     private AudioClip audioClip;
     private AudioSource audioSource;
+    private bool isWorkoutStopped, hasWorkoutBeenPaused;
     private ExerciseDetails exerciseDetails;
+    private float timerTime;
+    private GameObject jimBot, areasToTrainPanel, exercisesPanel, individualExercisePanel, muscleDiagramPanel, scrollArea, workoutEquipmentPanel, startWorkoutPanel, workoutEndPanel, exercise1, exercise2, exercise3, HUD;
     private Image muscleDiagram;
+    private int exerciseNameArrayIndex;
     private RawImage tvScreen;
     private readonly VideoSource videoSource;
-    private string url, diagramToShow, individualExerciseURL, dialogFlowResponse;
-    private string AccessToken { get; set; }
-    private string[] chatbotResponseSplit;
-    private TextMeshProUGUI chatbotResponse, individualExerciseName, currentExercise, individualExerciseDescription, timerLabel;
+    private string individualExerciseURL;
+    private TextMeshProUGUI individualExerciseName, currentExercise, individualExerciseDescription, timerLabel;
     private Toggle barbellToggle, cableMachineToggle, dumbbellToggle;
     private VideoPlayer videoPlayer;
-    private float timerTime;
-    private int exerciseNameArrayIndex;
-    private bool isWorkoutStopped, hasWorkoutBeenPaused;
 
     private void Awake()
     {
@@ -52,6 +50,7 @@ public class JimBot : MonoBehaviour
         animator = jimBot.GetComponent<Animator>();
     }
 
+    // Counts down from 10 minutes, updates timer label every second, and acts at 5 minutes and 0 minutes accordingly
     private IEnumerator TimerCountdown()
     {
         while (timerTime > 0f && !isWorkoutStopped)
@@ -78,6 +77,7 @@ public class JimBot : MonoBehaviour
         yield return null;
     }
 
+    // Reset timer, starts the next exercise
     public void NextExercise()
     {
         timerTime = 600f;
@@ -164,7 +164,7 @@ public class JimBot : MonoBehaviour
         exerciseNames = new ArrayList();
         PanelSetActive(scrollArea, false);
         PanelSetActive(exercisesPanel, true);
-        chatbotResponseSplit = chatbotResponse.Split('-');
+        string[] chatbotResponseSplit = chatbotResponse.Split('-');
         int index; string word;
         foreach (string iteration in chatbotResponseSplit)
         {

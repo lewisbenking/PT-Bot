@@ -4,7 +4,7 @@ using LightBDD.NUnit3;
 
 namespace Assets.Editor
 {
-    [Label("FEAT-1")]
+    [Label("Assumes the API has returned an empty response, or the user hasn't provided a valid input")]
     public partial class Test_ResponseHandler
     {
         [Label("The string 'DefaultErrorResponse' should be returned from an invalid input, otherwise 'ChatbotResponse'")]
@@ -27,7 +27,7 @@ namespace Assets.Editor
                 Then => CheckTheAudioToPlay("ChatbotResponse"));
         }
 
-        [Label("The assumes the user has chosen their equipment and the relevant panels will be returned and set active")]
+        [Label("Assumes the user has chosen their equipment and the relevant panels will be returned and set active")]
         [Scenario]
         public void TestDiagramToShow()
         {

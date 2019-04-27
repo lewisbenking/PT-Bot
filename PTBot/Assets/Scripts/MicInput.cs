@@ -16,10 +16,10 @@ public class MicInput : MonoBehaviour
     private Button buttonTalkToBot;
     private InputField inputField;
 
+    // Validates microphone is connected and its recording capabilities
     void Start()
     {
         inputField = GameObject.Find("InputField").GetComponent<InputField>();
-        // Validates a microphone is connected.
         if (Microphone.devices.Length <= 0)
         {
             Debug.LogWarning("Microphone not connected!");
@@ -27,18 +27,19 @@ public class MicInput : MonoBehaviour
         else
         {
             micConnected = true;
-            // Gets default microphone recording capabilities.
             Microphone.GetDeviceCaps(null, out minFreq, out maxFreq);
-            if (minFreq == 0 && maxFreq == 0) { maxFreq = 44100; }
+            if (minFreq == 0 && maxFreq == 0) maxFreq = 44100;
             goAudioSource = this.GetComponent<AudioSource>();
         }
     }
 
+    // If T is pressed and the input field is empty, then record audio
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T) && (String.IsNullOrWhiteSpace(inputField.text)))  { RecordAudio(); }
+        if (Input.GetKeyDown(KeyCode.T) && (String.IsNullOrWhiteSpace(inputField.text))) RecordAudio();
     }
 
+    // Starts/stops recording then sends to DialogFlow API
     public void RecordAudio()
     {
         buttonTalkToBot = GameObject.Find("ButtonSendVoiceToChatbot").GetComponent<Button>();

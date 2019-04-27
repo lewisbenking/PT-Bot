@@ -2,17 +2,6 @@
 using System.Collections.Generic;
 namespace JsonDataAudioInput
 {
-    /*
-     "queryParams": {
-       object (QueryParameters)
-   },
-     "queryInput": {
-       object (QueryInput)
-     },
-     "inputAudio": string
-   }*/
-    //https://dialogflow.com/docs/reference/api-v2/rest/v2beta1/projects.agent.sessions/detectIntent
-    //https://dialogflow.com/docs/reference/api-v2/rest/v2/projects.agent.sessions/detectIntent#QueryParameters
     [Serializable]
     public class RequestBody
     {
@@ -20,57 +9,20 @@ namespace JsonDataAudioInput
         public string inputAudio;
     }
 
-    /*
-     * Required request body
-     * queryInput
-     * Represents the query input. It can contain either:
-     * 1.An audio config which instructs the speech recognizer how to process the speech audio.
-     * 2.A conversational query in the form of text,.
-     * 3.An event that specifies which intent to trigger.
-     * JSON representation
-        {
-          // Union field input can be only one of the following:
-          "audioConfig": {
-            object(InputAudioConfig)
-          },
-          "text": {
-            object(TextInput)
-          },
-          "event": {
-            object(EventInput)
-          }
-          // End of list of possible types for union field input.
-        }*/
     [Serializable]
     public class QueryInput
     {
         public InputAudioConfig audioConfig;
     }
-    /*
-     * InputAudioConfig
-     * Instructs the speech recognizer how to process the audio content.
-    {
-      "audioEncoding": enum(AudioEncoding),
-      "sampleRateHertz": number,
-      "languageCode": string,
-      "phraseHints": [
-        string
-      ]
-    }
-    * phraseHints - is optional
-    */
+
     [Serializable]
     public class InputAudioConfig
     {
         public AudioEncoding audioEncoding;
         public int sampleRateHertz;
         public String languageCode;
-        //public String[] phraseHints;
     }
-    /*AudioEncoding
-     * Audio encoding of the audio content sent in the conversational query request. 
-     * Refer to the Cloud Speech API documentation for more details.
-     */
+
     [Serializable]
     public enum AudioEncoding
     {
@@ -84,7 +36,6 @@ namespace JsonDataAudioInput
         AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE
     }
 
-    //https://dialogflow.com/docs/reference/api-v2/rest/Shared.Types/WebhookState
     [Serializable]
     public enum WebhookState
     {
@@ -93,31 +44,12 @@ namespace JsonDataAudioInput
         WEBHOOK_STATE_ENABLED_FOR_SLOT_FILLING
     }
 
-    /*
-     * TextInput
-     * Represents the natural language text to be processed.
-     * {
-        "text": string,
-        "languageCode": string
-        }*/
     [Serializable]
     public class TextInput
     {
         public String text;
         public String languageCode;
     }
-
-    /*response body json doc
-     * {
-          "responseId": string,
-          "queryResult": {
-            object(QueryResult)
-          },
-          "webhookStatus": {
-            object(Status)
-          }
-        }
-     */
 
     [Serializable]
     public class ResponseBody
@@ -129,38 +61,6 @@ namespace JsonDataAudioInput
         public string outputAudio;
     }
 
-    //https://dialogflow.com/docs/reference/api-v2/rest/Shared.Types/QueryResult
-    /*{
-          "queryText": string,
-          "languageCode": string,
-          "speechRecognitionConfidence": number,
-          "action": string,
-          "parameters": {
-            object
-          },
-          "allRequiredParamsPresent": boolean,
-          "fulfillmentText": string,
-          "fulfillmentMessages": [
-            {
-              object(Message)
-            }
-          ],
-          "webhookSource": string,
-          "webhookPayload": {
-            object
-          },
-          "outputContexts": [
-            {
-              object(Context)
-            }
-          ],
-          "intent": {
-            object(Intent)
-          },
-          "intentDetectionConfidence": number,
-          "diagnosticInfo": {
-            object
-          }}*/
     [Serializable]
     public class QueryResult
     {
@@ -180,18 +80,6 @@ namespace JsonDataAudioInput
         public Struct diagnosticInfo;
     }
 
-    //https://dialogflow.com/docs/reference/api-v2/rest/Shared.Types/Operation#Status.SCHEMA_REPRESENTATION
-    /*{
-      "code": number,
-      "message": string,
-      "details": [
-        {
-          "@type": string,
-          field1: ...,
-          ...
-        }
-      ]
-    }*/
     [Serializable]
     public class Status
     {
@@ -200,7 +88,6 @@ namespace JsonDataAudioInput
         public Object[] details;
     }
 
-    //https://dialogflow.com/docs/reference/api-v2/rest/Shared.Types/Intent#SCHEMA_REPRESENTATION
     [Serializable]
     public class Intent
     {
@@ -211,7 +98,6 @@ namespace JsonDataAudioInput
         public bool isFallback;
     }
 
-    //https://dialogflow.com/docs/reference/api-v2/rest/Shared.Types/Context
     [Serializable]
     public class Context
     {
@@ -234,29 +120,33 @@ namespace JsonDataAudioInput
         public Struct struct_value;
         public ListValue list_value;
 
-        public void ForBool(bool value){
+        public void ForBool(bool value)
+        {
             this.bool_value = value;
         }
-        
+
         public void ForString(string value)
         {
             this.string_value = value;
         }
 
-        public void ForNumber(double number){
+        public void ForNumber(double number)
+        {
             this.number_value = number;
         }
 
         public void ForNull()
         {
-            this.null_value = NullValue.null_vaule;
+            this.null_value = NullValue.null_value;
         }
 
-        public void ForStruct(Struct value){
+        public void ForStruct(Struct value)
+        {
             this.struct_value = value;
         }
 
-        public void ForList(ListValue value){
+        public void ForList(ListValue value)
+        {
             this.list_value = value;
         }
     }
@@ -264,26 +154,24 @@ namespace JsonDataAudioInput
     [Serializable]
     public enum NullValue
     {
-        null_vaule
+        null_value
     }
 
     [Serializable]
-    public class ListValue{
+    public class ListValue
+    {
         public Value values;
-
     }
 
     [Serializable]
-    public class Text{
+    public class Text
+    {
         public string[] text;
     }
 
     [Serializable]
-    public class Message{
+    public class Message
+    {
         public Text text;
     }
-
-
-
-
 }

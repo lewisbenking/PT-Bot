@@ -3,30 +3,35 @@ using System.Text;
 using System.IO;
 using System;
 
-/// <summary>
-/// WAV utility for recording and audio playback functions in Unity.
-/// Version: 1.0 alpha 1
-///
-/// - Use "ToAudioClip" method for loading wav file / bytes.
-/// Loads .wav (PCM uncompressed) files at 8,16,24 and 32 bits and converts data to Unity's AudioClip.
-///
-/// - Use "FromAudioClip" method for saving wav file / bytes.
-/// Converts an AudioClip's float data into wav byte array at 16 bit.
-/// </summary>
-/// <remarks>
-/// For documentation and usage examples: https://github.com/deadlyfingers/UnityWav
-/// </remarks>
+/*
+Copyright(c) 2015 WavUtility
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+^ The class has been modified to suit this project.
+*/
 
 public class WavUtility
 {
     // Force save as 16-bit .wav
     const int BlockSize_16Bit = 2;
 
-    /// <summary>
-    /// Load PCM format *.wav audio file (using Unity's Application data path) and convert to AudioClip.
-    /// </summary>
-    /// <returns>The AudioClip.</returns>
-    /// <param name="filePath">Local file path to .wav file</param>
     public static AudioClip ToAudioClip(string filePath)
     {
         byte[] fileBytes = File.ReadAllBytes(filePath);
@@ -75,8 +80,8 @@ public class WavUtility
         MemoryStream stream = new MemoryStream();
         const int headerSize = 44;
         UInt16 bitDepth = 16;
-        // NB: Only supports 16 bit. Total file size = 44 bytes for header format and audioClip.samples * factor due to float to Int16 / sbyte conversion
-        int fileSize = audioClip.samples * BlockSize_16Bit + headerSize; // BlockSize (bitDepth)
+        // Only supports 16 bit. Total file size = 44 bytes for header format and audioClip.samples * factor due to float to Int16 / sbyte conversion
+        int fileSize = audioClip.samples * BlockSize_16Bit + headerSize;
         WriteFileHeader(ref stream, fileSize);
         WriteFileFormat(ref stream, audioClip.channels, audioClip.frequency, bitDepth);
         WriteFileData(ref stream, audioClip, bitDepth);

@@ -27,6 +27,7 @@ public class Instructions : MonoBehaviour
         panelHUD = GameObject.Find("Help_HUD"); PanelSetActive(panelHUD, false);
     }
 
+    // Makes panel active/inactive and plays audio
     public void ShowHelp(GameObject newActivePanel)
     {
         PanelSetActive(mainPanel, false);
@@ -47,5 +48,9 @@ public class Instructions : MonoBehaviour
         audioSource.PlayOneShot(audioClip);
     }
 
-    public void LoadScene(int sceneNumber) { SceneManager.LoadScene(sceneNumber); }
+    // Loads a scene
+    public void LoadScene(int sceneNumber)
+    {
+        SceneManager.LoadScene(sceneNumber);
+    }
 }

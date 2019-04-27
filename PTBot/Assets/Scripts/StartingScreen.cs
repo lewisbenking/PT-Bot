@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StartingScreen: MonoBehaviour
 {
     private AudioClip audioClip;
     private AudioSource audioSource;
-    public bool audioPlayed;
 
     void Start()
     {
@@ -15,21 +12,22 @@ public class StartingScreen: MonoBehaviour
         PlayAudio();
     }
     
+    // Plays audio clip
     public void PlayAudio()
     {
-        audioPlayed = false;
         audioSource.Stop();
         audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/Audio/StartingScreen.wav");
         audioSource.spatialBlend = 0.0f;
         audioSource.PlayOneShot(audioClip);
-        audioPlayed = true;
     }
 
+    // Loads a scene
     public void LoadScene(int sceneNumber)
     {
         SceneManager.LoadScene(sceneNumber);
     }
 
+    // Closes the application
     public void ExitApp()
     {
         Debug.Log("Exit Pressed");

@@ -6,6 +6,7 @@ public class ResponseHandler
     private ArrayList panelsToSetActive;
     private bool goHome, startWorkout, getExerciseDetails;
 
+    // Assigns values to variables based on the input string
     public void HandleResponse(string chatbotResponse)
     {
         goHome = false; startWorkout = false; getExerciseDetails = false;
@@ -54,16 +55,35 @@ public class ResponseHandler
             audioToPlay = "ChatbotResponse";
         }
     }
-    
-    public ArrayList CheckPanelsToSetActive() { return panelsToSetActive; }
 
-    public bool CheckGetExerciseDetails() { return getExerciseDetails; }
+    // The following methods return the required variables
+    public ArrayList CheckPanelsToSetActive()
+    {
+        return panelsToSetActive;
+    }
 
-    public bool CheckGoHome() { return goHome; }
+    public bool CheckGetExerciseDetails()
+    {
+        return getExerciseDetails;
+    }
 
-    public bool CheckStartWorkout() { return startWorkout; }
+    public bool CheckGoHome()
+    {
+        return goHome;
+    }
 
-    public string CheckAudioToPlay() { return audioToPlay; }
+    public bool CheckStartWorkout()
+    {
+        return startWorkout;
+    }
 
-    public string CheckDiagramToShow() { return diagramToShow; }
+    public string CheckAudioToPlay()
+    {
+        return audioToPlay;
+    }
+
+    public string CheckDiagramToShow()
+    {
+        return diagramToShow;
+    }
 }
