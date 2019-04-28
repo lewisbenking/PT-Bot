@@ -1,0 +1,42 @@
+{
+  "id": "5f8f1431-9607-44b6-96fd-173f2a7de4ea",
+  "name": "No Equipment",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [
+        {
+          "name": "NoEquipment-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "f31a3305-bb22-4da4-9284-0eea19f59b44",
+          "required": false,
+          "dataType": "@NoEquipment",
+          "name": "NoEquipment",
+          "value": "$NoEquipment",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $NoEquipment workout for you!\n\n- Pushups.\n- Russian Twists.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

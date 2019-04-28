@@ -1,0 +1,48 @@
+{
+  "id": "a83c5d74-ccae-4cd2-8abf-5d7a4e7ce487",
+  "parentId": "b09e67db-9475-45fd-8d8e-52bed16cee0a",
+  "rootParentId": "b09e67db-9475-45fd-8d8e-52bed16cee0a",
+  "name": "Barbell Only - Chest",
+  "auto": true,
+  "contexts": [
+    "BarbellOnly-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellOnly.BarbellOnly-custom-4",
+      "affectedContexts": [
+        {
+          "name": "BarbellOnly-Chest-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "f0e68342-d511-4cb9-a72c-be94d6599c94",
+          "required": false,
+          "dataType": "@ChestEntity",
+          "name": "ChestEntity",
+          "value": "$ChestEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $ChestEntity workout for you!\n\n- Barbell Bench Press.\n- Pushups.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

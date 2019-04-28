@@ -1,0 +1,48 @@
+{
+  "id": "ee67e9e5-8718-48f3-9b5a-1b03ea11c5ea",
+  "parentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "rootParentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "name": "Barbell Dumbbell - Legs",
+  "auto": true,
+  "contexts": [
+    "BarbellDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellDumbbell.BarbellDumbbell-custom-5",
+      "affectedContexts": [
+        {
+          "name": "BarbellDumbbell-Legs-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "60fed736-ed3c-43b8-b380-a20817a399e1",
+          "required": false,
+          "dataType": "@LegsEntity",
+          "name": "LegsEntity",
+          "value": "$LegsEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $LegsEntity workout for you!\n\n- Barbell Deadlift.\n- Barbell Squats.\n- Dumbbell Lunges.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

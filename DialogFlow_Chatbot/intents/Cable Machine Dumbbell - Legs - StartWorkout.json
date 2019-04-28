@@ -1,0 +1,41 @@
+{
+  "id": "a80d2c2f-1b2a-4b4a-af4e-4bcb95f93bf6",
+  "parentId": "ebd19345-b308-44a2-b12e-45978d6b6d08",
+  "rootParentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "name": "Cable Machine Dumbbell - Legs - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "CableMachineDumbbell-Legs-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineDumbbell.CableMachineDumbbell-custom-3.CableMachineDumbbell-Legs-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "acdcac8d-9194-43fc-9f40-5b0aaf701e0c",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

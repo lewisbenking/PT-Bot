@@ -1,0 +1,41 @@
+{
+  "id": "05d3a234-22a8-4735-93e9-c77ae2211f3e",
+  "parentId": "32ae622b-acab-47ce-ab94-4ab712ddd230",
+  "rootParentId": "b09e67db-9475-45fd-8d8e-52bed16cee0a",
+  "name": "Barbell Only - Arms - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "BarbellOnly-Arms-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellOnly.BarbellOnly-custom.BarbellOnly-Arms-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "9a8db810-a866-490c-8111-6956378a0a88",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

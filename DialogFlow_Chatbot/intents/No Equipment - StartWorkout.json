@@ -1,0 +1,41 @@
+{
+  "id": "283515c9-686c-4a9e-bf0f-cf8f1667573a",
+  "parentId": "5f8f1431-9607-44b6-96fd-173f2a7de4ea",
+  "rootParentId": "5f8f1431-9607-44b6-96fd-173f2a7de4ea",
+  "name": "No Equipment - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "NoEquipment-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "NoEquipment.NoEquipment-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "e4d7371b-39e1-4dcf-ba7b-d55bcbd42da6",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

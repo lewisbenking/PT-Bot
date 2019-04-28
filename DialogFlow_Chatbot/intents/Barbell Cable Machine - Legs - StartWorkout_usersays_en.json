@@ -1,0 +1,15 @@
+[
+  {
+    "id": "ac0fb2f5-54af-4e6c-99f3-59b39078caac",
+    "data": [
+      {
+        "text": "Start workout",
+        "alias": "StartWorkoutEntity",
+        "meta": "@StartWorkoutEntity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  }
+]

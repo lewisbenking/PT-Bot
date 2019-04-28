@@ -1,0 +1,28 @@
+{
+  "id": "47c4abcf-dcb4-431a-8e82-11ffeaf361e1",
+  "name": "Default Fallback Intent",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "input.unknown",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Sorry. I don\u0027t understand. \n\nIf you need help, please select the question mark icon from the HUD under the TV screen. \n\nOr select Reset JimBot to start again."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": true,
+  "events": []
+}

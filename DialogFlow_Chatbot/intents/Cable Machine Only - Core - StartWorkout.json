@@ -1,0 +1,41 @@
+{
+  "id": "3804b1bb-b7a6-4851-9508-66f280dca6f7",
+  "parentId": "73b3bc69-3c6e-4479-b321-18b71417a6ea",
+  "rootParentId": "68ceb586-e077-4178-9301-6f0486ca0aa6",
+  "name": "Cable Machine Only - Core - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "CableMachineOnly-Core-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineOnly.CableMachineOnly-custom-3.CableMachineOnly-Core-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "b7e6d189-9c2c-4eaa-bc7f-7c3ed0fc33aa",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

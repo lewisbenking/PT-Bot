@@ -1,0 +1,48 @@
+{
+  "id": "0cd9900f-8457-4216-a6ca-de356b9e6d15",
+  "parentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "rootParentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "name": "Barbell Cable Machine - Core",
+  "auto": true,
+  "contexts": [
+    "BarbellCableMachine-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellCableMachine.BarbellCableMachine-custom",
+      "affectedContexts": [
+        {
+          "name": "BarbellCableMachine-Core-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "412c916c-e1b4-4bf3-a30b-45a4fb0d2856",
+          "required": false,
+          "dataType": "@CoreEntity",
+          "name": "CoreEntity",
+          "value": "$CoreEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $CoreEntity workout for you!\n\n- Barbell Side Bends.\n- Hanging Leg Raises.\n- Seated Barbell Twists.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

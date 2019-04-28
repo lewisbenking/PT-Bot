@@ -1,0 +1,47 @@
+{
+  "id": "571b2e5a-434d-4b26-83fb-a5bef4ca678b",
+  "parentId": "68ceb586-e077-4178-9301-6f0486ca0aa6",
+  "rootParentId": "68ceb586-e077-4178-9301-6f0486ca0aa6",
+  "name": "Cable Machine Only - Back",
+  "auto": true,
+  "contexts": [
+    "CableMachineOnly-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineOnly.CableMachineOnly-custom-4",
+      "affectedContexts": [
+        {
+          "name": "CableMachineOnly-Back-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "30f5513f-f637-4b6b-a92f-0981e69fe706",
+          "dataType": "@BackEntity",
+          "name": "BackEntity",
+          "value": "$BackEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $BackEntity workout for you!\n\n- Lat Pulldowns.\n- Pullups.\n- Seated Cable Rows.\n\nYou can see more about each exercise by clicking the buttons."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

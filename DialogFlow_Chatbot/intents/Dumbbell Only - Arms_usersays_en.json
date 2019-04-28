@@ -1,0 +1,15 @@
+[
+  {
+    "id": "ae1cc07b-20b5-4aab-949e-e9c56d69f4c7",
+    "data": [
+      {
+        "text": "Arms",
+        "alias": "ArmsEntity",
+        "meta": "@ArmsEntity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  }
+]

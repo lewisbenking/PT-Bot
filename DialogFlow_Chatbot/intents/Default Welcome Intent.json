@@ -1,0 +1,43 @@
+{
+  "id": "b48a531b-0ba8-4027-a1bc-a6b5f639e032",
+  "name": "Default Welcome Intent",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "input.welcome",
+      "affectedContexts": [
+        {
+          "name": "DefaultWelcomeIntent-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "Hi! How are you doing?",
+            "Hello! How can I help you?",
+            "Good day! What can I do for you today?",
+            "Greetings! How can I assist?"
+          ]
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [
+    {
+      "name": "WELCOME"
+    }
+  ]
+}

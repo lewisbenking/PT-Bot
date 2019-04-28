@@ -1,0 +1,19 @@
+[
+  {
+    "id": "1da9302d-e062-475b-8f16-54ac43a1a3a6",
+    "data": [
+      {
+        "text": "Chest",
+        "alias": "ChestEntity",
+        "meta": "@ChestEntity",
+        "userDefined": false
+      },
+      {
+        "text": " workout",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1
+  }
+]

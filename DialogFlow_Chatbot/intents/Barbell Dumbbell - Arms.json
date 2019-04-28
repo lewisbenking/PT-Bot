@@ -1,0 +1,48 @@
+{
+  "id": "38cde531-e80c-4a8e-a324-093b25384112",
+  "parentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "rootParentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "name": "Barbell Dumbbell - Arms",
+  "auto": true,
+  "contexts": [
+    "BarbellDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellDumbbell.BarbellDumbbell-custom-4",
+      "affectedContexts": [
+        {
+          "name": "BarbellDumbbell-Arms-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "11e05c18-ffb3-45e1-9c2c-2e65f6fbd63e",
+          "required": false,
+          "dataType": "@ArmsEntity",
+          "name": "ArmsEntity",
+          "value": "$ArmsEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s an $ArmsEntity workout for you!\n\n- Alternate Dumbbell Curls.\n- Barbell Curls.\n- Hammer Curls.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

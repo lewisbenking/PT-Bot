@@ -1,0 +1,48 @@
+{
+  "id": "99c01f66-bc1f-4d00-852e-1bbc45d3563e",
+  "parentId": "6dfeaa6f-7271-49e6-abb8-9c276556a7eb",
+  "rootParentId": "6dfeaa6f-7271-49e6-abb8-9c276556a7eb",
+  "name": "Dumbbell Only - Core",
+  "auto": true,
+  "contexts": [
+    "DumbbellOnly-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "DumbbellOnly.DumbbellOnly-custom-2",
+      "affectedContexts": [
+        {
+          "name": "DumbbellOnly-Core-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "69842b5f-a035-47e4-abdf-7b74575255e7",
+          "required": false,
+          "dataType": "@CoreEntity",
+          "name": "CoreEntity",
+          "value": "$CoreEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $CoreEntity workout for you!\n\n- Air Bikes.\n- Dumbbell Side Bends.\n- Russian Twists.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

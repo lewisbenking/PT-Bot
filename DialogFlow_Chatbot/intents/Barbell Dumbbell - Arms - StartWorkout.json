@@ -1,0 +1,41 @@
+{
+  "id": "3b35579a-bb4c-4710-8eed-9623cadb3c11",
+  "parentId": "38cde531-e80c-4a8e-a324-093b25384112",
+  "rootParentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "name": "Barbell Dumbbell - Arms - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "BarbellDumbbell-Arms-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellDumbbell.BarbellDumbbell-custom-4.BarbellDumbbell-Arms-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "c7e7f65e-b393-4acc-8b7b-6709a054714d",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

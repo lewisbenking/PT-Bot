@@ -1,0 +1,48 @@
+{
+  "id": "b6ae67a4-dcd6-4761-9b38-d29a19fdb153",
+  "parentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "rootParentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "name": "Barbell Dumbbell - Back",
+  "auto": true,
+  "contexts": [
+    "BarbellDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellDumbbell.BarbellDumbbell-custom",
+      "affectedContexts": [
+        {
+          "name": "BarbellDumbbell-Back-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "bba4187d-ebb2-4c08-80d5-6cdfe38f9eae",
+          "required": false,
+          "dataType": "@BackEntity",
+          "name": "BackEntity",
+          "value": "$BackEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $BackEntity workout for you!\n\n- Barbell Shrug.\n- Dumbbell Shrug.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

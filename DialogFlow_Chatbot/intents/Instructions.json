@@ -1,0 +1,27 @@
+{
+  "id": "12940514-520e-4972-b3c1-ab96955d8637",
+  "name": "Instructions",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here is a list of suitable exercises based on your previous choices. If you want to train a different area, use the HUD to type or speak the phrases from the last section.\nYou can only do this once, otherwise I won\u0027t understand and you have to select \"Reset JimBot\", and follow the instructions on the TV screen.\nYou can select any of the exercises to view more details about them. Or, if you\u0027re ready to work out then select \"Start Workout\" on the TV screen."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

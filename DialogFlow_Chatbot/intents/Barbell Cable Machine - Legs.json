@@ -1,0 +1,48 @@
+{
+  "id": "d9da8540-1db8-4c11-8a47-7103e27881b6",
+  "parentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "rootParentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "name": "Barbell Cable Machine - Legs",
+  "auto": true,
+  "contexts": [
+    "BarbellCableMachine-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellCableMachine.BarbellCableMachine-custom",
+      "affectedContexts": [
+        {
+          "name": "BarbellCableMachine-Legs-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "74227994-9aff-423f-9a35-a612ddf8c94e",
+          "required": false,
+          "dataType": "@LegsEntity",
+          "name": "LegsEntity",
+          "value": "$LegsEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $LegsEntity workout for you!\n\n- Barbell Lunges\n- Barbell Squats.\n- Romanian Deadlift.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

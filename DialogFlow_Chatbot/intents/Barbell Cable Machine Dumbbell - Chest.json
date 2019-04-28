@@ -1,0 +1,48 @@
+{
+  "id": "56f70511-ba23-426c-8811-661ce66416ef",
+  "parentId": "f4c5eaa6-7b5b-4050-85cc-936da0adfc04",
+  "rootParentId": "f4c5eaa6-7b5b-4050-85cc-936da0adfc04",
+  "name": "Barbell Cable Machine Dumbbell - Chest",
+  "auto": true,
+  "contexts": [
+    "BarbellCableMachineDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellCableMachineDumbbell.BarbellCableMachineDumbbell-custom-4",
+      "affectedContexts": [
+        {
+          "name": "BarbellCableMachineDumbbell-Chest-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "4e1ca011-13f6-4711-9bdf-3acc1ebeb1b3",
+          "required": false,
+          "dataType": "@ChestEntity",
+          "name": "ChestEntity",
+          "value": "$ChestEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $ChestEntity workout for you!\n\n- Barbell Bench Press.\n- Dumbbell Bench Press.\n- Dumbbell Flyes.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

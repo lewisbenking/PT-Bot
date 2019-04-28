@@ -1,0 +1,9 @@
+{
+  "id": "d9ecd7d4-0f18-4086-aadb-b5cdc12e0d33",
+  "name": "ChestEntity",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": false
+}

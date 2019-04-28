@@ -1,0 +1,48 @@
+{
+  "id": "4566f621-a84f-4943-b7ce-f5cf6efe3b7c",
+  "parentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "rootParentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "name": "Cable Machine Dumbbell - Back",
+  "auto": true,
+  "contexts": [
+    "CableMachineDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineDumbbell.CableMachineDumbbell-custom-5",
+      "affectedContexts": [
+        {
+          "name": "CableMachineDumbbell-Back-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "96ed7994-8bb1-4c58-b39d-2ec263bb5eb7",
+          "required": false,
+          "dataType": "@BackEntity",
+          "name": "BackEntity",
+          "value": "$BackEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $BackEntity workout for you!\n\n- Dumbbell Shrug.\n- Lat Pulldowns.\n- Pullups.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

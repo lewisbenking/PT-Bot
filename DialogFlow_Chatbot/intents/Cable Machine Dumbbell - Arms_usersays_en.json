@@ -1,0 +1,19 @@
+[
+  {
+    "id": "4dc4110e-8e7a-4340-a2b6-f8188b1cb104",
+    "data": [
+      {
+        "text": "Arms",
+        "alias": "ArmsEntity",
+        "meta": "@ArmsEntity",
+        "userDefined": false
+      },
+      {
+        "text": " workout",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  }
+]

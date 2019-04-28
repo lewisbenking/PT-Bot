@@ -1,0 +1,45 @@
+[
+  {
+    "id": "9abd1aa0-2b1e-43f0-b8d1-7e191f114b18",
+    "data": [
+      {
+        "text": "None",
+        "alias": "NoEquipment",
+        "meta": "@NoEquipment",
+        "userDefined": false
+      },
+      {
+        "text": " Selected",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  },
+  {
+    "id": "dfe28afa-7fb3-4253-aa74-0f11d941420c",
+    "data": [
+      {
+        "text": "No Equipment",
+        "alias": "NoEquipment",
+        "meta": "@NoEquipment",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  },
+  {
+    "id": "01f5c68a-3753-4968-8a01-a1b0ffae0276",
+    "data": [
+      {
+        "text": "None of the above",
+        "alias": "NoEquipment",
+        "meta": "@NoEquipment",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  }
+]

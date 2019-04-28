@@ -1,0 +1,19 @@
+[
+  {
+    "id": "069e51e6-4737-490f-9927-20d013e86d17",
+    "data": [
+      {
+        "text": "Core",
+        "alias": "CoreEntity",
+        "meta": "@CoreEntity",
+        "userDefined": false
+      },
+      {
+        "text": " workout",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  }
+]

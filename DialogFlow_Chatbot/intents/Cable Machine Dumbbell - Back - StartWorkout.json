@@ -1,0 +1,41 @@
+{
+  "id": "179a01cb-e2c2-4c71-b228-4211a1779cea",
+  "parentId": "4566f621-a84f-4943-b7ce-f5cf6efe3b7c",
+  "rootParentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "name": "Cable Machine Dumbbell - Back - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "CableMachineDumbbell-Back-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineDumbbell.CableMachineDumbbell-custom-5.CableMachineDumbbell-Back-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "3c80d7b9-60db-4b93-97ab-06bf4858c09e",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

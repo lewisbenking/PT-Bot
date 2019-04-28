@@ -1,0 +1,48 @@
+{
+  "id": "05194c28-595e-4da5-a753-bbac9cc00ed5",
+  "parentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "rootParentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "name": "Cable Machine Dumbbell - Arms",
+  "auto": true,
+  "contexts": [
+    "CableMachineDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineDumbbell.CableMachineDumbbell-custom",
+      "affectedContexts": [
+        {
+          "name": "CableMachineDumbbell-Arms-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "f500009b-c4c0-4b00-af6a-bc5c0a31db64",
+          "required": false,
+          "dataType": "@ArmsEntity",
+          "name": "ArmsEntity",
+          "value": "$ArmsEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s an $ArmsEntity workout for you!\n\n- Alternate Dumbbell Curls.\n- Concentration Curls.\n- Tricep Pushdowns.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

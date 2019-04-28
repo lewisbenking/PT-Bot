@@ -1,0 +1,9 @@
+{
+  "id": "de4f350e-14b9-42e0-b1f5-a6520045391a",
+  "name": "CoreEntity",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": false
+}

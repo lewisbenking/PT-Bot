@@ -1,0 +1,48 @@
+{
+  "id": "99473377-7b05-4740-8395-132f705ad185",
+  "parentId": "6dfeaa6f-7271-49e6-abb8-9c276556a7eb",
+  "rootParentId": "6dfeaa6f-7271-49e6-abb8-9c276556a7eb",
+  "name": "Dumbbell Only - Chest",
+  "auto": true,
+  "contexts": [
+    "DumbbellOnly-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "DumbbellOnly.DumbbellOnly-custom-4",
+      "affectedContexts": [
+        {
+          "name": "DumbbellOnly-Chest-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "faca75f4-bcdd-4c8f-8b50-9bb6dfe5ed41",
+          "required": false,
+          "dataType": "@ChestEntity",
+          "name": "ChestEntity",
+          "value": "$ChestEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $ChestEntity workout for you!\n\n- Dumbbell Bench Press.\n- Dumbbell Bench Press Decline.\n- Dumbbell Flyes.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

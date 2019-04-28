@@ -1,0 +1,48 @@
+{
+  "id": "573e50af-e19e-4caf-a8d4-d6939eb43e57",
+  "parentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "rootParentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "name": "Barbell Cable Machine - Back",
+  "auto": true,
+  "contexts": [
+    "BarbellCableMachine-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellCableMachine.BarbellCableMachine-custom",
+      "affectedContexts": [
+        {
+          "name": "BarbellCableMachine-Back-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "29ea0868-245e-4d12-babd-4ccf3c14814e",
+          "required": false,
+          "dataType": "@BackEntity",
+          "name": "BackEntity",
+          "value": "$BackEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $BackEntity workout for you!\n\n- Barbell Shrug.\n- Lat Pulldowns.\n- Pullups.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

@@ -1,0 +1,48 @@
+{
+  "id": "5a334e59-3a2e-4ab5-96cd-9c64d31eb015",
+  "parentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "rootParentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "name": "Cable Machine Dumbbell - Chest",
+  "auto": true,
+  "contexts": [
+    "CableMachineDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineDumbbell.CableMachineDumbbell-custom-4",
+      "affectedContexts": [
+        {
+          "name": "CableMachineDumbbell-Chest-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "79c0ed70-da34-4361-b8dd-c70d1dd993c0",
+          "required": false,
+          "dataType": "@ChestEntity",
+          "name": "ChestEntity",
+          "value": "$ChestEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $ChestEntity workout for you!\n\n- Dumbbell Bench Press.\n- Dumbbell Bench Press Decline.\n- Pushups.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

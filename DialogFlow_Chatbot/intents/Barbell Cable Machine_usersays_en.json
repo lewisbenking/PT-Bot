@@ -1,0 +1,24 @@
+[
+  {
+    "id": "dcf99e59-3310-4067-ae21-c3f4ca1de72b",
+    "data": [
+      {
+        "text": "Barbell Cable Machine",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  },
+  {
+    "id": "3d8b8438-1425-4c21-b721-9e9b5ddbbfc3",
+    "data": [
+      {
+        "text": "Barbell and Cable Machine",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  }
+]

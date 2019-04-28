@@ -1,0 +1,48 @@
+{
+  "id": "156f359d-4149-47e2-a25a-b19a488c11b1",
+  "parentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "rootParentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "name": "Barbell Cable Machine - Arms",
+  "auto": true,
+  "contexts": [
+    "BarbellCableMachine-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellCableMachine.BarbellCableMachine-custom",
+      "affectedContexts": [
+        {
+          "name": "BarbellCableMachine-Arms-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "32d3ac07-0336-4677-90fe-909e7c76c269",
+          "required": false,
+          "dataType": "@ArmsEntity",
+          "name": "ArmsEntity",
+          "value": "$ArmsEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a workout for you!\n\n- Barbell Curls.\n- Tricep Pushdowns.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

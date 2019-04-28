@@ -1,0 +1,9 @@
+{
+  "id": "eff7ac41-f53c-41d2-b7a3-cad1938544f2",
+  "name": "StartWorkoutEntity",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": false
+}

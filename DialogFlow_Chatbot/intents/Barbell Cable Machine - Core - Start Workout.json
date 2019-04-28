@@ -1,0 +1,41 @@
+{
+  "id": "128fc1f3-6eac-4735-864f-e1b5ec0b65ac",
+  "parentId": "0cd9900f-8457-4216-a6ca-de356b9e6d15",
+  "rootParentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "name": "Barbell Cable Machine - Core - Start Workout",
+  "auto": true,
+  "contexts": [
+    "BarbellCableMachine-Core-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellCableMachine.BarbellCableMachine-custom.BarbellCableMachine-Core-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "d6c051cf-410e-4bec-918c-248e7d323c5d",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

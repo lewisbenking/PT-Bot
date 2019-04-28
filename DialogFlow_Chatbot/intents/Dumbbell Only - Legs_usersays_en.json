@@ -1,0 +1,19 @@
+[
+  {
+    "id": "896df9ce-05cc-446d-96b2-0b8050dfc1d0",
+    "data": [
+      {
+        "text": "Legs",
+        "alias": "LegsEntity",
+        "meta": "@LegsEntity",
+        "userDefined": false
+      },
+      {
+        "text": " workout",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1
+  }
+]

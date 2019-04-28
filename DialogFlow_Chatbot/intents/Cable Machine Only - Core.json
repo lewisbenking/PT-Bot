@@ -1,0 +1,47 @@
+{
+  "id": "73b3bc69-3c6e-4479-b321-18b71417a6ea",
+  "parentId": "68ceb586-e077-4178-9301-6f0486ca0aa6",
+  "rootParentId": "68ceb586-e077-4178-9301-6f0486ca0aa6",
+  "name": "Cable Machine Only - Core",
+  "auto": true,
+  "contexts": [
+    "CableMachineOnly-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineOnly.CableMachineOnly-custom-3",
+      "affectedContexts": [
+        {
+          "name": "CableMachineOnly-Core-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "3fcb43ce-fce5-4e77-8750-094b9144152f",
+          "dataType": "@CoreEntity",
+          "name": "CoreEntity",
+          "value": "$CoreEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $CoreEntity workout for you!\n\n- Air Bikes.\n- Hanging Leg Raises.\n- Russian Twists.\n\nYou can see more about each exercise by clicking the buttons."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

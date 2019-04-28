@@ -1,0 +1,9 @@
+{
+  "id": "cb29a77f-3086-4781-bfdc-91de557b7219",
+  "name": "LegsEntity",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": false
+}

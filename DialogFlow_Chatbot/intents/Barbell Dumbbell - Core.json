@@ -1,0 +1,48 @@
+{
+  "id": "ee2e61db-342a-49e2-90b5-19f5e5c95f92",
+  "parentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "rootParentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "name": "Barbell Dumbbell - Core",
+  "auto": true,
+  "contexts": [
+    "BarbellDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellDumbbell.BarbellDumbbell-custom-2",
+      "affectedContexts": [
+        {
+          "name": "BarbellDumbbell-Core-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "6907e465-4fc8-4364-9893-d738aa5a149b",
+          "required": false,
+          "dataType": "@CoreEntity",
+          "name": "CoreEntity",
+          "value": "$CoreEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $CoreEntity workout for you!\n\n- Air Bikes.\n- Dumbbell Side Bends.\n- Seated Barbell Twists.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

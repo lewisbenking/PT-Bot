@@ -1,0 +1,9 @@
+{
+  "id": "815bb330-c54f-41b3-9539-f6c5fa274a11",
+  "name": "BackEntity",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": false
+}

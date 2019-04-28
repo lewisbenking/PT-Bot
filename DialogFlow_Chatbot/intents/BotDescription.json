@@ -1,0 +1,28 @@
+{
+  "id": "a51e7a88-e124-44ec-9e1f-5e9ba98c69cb",
+  "name": "BotDescription",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "I\u0027m a personal trainer chatbot. I will give you workouts and motivate you and other stuff!"
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1550521808,
+  "fallbackIntent": false,
+  "events": []
+}

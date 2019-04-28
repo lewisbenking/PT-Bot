@@ -1,0 +1,48 @@
+{
+  "id": "cb369d72-63cb-493a-8037-0d208a8cc370",
+  "parentId": "6dfeaa6f-7271-49e6-abb8-9c276556a7eb",
+  "rootParentId": "6dfeaa6f-7271-49e6-abb8-9c276556a7eb",
+  "name": "Dumbbell Only - Legs",
+  "auto": true,
+  "contexts": [
+    "DumbbellOnly-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "DumbbellOnly.DumbbellOnly-custom",
+      "affectedContexts": [
+        {
+          "name": "DumbbellOnly-Legs-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "cc889ef6-8af0-4c51-92ac-501d0a4f07e4",
+          "required": false,
+          "dataType": "@LegsEntity",
+          "name": "LegsEntity",
+          "value": "$LegsEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $LegsEntity workout for you!\n\n- Dumbbell Lunges.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

@@ -1,0 +1,39 @@
+{
+  "id": "7e556fbe-2751-4951-8180-1140845b1f7a",
+  "parentId": "68ceb586-e077-4178-9301-6f0486ca0aa6",
+  "rootParentId": "68ceb586-e077-4178-9301-6f0486ca0aa6",
+  "name": "Cable Machine Only - Legs",
+  "auto": true,
+  "contexts": [
+    "CableMachineOnly-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineOnly.CableMachineOnly-custom",
+      "affectedContexts": [
+        {
+          "name": "CableMachineOnly-Legs-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Unfortunately I haven\u0027t got a workout for you."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

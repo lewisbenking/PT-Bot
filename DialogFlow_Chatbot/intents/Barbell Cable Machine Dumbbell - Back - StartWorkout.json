@@ -1,0 +1,41 @@
+{
+  "id": "3630d1fc-1d57-4fad-b551-5379f12cbfbd",
+  "parentId": "19f19aef-7110-4012-8cad-73aed9718a57",
+  "rootParentId": "f4c5eaa6-7b5b-4050-85cc-936da0adfc04",
+  "name": "Barbell Cable Machine Dumbbell - Back - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "BarbellCableMachineDumbbell-Back-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellCableMachineDumbbell.BarbellCableMachineDumbbell-custom.BarbellCableMachineDumbbell-Back-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "8a4e13c1-2d81-4070-8c76-2272f0e111f5",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

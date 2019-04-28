@@ -1,0 +1,27 @@
+{
+  "id": "3d40c46e-0b20-4e45-8947-95a19a6ef5dd",
+  "name": "IntroClipTest",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here you can view information about individual exercises. You can scroll through the text description of the exercise, or you can select \"Play Video\" to see how to do it. Feel free to practice doing the exercises in your own time before you start the workout.\nIf you want to know which muscles of the body are affected by the exercise, select the \"Muscle Diagram\" button.\nTo go back to the workout list, select the \"Back\" button."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

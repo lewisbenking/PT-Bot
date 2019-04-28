@@ -1,0 +1,41 @@
+{
+  "id": "c4fbc4e0-20c5-4591-b9d7-395b6132b207",
+  "parentId": "ee67e9e5-8718-48f3-9b5a-1b03ea11c5ea",
+  "rootParentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "name": "Barbell Dumbbell - Legs - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "BarbellDumbbell-Legs-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellDumbbell.BarbellDumbbell-custom-5.BarbellDumbbell-Legs-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "fd39999c-9295-47c3-b91b-877ba91f61e0",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

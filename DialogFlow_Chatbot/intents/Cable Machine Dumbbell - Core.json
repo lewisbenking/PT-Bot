@@ -1,0 +1,48 @@
+{
+  "id": "9b6e7313-147a-4c62-99cd-58e687b01c2d",
+  "parentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "rootParentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "name": "Cable Machine Dumbbell - Core",
+  "auto": true,
+  "contexts": [
+    "CableMachineDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineDumbbell.CableMachineDumbbell-custom-2",
+      "affectedContexts": [
+        {
+          "name": "CableMachineDumbbell-Core-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "1e2e092d-c42f-4fe8-a878-a0c3f558c977",
+          "required": false,
+          "dataType": "@CoreEntity",
+          "name": "CoreEntity",
+          "value": "$CoreEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $CoreEntity workout for you!\n\n- Air Bikes.\n- Dumbbell Side Bends.\n- Hanging Leg Raises.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "9c39b6ae-3a1a-4289-89fd-5e11fee424f6",
+    "data": [
+      {
+        "text": "Barbell Dumbbells",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  },
+  {
+    "id": "a2c8d2fd-a79d-4c5e-86cd-189807f076be",
+    "data": [
+      {
+        "text": "Barbell and Dumbbells",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  }
+]

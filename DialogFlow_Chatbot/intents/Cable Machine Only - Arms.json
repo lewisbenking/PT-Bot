@@ -1,0 +1,47 @@
+{
+  "id": "046540b2-5488-4f2d-8f09-1b37f6513b8b",
+  "parentId": "68ceb586-e077-4178-9301-6f0486ca0aa6",
+  "rootParentId": "68ceb586-e077-4178-9301-6f0486ca0aa6",
+  "name": "Cable Machine Only - Arms",
+  "auto": true,
+  "contexts": [
+    "CableMachineOnly-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineOnly.CableMachineOnly-custom-5",
+      "affectedContexts": [
+        {
+          "name": "CableMachineOnly-Arms-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "61c8d060-5274-4ae4-9b9a-fb42143700d1",
+          "dataType": "@ArmsEntity",
+          "name": "ArmsEntity",
+          "value": "$ArmsEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s an $ArmsEntity workout for you!\n\n- Tricep Pushdowns.\n\nYou can see more about each exercise by clicking the buttons."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

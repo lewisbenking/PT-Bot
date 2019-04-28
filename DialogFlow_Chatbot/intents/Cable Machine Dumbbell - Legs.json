@@ -1,0 +1,48 @@
+{
+  "id": "ebd19345-b308-44a2-b12e-45978d6b6d08",
+  "parentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "rootParentId": "d10f82fc-520f-471a-b16e-4cbd59ff00f8",
+  "name": "Cable Machine Dumbbell - Legs",
+  "auto": true,
+  "contexts": [
+    "CableMachineDumbbell-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "CableMachineDumbbell.CableMachineDumbbell-custom-3",
+      "affectedContexts": [
+        {
+          "name": "CableMachineDumbbell-Legs-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "16dbc5af-6387-4d9d-8c33-9589a0d75529",
+          "required": false,
+          "dataType": "@LegsEntity",
+          "name": "LegsEntity",
+          "value": "$LegsEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $LegsEntity workout for you!\n\n- Dumbbell Lunges.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

@@ -1,0 +1,48 @@
+{
+  "id": "9da844a8-2254-4e35-a21a-b8b4a30d4614",
+  "parentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "rootParentId": "64d73530-86a4-4be0-b47c-9c8d9b9ac101",
+  "name": "Barbell Cable Machine - Chest",
+  "auto": true,
+  "contexts": [
+    "BarbellCableMachine-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellCableMachine.BarbellCableMachine-custom",
+      "affectedContexts": [
+        {
+          "name": "BarbellCableMachine-Chest-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "7cfa3870-313a-48ab-b29f-951949bac8f7",
+          "required": false,
+          "dataType": "@ChestEntity",
+          "name": "ChestEntity",
+          "value": "$ChestEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Here\u0027s a $ChestEntity workout for you!\n\n- Barbell Bench Press.\n- Pushups.\n\nYou can see more about each exercise by selecting them from the list.\n\nWhen you\u0027re ready to work out, please select \"Start Workout\"."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

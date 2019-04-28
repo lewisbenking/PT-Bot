@@ -1,0 +1,41 @@
+{
+  "id": "dbb0173a-5011-4804-ae09-8a0eb2cfd467",
+  "parentId": "e70b9f6b-579a-46f0-9220-0d96aec309cd",
+  "rootParentId": "3ed48af4-9c2f-4c9d-88f2-76aa46f4687f",
+  "name": "Barbell Dumbbell - Chest - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "BarbellDumbbell-Chest-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "BarbellDumbbell.BarbellDumbbell-custom-3.BarbellDumbbell-Chest-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "b7fea6ef-8ced-4c7b-a611-8f31e8f71eb6",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

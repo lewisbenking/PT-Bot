@@ -1,0 +1,41 @@
+{
+  "id": "88098397-090b-433f-a176-06320b784e9f",
+  "parentId": "99473377-7b05-4740-8395-132f705ad185",
+  "rootParentId": "6dfeaa6f-7271-49e6-abb8-9c276556a7eb",
+  "name": "Dumbbell Only - Chest - StartWorkout",
+  "auto": true,
+  "contexts": [
+    "DumbbellOnly-Chest-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "DumbbellOnly.DumbbellOnly-custom-4.DumbbellOnly-Chest-custom",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "4947e75d-da34-44a2-b503-af7a18afd585",
+          "dataType": "@StartWorkoutEntity",
+          "name": "StartWorkoutEntity",
+          "value": "$StartWorkoutEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Ok. Let\u0027s do the workout."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189124811,
+  "fallbackIntent": false,
+  "events": []
+}

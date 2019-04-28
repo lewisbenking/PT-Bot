@@ -1,0 +1,44 @@
+{
+  "description": "",
+  "language": "en",
+  "activeAssistantAgents": [
+    "smalltalk-domain-on",
+    "smalltalk-fulfillment-on"
+  ],
+  "disableInteractionLogs": false,
+  "disableStackdriverLogs": true,
+  "googleAssistant": {
+    "googleAssistantCompatible": false,
+    "project": "pt-bot-d56dd",
+    "welcomeIntentSignInRequired": false,
+    "startIntents": [],
+    "systemIntents": [],
+    "endIntentIds": [
+      "fa94f0cd-fcb0-4314-97c5-9b581b99261b"
+    ],
+    "oAuthLinking": {
+      "required": false,
+      "grantType": "AUTH_CODE_GRANT"
+    },
+    "voiceType": "MALE_1",
+    "capabilities": [],
+    "protocolVersion": "V2",
+    "isDeviceAgent": false
+  },
+  "defaultTimezone": "Africa/Casablanca",
+  "webhook": {
+    "available": false,
+    "useForDomains": false,
+    "cloudFunctionsEnabled": false,
+    "cloudFunctionsInitialized": false
+  },
+  "isPrivate": true,
+  "customClassifierMode": "use.after",
+  "mlMinConfidence": 0.3,
+  "supportedLanguages": [],
+  "onePlatformApiVersion": "v2beta1",
+  "analyzeQueryTextSentiment": false,
+  "enabledKnowledgeBaseNames": [],
+  "knowledgeServiceConfidenceAdjustment": -0.4,
+  "dialogBuilderMode": false
+}
