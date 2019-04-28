@@ -101,7 +101,11 @@ public class JimBot : MonoBehaviour
     public void StartWorkoutTimer()
     {
         isWorkoutStopped = false;
-        if (hasWorkoutBeenPaused) PlayAudio("ResumeWorkout");
+        if (hasWorkoutBeenPaused)
+        {
+            PlayAudio("ResumeWorkout");
+            animator.SetTrigger("WellDone");
+        }
         else PlayAudio("StartWorkout");
         StartCoroutine("TimerCountdown");
     }

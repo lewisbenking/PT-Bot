@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DialogflowAPIScript">
+    <Position X="0.75" Y="1.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>FaAQQAAUAGRSFQBCAEABCgCMEAAoEAAQgAAAAARAAFI=</HashCode>
+      <FileName>Assets\Scripts\DialogflowAPIScript.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="jimBot" />
+      <Field Name="responseHandler" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ExerciseDetails">
+    <Position X="3.75" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAgAAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ExerciseDetails.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Instructions">
+    <Position X="8.5" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAQAoAAgCCCCAAAAAAAACGAIAAAAkAAQAAAAAAAAAJA=</HashCode>
+      <FileName>Assets\Scripts\Instructions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JimBot">
+    <Position X="4" Y="3.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>FZAQwQAwACAyBQDCBKEBGgoEICAgkAKQgAAEAQQAAFg=</HashCode>
+      <FileName>Assets\Scripts\JimBot.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="exerciseDetails" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MicInput">
+    <Position X="5.25" Y="1" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAQAAIAEACAACAAAAAEAAAAgACAAIAAAAQCAAAAAEAA=</HashCode>
+      <FileName>Assets\Scripts\MicInput.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="dialogFlowAPIScript" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ResponseHandler">
+    <Position X="1.25" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AEABQAABCAgAAAAAAAAAAABAAAAAAAAAAAAAQAUAAgM=</HashCode>
+      <FileName>Assets\Scripts\ResponseHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StartingScreen">
+    <Position X="6.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAgACAAAAAAAAAACAAAAAAAkAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\StartingScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

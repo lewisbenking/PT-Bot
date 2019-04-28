@@ -291,5 +291,4 @@ C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot
 C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp-firstpass.csproj.CopyComplete
 C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp-firstpass.dll
 C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp-firstpass.pdb
-C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\Temp\bin\Debug\Assembly-CSharp-firstpass.dll.config
 C:\Users\lbk95\Documents\_ASTON\YEAR_4\CS3010_IndividualProject\FYP\Repos\PT-Bot\PTBot\obj\Debug\Assembly-CSharp-firstpass.csprojAssemblyReference.cache
