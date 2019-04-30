@@ -147,7 +147,7 @@ public class JimBot : MonoBehaviour
     public void PlayAudio(string fileName)
     {
         audioSource.Stop();
-        audioClip = WavUtility.ToAudioClip($"{Application.persistentDataPath}/Audio/{fileName}.wav");
+        audioClip = WavUtility.ToAudioClip($"{Application.dataPath}/Audio/{fileName}.wav");
         audioSource.spatialBlend = 0.0f;
         audioSource.PlayOneShot(audioClip);
     }

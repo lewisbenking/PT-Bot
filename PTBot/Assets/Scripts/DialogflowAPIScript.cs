@@ -140,7 +140,7 @@ public class DialogflowAPIScript : MonoBehaviour
             animator.SetTrigger("ReverseThinking");
             JsonData.ResponseBody content = (JsonData.ResponseBody)JsonUtility.FromJson<JsonData.ResponseBody>(result);
             chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
-            File.WriteAllBytes($"{Application.persistentDataPath}/Audio/ChatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
+            File.WriteAllBytes($"{Application.dataPath}/Audio/ChatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
             ResponseHandler(chatbotResponse.text);
         }
     }
@@ -194,7 +194,7 @@ public class DialogflowAPIScript : MonoBehaviour
             else
             {
                 chatbotResponse.text = content.queryResult.fulfillmentMessages[0].text.text[0].ToString();
-                File.WriteAllBytes($"{Application.persistentDataPath}/Audio/chatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
+                File.WriteAllBytes($"{Application.dataPath}/Audio/chatbotResponse.wav", Convert.FromBase64String(content.outputAudio));
                 ResponseHandler(chatbotResponse.text);
             }
         }
