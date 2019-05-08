@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-^ Some component from their class have been used and modified to suit this project.
+^ Some components from their class have been used and modified to suit this project.
 */
 
 using System;
@@ -35,8 +35,7 @@ public class MicInput : MonoBehaviour
 {
     private bool micConnected = false;
     private int minFreq, maxFreq;
-    private AudioSource goAudioSource;
-    public AudioClip recordedClip;
+    private AudioSource audioSource;
     private float[] samples;
     private DialogflowAPIScript dialogFlowAPIScript;
     private Button buttonTalkToBot;
@@ -55,7 +54,7 @@ public class MicInput : MonoBehaviour
             micConnected = true;
             Microphone.GetDeviceCaps(null, out minFreq, out maxFreq);
             if (minFreq == 0 && maxFreq == 0) maxFreq = 44100;
-            goAudioSource = this.GetComponent<AudioSource>();
+            audioSource = this.GetComponent<AudioSource>();
         }
     }
 
@@ -75,18 +74,18 @@ public class MicInput : MonoBehaviour
             if (!Microphone.IsRecording(null))
             {
                 buttonTalkToBot.GetComponentInChildren<TextMeshProUGUI>().text = "Stop Recording";
-                goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
-                recordedClip = goAudioSource.clip;
-                samples = new float[goAudioSource.clip.samples];
+                audioSource.clip = Microphone.Start(null, true, 20, maxFreq);
+                samples = new float[audioSource.clip.samples];
             }
             else
             {
                 buttonTalkToBot.GetComponentInChildren<TextMeshProUGUI>().text = "Talk to JimBot";
                 Microphone.End(null); //Stop the audio recording  
-                Convert.ToByte(goAudioSource.clip);
-                byte[] byteArray = WavUtility.FromAudioClip(goAudioSource.clip);
+                Convert.ToByte(audioSource.clip);
+                byte[] byteArray = WavUtility.FromAudioClip(audioSource.clip);
                 string base64string = Convert.ToBase64String(byteArray);
                 dialogFlowAPIScript = GameObject.Find("DialogFlowAPIObject").GetComponentInChildren<DialogflowAPIScript>();
+                audioSource.clip = null;
                 dialogFlowAPIScript.SendSpeechToChatbot(base64string);
             }
         }
