@@ -20,3 +20,5 @@ https://www.youtube.com/watch?v=BI1W-TGtWrs
 
 JimBot BDD NUnit Tests Results:
 https://www.youtube.com/watch?v=BTxQP4J89wc
+
+The CS3010 Final Report and CS3270 Report are also included in this repository in the Documents directory.
