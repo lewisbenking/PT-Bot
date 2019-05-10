@@ -15,3 +15,6 @@ https://www.youtube.com/watch?v=BI1W-TGtWrs
 
 JimBot BDD NUnit Tests Results:
 https://www.youtube.com/watch?v=BTxQP4J89wc
+
+
+To run JimBot, please download the contents of the PTBot folder first, and the .exe is in PTBot\x86\JimBot.exe
