@@ -1,6 +1,10 @@
 # JimBot
 Welcome to JimBot!
 
+This is my submission for the CS3010 Final Year Project (Dissertation) at Aston University.
+
+I scored a first in this module.
+
 For updates on the progress of this project, please view the Trello board:
 https://trello.com/b/zk2OfJxu/jimbot
 
